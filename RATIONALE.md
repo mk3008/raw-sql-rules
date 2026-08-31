@@ -178,4 +178,4 @@ The strongest supported statement is narrower:
 - [Ashiba Scope](https://github.com/mk3008/ashiba/blob/main/docs/design/ashiba-scope.md)
 
 These are evidence/provenance links, not runtime dependencies. The standalone
-[RULES.md](RULES.md) remains the normative contract.
+[raw-sql-rules.md](raw-sql-rules.md) remains the normative contract.
