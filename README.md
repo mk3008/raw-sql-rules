@@ -13,9 +13,15 @@ behavioral evidence.
 
 ## Adopt it
 
-Keep or vendor `RULES.md` in the application repository and make it directly
-available to the coding agent. Reference it from `AGENTS.md` or contributor
-instructions. Do not translate the Rules into a framework or config layer.
+Keep or vendor the Rules in the application repository and make them directly
+available to the coding agent. The filename and path are not normative.
+`RULES.md` is authoritative in this repository, but a consuming repository may
+use a more specific path such as `rules/raw-sql-rules.md`, or another clear name
+that avoids collisions with its existing conventions. Reference the exact path
+from `AGENTS.md` or contributor instructions.
+
+Preserve the Rules content when copying or vendoring it; do not translate the
+contract into a framework or config layer merely to distribute it.
 
 If a database-backed regression pattern already exists, follow it and preserve
 evidence for changed database behavior. If none exists, Rule 8 describes the
