@@ -36,7 +36,14 @@ infrastructure or exhaustive coverage.
 implementation example. It is not a required directory layout or a requirement
 to use MySQL.
 
+## Why these Rules?
+
+See [RATIONALE.md](RATIONALE.md) for why a short natural-language contract is
+sufficient in the evaluated scope, how each Rule was derived, the failed and
+successful validation stages, and links to the full archived research evidence.
+
 ## Evidence
 
-See [EVIDENCE.md](EVIDENCE.md) for provenance, evaluated scope, and limits.
-The standalone artifact is self-contained.
+See [EVIDENCE.md](EVIDENCE.md) for concise provenance, evaluated scope, and
+limits. The standalone artifact is self-contained; the archived research links
+are evidence, not runtime dependencies.
