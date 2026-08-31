@@ -18,6 +18,8 @@ Raw SQL Rules is an instruction harness for AI-assisted Raw SQL work. Its job is
 
 The Rules define how an AI agent should approach Raw SQL work; they do not certify the code it produces. Requirements and prompts still define what should be built, while application tests and normal review determine whether the resulting code is acceptable to ship. Review remains appropriate whenever the risk or change warrants it.
 
+Bounded application search with many optional inputs remains in scope when the application owns the finite query shape. The boundary is an open-ended user-defined query language — arbitrary predicate trees, join graphs, projections, aggregates, or grouping dimensions — not the number of search fields.
+
 ## Install
 
 From the root of your application repository:
