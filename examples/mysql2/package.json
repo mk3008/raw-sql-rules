@@ -1,0 +1,11 @@
+{
+  "name": "raw-sql-rules-mysql2-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "regression": "node regression.mjs"
+  },
+  "devDependencies": {
+    "mysql2": "3.22.3"
+  }
+}
