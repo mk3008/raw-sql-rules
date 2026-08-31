@@ -1,49 +1,32 @@
 # Raw SQL Rules
 
-Raw SQL Rules is a small natural-language contract for applications that choose
-to use Raw SQL directly. Its authoritative contract is [RULES.md](RULES.md).
+**Raw SQL, with rules instead of a framework.**
 
-It is not an ORM, query builder, runtime framework, linter, migration system,
-or code generator. Raw SQL is not chosen for unlimited freedom: one visible
-representation is easier for humans and AI agents to inspect and constrain.
+Raw SQL Rules is a small set of natural-language rules for safe, reviewable Raw SQL application development.
 
-The core idea is visible SQL + directly inspectable current DDL + bounded
-runtime syntax + meaningful parameters + a native driver + database-backed
-behavioral evidence.
+- **DBMS-agnostic** — the Rules themselves do not depend on one database product.
+- **Language-agnostic** — no programming language is prescribed.
+- **Incrementally adoptable** — use the Rules only on the Raw SQL paths of an application that may still use an ORM elsewhere.
 
-## Adopt it
+Current release: **0.1**. The Rules are evidence-backed, but real-world dogfooding is still limited.
 
-Keep or vendor the Rules in the application repository and make them directly
-available to the coding agent. The filename and path are not normative.
-`RULES.md` is authoritative in this repository, but a consuming repository may
-use a more specific path such as `rules/raw-sql-rules.md`, or another clear name
-that avoids collisions with its existing conventions. Reference the exact path
-from `AGENTS.md` or contributor instructions.
+The authoritative contract is [raw-sql-rules.md](raw-sql-rules.md).
 
-Preserve the Rules content when copying or vendoring it; do not translate the
-contract into a framework or config layer merely to distribute it.
+## Install
 
-If a database-backed regression pattern already exists, follow it and preserve
-evidence for changed database behavior. If none exists, Rule 8 describes the
-small bootstrap path: canonical DDL -> target database -> native driver -> real
-SQL asset -> meaningful behavior/runtime assertion -> one repeatable command.
-That first example supplies the How for later agents; it is not broad testing
-infrastructure or exhaustive coverage.
+From the root of your application repository:
 
-## Example
+```sh
+gh api repos/mk3008/raw-sql-rules/contents/install.sh \
+  -H 'Accept: application/vnd.github.raw+json' |
+  sh
+```
 
-[examples/mysql2](examples/mysql2) is one non-normative evaluated MySQL/mysql2
-implementation example. It is not a required directory layout or a requirement
-to use MySQL.
+The installer copies the Rules to `rules/raw-sql-rules.md` and adds a small reference block to the root `AGENTS.md`. Re-running it updates the same block instead of duplicating it.
 
-## Why these Rules?
+## Learn more
 
-See [RATIONALE.md](RATIONALE.md) for why a short natural-language contract is
-sufficient in the evaluated scope, how each Rule was derived, the failed and
-successful validation stages, and links to the full archived research evidence.
-
-## Evidence
-
-See [EVIDENCE.md](EVIDENCE.md) for concise provenance, evaluated scope, and
-limits. The standalone artifact is self-contained; the archived research links
-are evidence, not runtime dependencies.
+- [raw-sql-rules.md](raw-sql-rules.md) — the normative contract
+- [RATIONALE.md](RATIONALE.md) — why these Rules exist and how they were validated
+- [EVIDENCE.md](EVIDENCE.md) — evidence, provenance, and known limits
+- [examples/mysql2](examples/mysql2) — one non-normative real-database example
