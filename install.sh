@@ -39,7 +39,9 @@ cat > "$tmp_block" <<EOF
 $START
 ## Raw SQL
 
-For application database access, follow [Raw SQL Rules]($RULES_PATH).
+Before changing or reviewing a Raw SQL data-access path, read \
+\`$RULES_PATH\`.
+Follow it as the repository contract for Raw SQL work.
 $END
 EOF
 
