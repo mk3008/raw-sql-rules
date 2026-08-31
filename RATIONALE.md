@@ -1,11 +1,12 @@
-# Why these Rules are small — and why they are not arbitrary
+# Why Raw SQL Rules exists
 
-Raw SQL Rules is intentionally short. That does not mean database work is
-simple, and it does not mean natural language replaces database behavior or
-tests.
+Raw SQL Rules is not a collection of preferred SQL practices assembled from intuition. It emerged from a larger effort to make application Raw SQL safer by building, comparing, removing, and re-testing different mechanisms.
 
-The contract is small because it does not invent another data-access system.
-It assigns authority to things an application already has:
+That earlier project was called **Ashiba**, a project that explored how to use Raw SQL safely in application development. It initially owned a broader SQL-first toolchain and repeatedly tested which responsibilities were actually worth keeping. Understanding Ashiba is not required to use Raw SQL Rules; its archived evaluations matter here as research evidence for how this contract was reached.
+
+Raw SQL Rules is intentionally short. That does not mean database work is simple, and it does not mean natural language replaces database behavior or tests.
+
+The contract is small because it does not invent another data-access system. It assigns authority to things an application already has:
 
 ```text
 SQL source assets        -> query intent
@@ -15,73 +16,47 @@ native database driver   -> execution boundary
 real database tests      -> behavior and runtime-type authority
 ```
 
-The Rules mainly constrain unsafe or ambiguous choices around those existing
-authorities. Ordinary application glue and architecture remain application-owned.
+The Rules mainly constrain unsafe or ambiguous choices around those existing authorities. Ordinary application glue and architecture remain application-owned.
 
-These Rules were not written once and declared correct. They were extracted
-from a longer Ashiba research program, challenged with fresh agents, revised
-when failures exposed ambiguity, and finally confirmed against a real database.
-The archived Ashiba repository keeps the full research trail.
+These Rules were not written once and declared correct. They were challenged with fresh agents, revised when failures exposed ambiguity, and finally confirmed against a real database. The archived Ashiba repository keeps that research trail.
+
+## Product boundary
+
+Raw SQL Rules is an instruction harness for AI-assisted Raw SQL work. It owns the contract that shapes how an agent starts and carries out that work, with the goal of materially improving first-pass direction and consistency.
+
+It does not certify the code an agent produces. The resulting code is ordinary application code: requirements and prompts define what should be built, database-backed tests provide behavioral evidence, and normal review remains appropriate when the risk or change warrants it. A verifier, linter, review engine, or test framework would be a different product responsibility rather than a missing part of these Rules.
 
 ## Why can natural-language Rules be enough?
 
 ### Existing primitives already carry most of the semantics
 
-SQL, DDL, the target database, and the native driver already define the real
-technical behavior. The Rules do not need to recreate a schema language, query
-language, transaction API, or type system.
+SQL, DDL, the target database, and the native driver already define the real technical behavior. The Rules do not need to recreate a schema language, query language, transaction API, or type system.
 
-Ashiba had already converged on visible SQL, separate values, finite reviewed
-dynamic syntax, native-driver execution, and application/live tests while
-rejecting ownership of application architecture and broad framework surface.
-See [Ashiba Scope](https://github.com/mk3008/ashiba/blob/main/docs/design/ashiba-scope.md).
+Ashiba had already converged on visible SQL, separate values, finite reviewed dynamic syntax, native-driver execution, and application/live tests while rejecting ownership of application architecture and broad framework surface. See [Ashiba Scope](https://github.com/mk3008/ashiba/blob/main/docs/design/ashiba-scope.md).
 
 ### The Rules constrain choices instead of prescribing How
 
-A capable coding agent can usually write ordinary driver calls, load a SQL file,
-or follow an existing test example. The durable knowledge is the boundary:
-what must remain visible, what is authoritative, and what escape hatches are not
-allowed.
+A capable coding agent can usually write ordinary driver calls, load a SQL file, or follow an existing test example. The durable knowledge is the boundary: what must remain visible, what is authoritative, and what escape hatches are not allowed.
 
-This was visible in the
-[AI-native construction baseline](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/ai-native-construction-baseline.md):
-fresh agents reached correct live PostgreSQL behavior without requiring a
-generator or scaffold, while generated/scaffolded paths sometimes added repair
-or non-fitting material.
+This was visible in the [AI-native construction baseline](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/ai-native-construction-baseline.md): fresh agents reached correct live PostgreSQL behavior without requiring a generator or scaffold, while generated/scaffolded paths sometimes added repair or non-fitting material.
 
 ### Repository examples supply the How after bootstrap
 
-The difficult case was when no database-backed test existed yet. Once one small
-real-database verification path existed, later fresh agents could follow and
-extend that example without special completion prose.
+The difficult case was when no database-backed test existed yet. Once one small real-database verification path existed, later fresh agents could follow and extend that example without special completion prose.
 
-See the
-[V5 bootstrap/steady-state results](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/evidence/v5/results.md)
-and the final
-[V6 confirmation](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/evidence/v6/confirmation.md).
+See the [V5 bootstrap/steady-state results](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/evidence/v5/results.md) and the final [V6 confirmation](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/evidence/v6/confirmation.md).
 
-That is why Rule 8 distinguishes normal maintenance from the zero-to-one
-bootstrap case instead of carrying a permanent testing tutorial.
+That is why Rule 8 distinguishes normal maintenance from the zero-to-one bootstrap case instead of carrying a permanent testing tutorial.
 
 ### Code remains valid for genuinely mechanical gaps
 
-The contract does not claim that all problems belong in prose. When a driver
-lacks a capability needed to express the Rules naturally, a small deterministic
-adapter may be justified.
+The contract does not claim that all problems belong in prose. When a driver lacks a capability needed to express the Rules naturally, a small deterministic adapter may be justified.
 
-The
-[named-parameter ownership evaluation](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/named-parameter-ownership/NAMED_PARAMETER_OWNERSHIP_REPORT.md)
-confirmed that mysql2 and mssql expose natural named binding while `pg` is
-positional. It also showed the limit: named identity helps review and
-maintenance, but does not prove business semantics. Real application/database
-tests remain authoritative.
+The [named-parameter ownership evaluation](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/named-parameter-ownership/NAMED_PARAMETER_OWNERSHIP_REPORT.md) confirmed that mysql2 and mssql expose natural named binding while `pg` is positional. It also showed the limit: named identity helps review and maintenance, but does not prove business semantics. Real application/database tests remain authoritative.
 
 ## How the hypothesis emerged
 
-Ashiba first ran a broader comparison with Prisma, sqlc, Drizzle, Kysely, and
-native `pg`. The important result was not a universal winner. Native `pg`
-performed strongly when given explicit Raw SQL safety constraints, while the
-Ashiba package did not demonstrate a general task-success advantage over it.
+Ashiba first ran a broader comparison with Prisma, sqlc, Drizzle, Kysely, and native `pg`. The important result was not a universal winner. Native `pg` performed strongly when given explicit Raw SQL safety constraints, while the Ashiba package did not demonstrate a general task-success advantage over it.
 
 That led to the hypothesis:
 
@@ -98,38 +73,21 @@ The reasoning, measured results, and limitations are documented in:
 - [Post-Benchmark Product Interpretation](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/current-ashiba-competitive-benchmark-v3/POST_BENCHMARK_PRODUCT_INTERPRETATION.md)
 - [AI-First Strategic Interpretation](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/current-ashiba-competitive-benchmark-v3/AI_FIRST_STRATEGIC_INTERPRETATION.md)
 
-Those documents explicitly avoid claiming that Raw SQL or Ashiba universally
-beats an ORM. The benchmark instead supported subtraction: much of the useful
-boundary could be expressed without permanent framework ownership.
+Those documents explicitly avoid claiming that Raw SQL or Ashiba universally beats an ORM. The benchmark instead supported subtraction: much of the useful boundary could be expressed without permanent framework ownership.
 
 ## How Raw SQL Rules itself was tested
 
-The standalone contract then received a separate evaluation. The initial Rules
-were frozen by hash; amendments preserved prior evidence; tests looked for both
-unsafe underconstraint and unreasonable overconstraint. See the
-[preregistered evaluation plan](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/EVALUATION_PLAN.md).
+The standalone contract then received a separate evaluation. The initial Rules were frozen by hash; amendments preserved prior evidence; tests looked for both unsafe underconstraint and unreasonable overconstraint. See the [preregistered evaluation plan](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/EVALUATION_PLAN.md).
 
-The
-[full evaluation report](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/EVALUATION_REPORT.md)
-records the progression:
+The [full evaluation report](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/EVALUATION_REPORT.md) records the progression:
 
-1. **V0-V2:** adversarial scenarios and independent fresh judgments established
-   the SQL/source/schema/dynamic-syntax boundaries and exposed an optional-filter
-   ambiguity.
-2. **V3:** goal-driven implementation probes were added. Two safe implementations
-   stopped at mock-only tests, so the result was downgraded to **NOT-YET**.
-3. **V4:** a separate completion-contract experiment was inconclusive because
-   Rules-only agents also used the live database once that path was clearly
-   discoverable.
-4. **V5:** the study separated the zero-test bootstrap case from normal
-   steady-state work. A minimal bootstrap succeeded, and two ordinary fresh
-   changes reused it without extra testing instructions.
-5. **V6:** the two-state model was made normative in Rule 8 and confirmed again
-   with fresh MySQL 8.4/mysql2 execution.
+1. **V0-V2:** adversarial scenarios and independent fresh judgments established the SQL/source/schema/dynamic-syntax boundaries and exposed an optional-filter ambiguity.
+2. **V3:** goal-driven implementation probes were added. Two safe implementations stopped at mock-only tests, so the result was downgraded to **NOT-YET**.
+3. **V4:** a separate completion-contract experiment was inconclusive because Rules-only agents also used the live database once that path was clearly discoverable.
+4. **V5:** the study separated the zero-test bootstrap case from normal steady-state work. A minimal bootstrap succeeded, and two ordinary fresh changes reused it without extra testing instructions.
+5. **V6:** the two-state model was made normative in Rule 8 and confirmed again with fresh MySQL 8.4/mysql2 execution.
 
-The final result was **READY-WITH-LIMIT**. The limit is evidence breadth — one
-primary final driver/dialect and small agent/task diversity — not a known unsafe
-escape that was hidden from the report.
+The final result was **READY-WITH-LIMIT**. The limit is evidence breadth — one primary final driver/dialect and small agent/task diversity — not a known unsafe escape that was hidden from the report.
 
 ## Why each Rule exists
 
@@ -158,10 +116,7 @@ Raw SQL Rules is **not** evidence that:
 
 The strongest supported statement is narrower:
 
-> For applications that intentionally choose visible Raw SQL, a small
-> natural-language contract plus ordinary repository context and real database
-> regression evidence was sufficient in the evaluated scope without adding a
-> data-access framework.
+> For applications that intentionally choose visible Raw SQL, a small natural-language contract plus ordinary repository context and real database regression evidence was sufficient in the evaluated scope without adding a data-access framework.
 
 ## Full research trail
 
@@ -177,5 +132,4 @@ The strongest supported statement is narrower:
 - [DDL Docs Ownership Decision](https://github.com/mk3008/ashiba/blob/main/docs/evaluations/ddl-docs-ownership/DDL_DOCS_DECISION.md)
 - [Ashiba Scope](https://github.com/mk3008/ashiba/blob/main/docs/design/ashiba-scope.md)
 
-These are evidence/provenance links, not runtime dependencies. The standalone
-[raw-sql-rules.md](raw-sql-rules.md) remains the normative contract.
+These are evidence/provenance links, not runtime dependencies. The standalone [raw-sql-rules.md](raw-sql-rules.md) remains the normative contract.
