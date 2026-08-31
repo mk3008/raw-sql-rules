@@ -12,6 +12,12 @@ Current release: **0.1**. The Rules are evidence-backed, but real-world dogfoodi
 
 The authoritative contract is [raw-sql-rules.md](raw-sql-rules.md).
 
+## Scope
+
+Raw SQL Rules is an instruction harness for AI-assisted Raw SQL work. Its job is to improve first-pass implementation quality and consistency by constraining the agent's starting choices.
+
+The Rules define how an AI agent should approach Raw SQL work; they do not certify the code it produces. Requirements and prompts still define what should be built, while application tests and normal review determine whether the resulting code is acceptable to ship. Review remains appropriate whenever the risk or change warrants it.
+
 ## Install
 
 From the root of your application repository:
@@ -22,7 +28,13 @@ gh api repos/mk3008/raw-sql-rules/contents/install.sh \
   sh
 ```
 
-The installer copies the Rules to `rules/raw-sql-rules.md` and adds a small reference block to the root `AGENTS.md`. Re-running it updates the same block instead of duplicating it.
+The installer copies the Rules to `rules/raw-sql-rules.md` and adds a small managed block to the root `AGENTS.md` telling the coding agent to read that local file before changing or reviewing Raw SQL data access. Re-running it updates the same block instead of duplicating it.
+
+## Why these Rules?
+
+These Rules were not assembled from a list of preferred practices. They emerged from a larger project for safe application Raw SQL through repeated implementation, comparison, failure, and removal of mechanisms that did not justify permanent ownership.
+
+See [RATIONALE.md](RATIONALE.md) for that research history and the evidence behind each Rule.
 
 ## Learn more
 
