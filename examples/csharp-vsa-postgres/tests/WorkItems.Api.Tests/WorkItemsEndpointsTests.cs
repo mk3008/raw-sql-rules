@@ -427,6 +427,26 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task PatchOwner_RollsBackOwnerUpdateWhenOwnerChangedEventInsertFails()
+    {
+        var workItemId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var originalOwnerId = await GetOwnerIdAsync(workItemId);
+        var nextOwnerId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+        var client = _factory.CreateClient();
+
+        await RejectOwnerChangedEventsAsync();
+
+        var response = await client.PatchAsJsonAsync(
+            $"/work-items/{workItemId}/owner",
+            new { ownerId = nextOwnerId });
+
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+
+        Assert.Equal(originalOwnerId, await GetOwnerIdAsync(workItemId));
+        Assert.Equal(0L, await CountEventsByTypeAsync(workItemId, "owner_changed"));
+    }
+
+    [Fact]
     public async Task PatchOwner_ReturnsNotFoundWhenWorkItemDoesNotExist()
     {
         var client = _factory.CreateClient();
@@ -504,6 +524,19 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     private static async Task<long> CountCompletedEventsAsync(Guid workItemId)
     {
         return await CountEventsByTypeAsync(workItemId, "completed");
+    }
+
+    private static async Task RejectOwnerChangedEventsAsync()
+    {
+        await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            ALTER TABLE work_item_events
+            ADD CONSTRAINT work_item_events_reject_owner_changed
+            CHECK (event_type <> 'owner_changed')
+            """;
+        await command.ExecuteNonQueryAsync();
     }
 
     private static async Task<long> CountEventsByTypeAsync(Guid workItemId, string eventType)
