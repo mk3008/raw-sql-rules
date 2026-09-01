@@ -42,6 +42,7 @@ $START
 Before changing or reviewing a Raw SQL data-access path, read \
 \`$RULES_PATH\`.
 Follow it as the repository contract for Raw SQL work.
+Before merge, run a fresh review of Raw SQL data-access changes against the requirements, canonical DDL, and these Rules.
 $END
 EOF
 
