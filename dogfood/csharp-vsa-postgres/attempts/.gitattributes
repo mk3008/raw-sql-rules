@@ -1,0 +1,2 @@
+# Frozen format-patch artifacts preserve the original patch whitespace exactly.
+*.patch -whitespace

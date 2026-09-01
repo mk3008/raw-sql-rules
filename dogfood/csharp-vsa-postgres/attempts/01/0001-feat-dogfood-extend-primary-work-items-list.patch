@@ -1,0 +1,214 @@
+From 536a01710083efe672ed2c3222054d192e6f2089 Mon Sep 17 00:00:00 2001
+From: MSugiura <mk3008.develop@gmail.com>
+Date: Tue, 1 Sep 2026 12:15:40 +0900
+Subject: [PATCH] feat(dogfood): extend primary work items list
+
+---
+ .../GetWorkItems/GetWorkItemsEndpoint.cs      | 15 ++++-
+ .../GetWorkItems/ListWorkItems.CreatedAsc.sql |  1 +
+ .../ListWorkItems.CreatedDesc.sql             |  1 +
+ .../ListWorkItems.PriorityDesc.sql            |  1 +
+ .../GetWorkItems/ListWorkItems.TitleAsc.sql   | 16 ++++++
+ .../WorkItemsEndpointsTests.cs                | 55 +++++++++++++++++++
+ 6 files changed, 87 insertions(+), 2 deletions(-)
+ create mode 100644 examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.TitleAsc.sql
+
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/GetWorkItemsEndpoint.cs b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/GetWorkItemsEndpoint.cs
+index 39c32bc..a6c635f 100644
+--- a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/GetWorkItemsEndpoint.cs
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/GetWorkItemsEndpoint.cs
+@@ -47,6 +47,7 @@ internal sealed class GetWorkItemsHandler(NpgsqlDataSource dataSource, SqlFileLo
+             WorkItemSortMode.CreatedDesc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.CreatedDesc.sql"],
+             WorkItemSortMode.CreatedAsc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.CreatedAsc.sql"],
+             WorkItemSortMode.PriorityDesc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.PriorityDesc.sql"],
++            WorkItemSortMode.TitleAsc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.TitleAsc.sql"],
+             _ => throw new UnreachableException()
+         };
+ 
+@@ -71,6 +72,10 @@ internal sealed class GetWorkItemsHandler(NpgsqlDataSource dataSource, SqlFileLo
+         {
+             TypedValue = request.CreatedTo
+         });
++        command.Parameters.Add(new NpgsqlParameter<short?>("min_priority", NpgsqlDbType.Smallint)
++        {
++            TypedValue = request.MinPriority
++        });
+         command.Parameters.Add(new NpgsqlParameter<int>("limit", NpgsqlDbType.Integer)
+         {
+             TypedValue = Math.Min(pageSize, MaxPageSize)
+@@ -100,6 +105,7 @@ internal sealed record GetWorkItemsRequest(
+     string? Status,
+     DateTimeOffset? CreatedFrom,
+     DateTimeOffset? CreatedTo,
++    short? MinPriority,
+     string? Sort,
+     int? PageSize)
+ {
+@@ -114,7 +120,7 @@ internal sealed record GetWorkItemsRequest(
+ 
+         if (Sort is not null && !WorkItemSortModeExtensions.TryParse(Sort, out _))
+         {
+-            errors = AddError(errors, nameof(Sort), "Sort must be one of: created_desc, created_asc, priority_desc.");
++            errors = AddError(errors, nameof(Sort), "Sort must be one of: created_desc, created_asc, priority_desc, title_asc.");
+         }
+ 
+         if (PageSize is <= 0)
+@@ -159,7 +165,8 @@ internal enum WorkItemSortMode
+ {
+     CreatedDesc,
+     CreatedAsc,
+-    PriorityDesc
++    PriorityDesc,
++    TitleAsc
+ }
+ 
+ internal static class WorkItemSortModeExtensions
+@@ -177,6 +184,9 @@ internal static class WorkItemSortModeExtensions
+             case "priority_desc":
+                 mode = WorkItemSortMode.PriorityDesc;
+                 return true;
++            case "title_asc":
++                mode = WorkItemSortMode.TitleAsc;
++                return true;
+             default:
+                 mode = default;
+                 return false;
+@@ -197,6 +207,7 @@ internal static class WorkItemSortModeExtensions
+             WorkItemSortMode.CreatedDesc => "created_desc",
+             WorkItemSortMode.CreatedAsc => "created_asc",
+             WorkItemSortMode.PriorityDesc => "priority_desc",
++            WorkItemSortMode.TitleAsc => "title_asc",
+             _ => throw new UnreachableException()
+         };
+     }
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedAsc.sql b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedAsc.sql
+index 683a53c..bc9118e 100644
+--- a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedAsc.sql
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedAsc.sql
+@@ -11,5 +11,6 @@ WHERE (@owner_id IS NULL OR owner_id = @owner_id)
+   AND (@status IS NULL OR status = @status)
+   AND (@created_from IS NULL OR created_at >= @created_from)
+   AND (@created_to IS NULL OR created_at <= @created_to)
++  AND (@min_priority IS NULL OR priority >= @min_priority)
+ ORDER BY created_at ASC, id
+ LIMIT @limit;
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedDesc.sql b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedDesc.sql
+index eb342be..583fdeb 100644
+--- a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedDesc.sql
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.CreatedDesc.sql
+@@ -11,5 +11,6 @@ WHERE (@owner_id IS NULL OR owner_id = @owner_id)
+   AND (@status IS NULL OR status = @status)
+   AND (@created_from IS NULL OR created_at >= @created_from)
+   AND (@created_to IS NULL OR created_at <= @created_to)
++  AND (@min_priority IS NULL OR priority >= @min_priority)
+ ORDER BY created_at DESC, id
+ LIMIT @limit;
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.PriorityDesc.sql b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.PriorityDesc.sql
+index 2f916ad..458df7c 100644
+--- a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.PriorityDesc.sql
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.PriorityDesc.sql
+@@ -11,5 +11,6 @@ WHERE (@owner_id IS NULL OR owner_id = @owner_id)
+   AND (@status IS NULL OR status = @status)
+   AND (@created_from IS NULL OR created_at >= @created_from)
+   AND (@created_to IS NULL OR created_at <= @created_to)
++  AND (@min_priority IS NULL OR priority >= @min_priority)
+ ORDER BY priority DESC, created_at DESC, id
+ LIMIT @limit;
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.TitleAsc.sql b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.TitleAsc.sql
+new file mode 100644
+index 0000000..d93b410
+--- /dev/null
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetWorkItems/ListWorkItems.TitleAsc.sql
+@@ -0,0 +1,16 @@
++SELECT
++    id,
++    title,
++    owner_id,
++    status,
++    priority,
++    created_at,
++    completed_at
++FROM work_items
++WHERE (@owner_id IS NULL OR owner_id = @owner_id)
++  AND (@status IS NULL OR status = @status)
++  AND (@created_from IS NULL OR created_at >= @created_from)
++  AND (@created_to IS NULL OR created_at <= @created_to)
++  AND (@min_priority IS NULL OR priority >= @min_priority)
++ORDER BY title ASC, id
++LIMIT @limit;
+diff --git a/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs b/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs
+index cc977d4..2d4977a 100644
+--- a/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs
++++ b/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs
+@@ -68,6 +68,33 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
+         Assert.Equal("pending", item.Status);
+     }
+ 
++    [Fact]
++    public async Task GetWorkItems_FiltersByMinimumPriority()
++    {
++        await InsertWorkItemAsync(
++            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
++            title: "Medium priority follow-up",
++            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
++            status: 0,
++            priority: 2,
++            createdAt: DateTimeOffset.Parse("2026-09-01T12:00:00Z"),
++            completedAt: null);
++
++        var client = _factory.CreateClient();
++
++        var response = await client.GetAsync("/work-items?minPriority=2&sort=created_desc");
++
++        response.EnsureSuccessStatusCode();
++        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
++
++        Assert.NotNull(payload);
++        Assert.Equal("created_desc", payload.Sort);
++        Assert.Collection(
++            payload.Items,
++            item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
++            item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id));
++    }
++
+     [Fact]
+     public async Task GetWorkItems_UsesCreatedDescByDefault()
+     {
+@@ -96,6 +123,34 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
+             item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id));
+     }
+ 
++    [Fact]
++    public async Task GetWorkItems_UsesTitleAscSortAsset()
++    {
++        await InsertWorkItemAsync(
++            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
++            title: "Alpha refinement",
++            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
++            status: 0,
++            priority: 2,
++            createdAt: DateTimeOffset.Parse("2026-09-01T12:00:00Z"),
++            completedAt: null);
++
++        var client = _factory.CreateClient();
++
++        var response = await client.GetAsync("/work-items?sort=title_asc");
++
++        response.EnsureSuccessStatusCode();
++        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
++
++        Assert.NotNull(payload);
++        Assert.Equal("title_asc", payload.Sort);
++        Assert.Collection(
++            payload.Items,
++            item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
++            item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id),
++            item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id));
++    }
++
+     [Fact]
+     public async Task GetWorkItems_UsesPriorityDescSortAsset()
+     {
+-- 
+2.47.1.windows.2
+
