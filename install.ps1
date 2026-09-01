@@ -1,6 +1,3 @@
-[CmdletBinding()]
-param()
-
 $ErrorActionPreference = 'Stop'
 
 $Repository = 'mk3008/raw-sql-rules'
