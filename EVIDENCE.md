@@ -30,13 +30,26 @@ The dedicated Raw SQL Rules work included:
 
 The evaluation intentionally recorded negative evidence. In V3, two fresh implementation probes stopped at mock-only tests, so the result was downgraded to `NOT-YET`. Later V5/V6 work isolated the zero-test bootstrap case and confirmed the final two-state Rule 8 contract instead of hiding those failures.
 
+## Standalone repository dogfood
+
+The standalone repository adds bounded product evidence without replacing the
+Ashiba-derived V0-V6 provenance above:
+
+- A Windows PowerShell portability failure was observed in [PR #8](https://github.com/mk3008/raw-sql-rules/pull/8); a native PowerShell 7+ installer was then added and verified, and exercised by the [clean primary C# / ASP.NET Core / PostgreSQL / VSA dogfood](dogfood/csharp-vsa-postgres/).
+- A [Raw-SQL-Rules-only blind review calibration](dogfood/review-calibration/csharp-vsa-postgres-attempt-0/) measured fresh review behavior without dedicated Review Rules.
+- A [recovery/adjudication calibration](dogfood/recovery-calibration/csharp-vsa-postgres-attempt-0/) preserved separate repair and verification-strengthening outcomes.
+- One [owner-reassignment end-to-end run](dogfood/end-to-end/csharp-vsa-postgres-owner-reassignment/) connected fresh review, adjudication, verification strengthening, re-review, and convergence.
+- The [0.1 readiness assessment](dogfood/0.1-readiness/) concluded `KEEP-AS-IS`: confirmed repeated Raw SQL implementation-contract gaps were `0`; dedicated Review Rules were not adopted; and Source Clarity remains unproven.
+
 ## Known limits
 
-- Final live evidence primarily covers MySQL/mysql2.
-- Agent and task diversity is small.
+- Evidence includes MySQL/mysql2 research and bounded C# / ASP.NET Core / PostgreSQL dogfood; language and DBMS universality are not proven.
+- Agent and task diversity remains small.
 - PostgreSQL named-parameter adaptation remains a separate concern.
-- Real-world dogfooding is still limited.
-- This is not proof of universal agent compliance.
+- PowerShell 7+ is tested; Windows PowerShell 5.1 is not evaluated.
+- Review detection is not perfect, and no dedicated Review Rules Arm B comparison has been run.
+- The one connected end-to-end run included a contained orchestration misrouting event; it is not evidence of fully uninterrupted autonomous development.
+- This is not proof of universal agent compliance, universal zero human blockers, or universal irrelevance of dedicated Review Rules.
 
 ## Provenance
 
