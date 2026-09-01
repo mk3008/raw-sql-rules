@@ -409,6 +409,24 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task PatchOwner_DoesNotWriteAnotherOwnerChangedEventAfterARealChange()
+    {
+        var workItemId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var ownerId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+        var client = _factory.CreateClient();
+
+        var firstResponse = await client.PatchAsJsonAsync($"/work-items/{workItemId}/owner", new { ownerId });
+        var firstOwnerChangedAt = await GetLatestEventOccurredAtAsync(workItemId, "owner_changed");
+        var secondResponse = await client.PatchAsJsonAsync($"/work-items/{workItemId}/owner", new { ownerId });
+
+        Assert.Equal(HttpStatusCode.NoContent, firstResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, secondResponse.StatusCode);
+        Assert.Equal(ownerId, await GetOwnerIdAsync(workItemId));
+        Assert.Equal(1L, await CountEventsByTypeAsync(workItemId, "owner_changed"));
+        Assert.Equal(firstOwnerChangedAt, await GetLatestEventOccurredAtAsync(workItemId, "owner_changed"));
+    }
+
+    [Fact]
     public async Task PatchOwner_ReturnsNotFoundWhenWorkItemDoesNotExist()
     {
         var client = _factory.CreateClient();
