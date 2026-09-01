@@ -37,12 +37,15 @@ Use this sequence as the default:
 5. Save commands and test/runtime evidence.
 6. Review the frozen candidate.
 7. Save the review prompt, inputs, and findings.
-8. Send only confirmed findings to repair.
-9. Commit the repair separately.
-10. Run regression verification.
-11. Re-review the same relevant boundary.
-12. Repeat when needed.
-13. Record convergence or human escalation.
+8. Classify findings and choose repair, verification strengthening,
+   observation, or escalation.
+9. Send only confirmed defects to repair and commit the repair separately.
+10. Record verification strengthening as a separate action when it closes an
+    evidence gap without changing candidate behavior.
+11. Run regression verification.
+12. Re-review the same relevant boundary.
+13. Repeat when needed.
+14. Record convergence or human escalation.
 
 Never overwrite or erase a pre-review candidate. The product evidence includes
 the uncorrected answer, the finding, the repair, and the reviewed result—not
@@ -88,6 +91,13 @@ Record unavailable information as `unavailable`; do not infer it.
 - changed behavior;
 - added or changed regression evidence.
 
+### Verification strengthening
+
+- exact action or prompt;
+- evidence gap addressed;
+- verification SHA, commands, and results;
+- explicit statement that candidate behavior was not changed.
+
 ### Final
 
 - final SHA;
@@ -104,9 +114,9 @@ default hypothesis is that a fresh reviewer given the candidate, requirements,
 canonical DDL, and Raw SQL Rules can autonomously find important problems with
 an ordinary request to review.
 
-Consider Review Rules only after evidence shows important findings are
-repeatedly missed under Raw SQL Rules alone. When evaluating a Review Rules
-candidate, compare it blind against the same frozen candidate where practical:
+Review Rules candidates may be evaluated before repeated misses where there is
+a concrete frozen candidate, known corpus, or pre-existing hypothesis. When
+practical, compare the candidate blind against the same frozen input:
 
 | Arm | Inputs |
 | --- | --- |
@@ -114,9 +124,14 @@ candidate, compare it blind against the same frozen candidate where practical:
 | B | the same inputs plus frozen Review Rules candidate |
 
 Do not repair the candidate before comparison reviews complete, and do not
-tell reviewers known findings. Compare confirmed-defect detection, missed known
-defects, false positives, style/naming noise, actionability, repairability,
-human intervention, and review overhead.
+tell reviewers known findings. Compare confirmed-defect detection and missed
+known defects, plus false positives, style/naming noise, actionability,
+repairability, human intervention, and review overhead.
+
+Evaluation is not adoption. Permanently adding or formalizing Review Rules
+requires reproducible added value over Raw-SQL-Rules-only review on those
+measures. If there is no meaningful difference, or Raw-SQL-Rules-only review
+is sufficient, not adding Review Rules is a valid result.
 
 ## 5. Source clarity and comments hypothesis
 
@@ -148,10 +163,10 @@ finding should support at least:
 | Evidence / impact | Direct support and consequence. |
 | Existing Rule coverage | Applicable Rule, or `none` / `unavailable`. |
 | Classification | One of the classifications below. |
-| Disposition | confirmed, rejected, uncertainty, deferred, or escalated. |
-| Repair SHA | Repair commit, if any. |
-| Regression evidence | Test or runtime proof, if any. |
-| Re-review result | Result after repair. |
+| Disposition / action | confirmed defect + repair; resolvable evidence gap + verification strengthening; uncertainty + observation; or requirement ambiguity + escalation. |
+| Repair or verification SHA | Separate repair or verification-strengthening commit, if any. |
+| Regression or strengthened evidence | Test, runtime, or other direct proof, if any. |
+| Re-review result | Result after the relevant action. |
 | Human intervention | Type and reason, if any. |
 
 ## 7. Finding classification
@@ -173,24 +188,35 @@ Equivalent names are acceptable when their boundary remains clear.
 ## 8. Rule pressure
 
 A finding does not immediately justify changing Rules. Preserve a single case
-as candidate evidence. Consider a Rule change only after accumulating evidence
-such as repeated independent misses, repeated misunderstanding by agents that
-read the Rule, high severity, stable reviewer detection, or recurring human
-intervention.
+as candidate evidence. Consider a Raw SQL Rule change only after accumulating
+evidence such as repeated independent misses, repeated misunderstanding by
+agents that read the Rule, high severity, stable reviewer detection, or
+recurring human intervention. Review Rules have the separate evaluation and
+adoption standard in the review-hypothesis section.
 
 Keeping Raw SQL Rules small is itself an evaluation target.
 
 ## 9. Recovery discipline
 
-For a confirmed finding:
+Classify each review result before acting:
+
+- **confirmed defect**: make the minimal repair, add regression evidence when
+  feasible, and re-review;
+- **resolvable evidence gap**: do not change candidate behavior; add the
+  smallest useful test or runtime verification and record it as a separate
+  verification-strengthening action;
+- **uncertainty**: do not force a defect repair; observe further when it can
+  resolve the uncertainty;
+- **requirement ambiguity**: do not silently decide product semantics; escalate
+  to a human.
+
+For a confirmed defect:
 
 - repair only the scope needed for that finding;
 - do not introduce an unrelated redesign;
 - do not weaken tests to pass;
 - add regression evidence when feasible;
 - re-check the same review and verification boundary after repair.
-
-An uncertainty alone is not a confirmed defect and must not force a repair.
 
 ## 10. Convergence
 
@@ -201,6 +227,8 @@ all applicable conditions:
 - review has no confirmed remaining defect, or each remaining defect has an
   explicit reason;
 - repaired findings have regression evidence;
+- each important evidence gap is closed, explicitly accepted as a limit, or
+  escalated;
 - unresolved evidence gaps are explicit;
 - human interventions are recorded;
 - missing requirements are escalated instead of silently decided.
