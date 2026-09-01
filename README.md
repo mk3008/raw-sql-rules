@@ -30,7 +30,8 @@ gh api repos/mk3008/raw-sql-rules/contents/install.sh \
   sh
 ```
 
-From PowerShell on Windows:
+From PowerShell 7+ on Windows (verified with PowerShell 7.6.5; Windows
+PowerShell 5.1 is not evaluated):
 
 ```powershell
 $ref = 'main'
