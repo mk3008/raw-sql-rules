@@ -30,6 +30,22 @@ gh api repos/mk3008/raw-sql-rules/contents/install.sh \
   sh
 ```
 
+From PowerShell 7+ on Windows (verified with PowerShell 7.6.5; Windows
+PowerShell 5.1 is not evaluated):
+
+```powershell
+$ref = 'main'
+$env:RAW_SQL_RULES_REF = $ref
+gh api "repos/mk3008/raw-sql-rules/contents/install.ps1?ref=$ref" `
+  -H 'Accept: application/vnd.github.raw+json' |
+  Out-String |
+  ForEach-Object { & ([scriptblock]::Create($_)) }
+```
+
+Both installers require the GitHub CLI (`gh`) to be authenticated. They accept
+the same optional environment overrides: `RAW_SQL_RULES_REF`,
+`RAW_SQL_RULES_PATH`, and `AGENTS_FILE`.
+
 The installer copies the Rules to `rules/raw-sql-rules.md` and adds a small managed block to the root `AGENTS.md` telling the coding agent to read that local file before changing or reviewing Raw SQL data access. Re-running it updates the same block instead of duplicating it.
 
 ## Why these Rules?
