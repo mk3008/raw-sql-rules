@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:18.1
+    environment:
+      POSTGRES_DB: work_items
+      POSTGRES_USER: work_items
+      POSTGRES_PASSWORD: work_items
+    ports:
+      - "54329:5432"
+    volumes:
+      - ./database/schema:/docker-entrypoint-initdb.d/schema:ro
+      - ./database/seed:/docker-entrypoint-initdb.d/seed:ro
