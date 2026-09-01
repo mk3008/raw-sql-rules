@@ -47,6 +47,7 @@ internal sealed class GetWorkItemsHandler(NpgsqlDataSource dataSource, SqlFileLo
             WorkItemSortMode.CreatedDesc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.CreatedDesc.sql"],
             WorkItemSortMode.CreatedAsc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.CreatedAsc.sql"],
             WorkItemSortMode.PriorityDesc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.PriorityDesc.sql"],
+            WorkItemSortMode.TitleAsc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.TitleAsc.sql"],
             _ => throw new UnreachableException()
         };
 
@@ -70,6 +71,10 @@ internal sealed class GetWorkItemsHandler(NpgsqlDataSource dataSource, SqlFileLo
         command.Parameters.Add(new NpgsqlParameter<DateTimeOffset?>("created_to", NpgsqlDbType.TimestampTz)
         {
             TypedValue = request.CreatedTo
+        });
+        command.Parameters.Add(new NpgsqlParameter<short?>("min_priority", NpgsqlDbType.Smallint)
+        {
+            TypedValue = request.MinPriority
         });
         command.Parameters.Add(new NpgsqlParameter<int>("limit", NpgsqlDbType.Integer)
         {
@@ -100,6 +105,7 @@ internal sealed record GetWorkItemsRequest(
     string? Status,
     DateTimeOffset? CreatedFrom,
     DateTimeOffset? CreatedTo,
+    short? MinPriority,
     string? Sort,
     int? PageSize)
 {
@@ -114,7 +120,7 @@ internal sealed record GetWorkItemsRequest(
 
         if (Sort is not null && !WorkItemSortModeExtensions.TryParse(Sort, out _))
         {
-            errors = AddError(errors, nameof(Sort), "Sort must be one of: created_desc, created_asc, priority_desc.");
+            errors = AddError(errors, nameof(Sort), "Sort must be one of: created_desc, created_asc, priority_desc, title_asc.");
         }
 
         if (PageSize is <= 0)
@@ -159,7 +165,8 @@ internal enum WorkItemSortMode
 {
     CreatedDesc,
     CreatedAsc,
-    PriorityDesc
+    PriorityDesc,
+    TitleAsc
 }
 
 internal static class WorkItemSortModeExtensions
@@ -176,6 +183,9 @@ internal static class WorkItemSortModeExtensions
                 return true;
             case "priority_desc":
                 mode = WorkItemSortMode.PriorityDesc;
+                return true;
+            case "title_asc":
+                mode = WorkItemSortMode.TitleAsc;
                 return true;
             default:
                 mode = default;
@@ -197,6 +207,7 @@ internal static class WorkItemSortModeExtensions
             WorkItemSortMode.CreatedDesc => "created_desc",
             WorkItemSortMode.CreatedAsc => "created_asc",
             WorkItemSortMode.PriorityDesc => "priority_desc",
+            WorkItemSortMode.TitleAsc => "title_asc",
             _ => throw new UnreachableException()
         };
     }

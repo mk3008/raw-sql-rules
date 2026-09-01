@@ -12,5 +12,5 @@ WHERE (@owner_id IS NULL OR owner_id = @owner_id)
   AND (@created_from IS NULL OR created_at >= @created_from)
   AND (@created_to IS NULL OR created_at <= @created_to)
   AND (@min_priority IS NULL OR priority >= @min_priority)
-ORDER BY priority DESC, created_at DESC, id
+ORDER BY title ASC, id
 LIMIT @limit;

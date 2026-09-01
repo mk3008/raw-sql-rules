@@ -69,6 +69,33 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task GetWorkItems_FiltersByMinimumPriority()
+    {
+        await InsertWorkItemAsync(
+            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
+            title: "Medium priority follow-up",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 0,
+            priority: 2,
+            createdAt: DateTimeOffset.Parse("2026-09-01T12:00:00Z"),
+            completedAt: null);
+
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("/work-items?minPriority=2&sort=created_desc");
+
+        response.EnsureSuccessStatusCode();
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        Assert.Equal("created_desc", payload.Sort);
+        Assert.Collection(
+            payload.Items,
+            item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
+            item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id));
+    }
+
+    [Fact]
     public async Task GetWorkItems_UsesCreatedDescByDefault()
     {
         await InsertWorkItemAsync(
@@ -94,6 +121,34 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
             item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
             item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id),
             item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id));
+    }
+
+    [Fact]
+    public async Task GetWorkItems_UsesTitleAscSortAsset()
+    {
+        await InsertWorkItemAsync(
+            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
+            title: "Alpha refinement",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 0,
+            priority: 2,
+            createdAt: DateTimeOffset.Parse("2026-09-01T12:00:00Z"),
+            completedAt: null);
+
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("/work-items?sort=title_asc");
+
+        response.EnsureSuccessStatusCode();
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        Assert.Equal("title_asc", payload.Sort);
+        Assert.Collection(
+            payload.Items,
+            item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
+            item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id),
+            item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id));
     }
 
     [Fact]
