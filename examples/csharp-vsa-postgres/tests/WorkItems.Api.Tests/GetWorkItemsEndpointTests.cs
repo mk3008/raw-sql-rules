@@ -95,6 +95,43 @@ public sealed class GetWorkItemsEndpointTests
         Assert.Equal("Completed baseline", payload.Items[0].Title);
         Assert.Equal("Prepare dogfood", payload.Items[1].Title);
     }
+
+    [Fact]
+    public async Task GetWorkItems_NormalizesOffsetTimestampsToUtcBeforeBinding()
+    {
+        await using var database = await PostgresTestDatabase.CreateAsync();
+        await using var factory = new WorkItemsApiFactory(database.ConnectionString);
+        using var client = factory.CreateClient();
+
+        var response = await client.GetAsync("/work-items?createdFrom=2026-09-01T09:00:00%2B09:00&createdTo=2026-09-01T09:00:00%2B09:00");
+
+        response.EnsureSuccessStatusCode();
+
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        var item = Assert.Single(payload.Items);
+        Assert.Equal("Prepare dogfood", item.Title);
+    }
+
+    [Fact]
+    public async Task GetWorkItems_AcceptsLargePageWithoutOverflowingOffset()
+    {
+        await using var database = await PostgresTestDatabase.CreateAsync();
+        await using var factory = new WorkItemsApiFactory(database.ConnectionString);
+        using var client = factory.CreateClient();
+
+        var response = await client.GetAsync($"/work-items?page={int.MaxValue}&pageSize=100");
+
+        response.EnsureSuccessStatusCode();
+
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        Assert.Empty(payload.Items);
+        Assert.Equal(int.MaxValue, payload.Page);
+        Assert.Equal(100, payload.PageSize);
+    }
 }
 
 public sealed record GetWorkItemsResponseContract(

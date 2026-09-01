@@ -10,13 +10,7 @@ internal sealed class WorkItemsApiFactory(string connectionString) : WebApplicat
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
-        builder.ConfigureAppConfiguration((_, configurationBuilder) =>
-        {
-            configurationBuilder.AddInMemoryCollection(
-            [
-                new KeyValuePair<string, string?>("ConnectionStrings:WorkItems", connectionString)
-            ]);
-        });
+        builder.UseSetting("ConnectionStrings:WorkItems", connectionString);
     }
 }
 

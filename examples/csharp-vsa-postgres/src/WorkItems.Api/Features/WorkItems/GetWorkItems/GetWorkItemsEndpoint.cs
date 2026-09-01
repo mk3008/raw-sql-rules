@@ -39,7 +39,7 @@ internal static class GetWorkItemsEndpoint
         var sort = string.IsNullOrWhiteSpace(request.Sort) ? "created_desc" : request.Sort;
         var page = request.Page ?? DefaultPage;
         var pageSize = Math.Min(request.PageSize ?? DefaultPageSize, MaxPageSize);
-        var offset = (page - 1) * pageSize;
+        var offset = ((long)page - 1L) * pageSize;
         WorkItemStatusCodec.TryParse(request.Status, out var status);
 
         await using var command = dataSource.CreateCommand(SqlBySortMode[sort]);
@@ -53,18 +53,21 @@ internal static class GetWorkItemsEndpoint
         });
         command.Parameters.Add(new NpgsqlParameter("created_from", NpgsqlDbType.TimestampTz)
         {
-            Value = request.CreatedFrom.HasValue ? request.CreatedFrom.Value : DBNull.Value
+            Value = request.CreatedFrom.HasValue ? NormalizeTimestamp(request.CreatedFrom.Value) : DBNull.Value
         });
         command.Parameters.Add(new NpgsqlParameter("created_to", NpgsqlDbType.TimestampTz)
         {
-            Value = request.CreatedTo.HasValue ? request.CreatedTo.Value : DBNull.Value
+            Value = request.CreatedTo.HasValue ? NormalizeTimestamp(request.CreatedTo.Value) : DBNull.Value
         });
         command.Parameters.Add(new NpgsqlParameter("minimum_priority", NpgsqlDbType.Smallint)
         {
             Value = request.MinimumPriority.HasValue ? request.MinimumPriority.Value : DBNull.Value
         });
         command.Parameters.AddWithValue("page_size", pageSize);
-        command.Parameters.AddWithValue("offset", offset);
+        command.Parameters.Add(new NpgsqlParameter("offset", NpgsqlDbType.Bigint)
+        {
+            Value = offset
+        });
 
         var items = new List<WorkItemResponse>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -112,6 +115,8 @@ internal static class GetWorkItemsEndpoint
 
         return errors;
     }
+
+    private static DateTimeOffset NormalizeTimestamp(DateTimeOffset value) => value.ToUniversalTime();
 }
 
 internal sealed record GetWorkItemsRequest(

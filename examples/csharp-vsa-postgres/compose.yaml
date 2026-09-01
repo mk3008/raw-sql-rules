@@ -10,3 +10,10 @@ services:
     volumes:
       - ./database/schema:/docker-entrypoint-initdb.d/schema:ro
       - ./database/seed:/docker-entrypoint-initdb.d/seed:ro
+
+networks:
+  default:
+    ipam:
+      config:
+        # The host's Docker default address pools are exhausted; reserve an explicit disposable subnet.
+        - subnet: 192.168.64.0/20
