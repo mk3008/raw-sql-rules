@@ -42,6 +42,20 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task GetWorkItems_ClampsPageSizeToConfiguredMaximum()
+    {
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("/work-items?pageSize=101");
+
+        response.EnsureSuccessStatusCode();
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        Assert.Equal(100, payload.PageSize);
+    }
+
+    [Fact]
     public async Task GetWorkItems_RejectsUnknownSortModes()
     {
         var client = _factory.CreateClient();
