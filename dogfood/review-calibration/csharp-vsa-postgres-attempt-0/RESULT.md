@@ -14,10 +14,10 @@
 
 | Metric | Result |
 | --- | --- |
-| Known confirmed-defect recall per run | Run 1 `0/2`; Run 2 `0/2`; Run 3 `0/2` |
+| Historical-corpus confirmed-defect reproduction per run | Run 1 `0/2`; Run 2 `0/2`; Run 3 `0/2` (comparison metric, not primary quality conclusion) |
 | Known evidence-gap detection per run | Run 1 `1/2`; Run 2 `1/2`; Run 3 `1/2` |
-| Union recall | confirmed defects `0/2`; evidence gaps `1/2` |
-| 3/3 stable detection | K-EG-02 direct asset coverage; A-EG-02 page-size-cap gap; K-CD-02 only as uncertainty |
+| Historical-corpus union reproduction | historical confirmed labels `0/2`; evidence gaps `1/2` |
+| 3/3 stable detection | K-EG-02 direct asset coverage; A-EG-02 page-size-cap gap; K-CD-02 as contract-preserving uncertainty |
 | 2/3 detection | A-CD-01 missing published SQL assets; A-EG-01 atomic rollback gap; A-EG-03 default/range coverage gap |
 | 1/3 detection | none |
 | Confirmed additional findings | A-CD-01, publish output omits SQL assets and endpoint fails HTTP 500 |
@@ -39,12 +39,18 @@ and HTTP 500 from the published `GET /work-items` endpoint.
 
 ## Inference
 
-In this one frozen candidate, Raw SQL Rules-only review consistently noticed
-test-evidence gaps around finite selection and page-size bounds. It did not
-produce a confirmed report for either known historical defect. The
-repeat-completion behavior was noticed by all three reviewers but reasonably
-downgraded because the supplied requirements did not define retries. Two of
-three reviews found a deployability defect outside the historical corpus.
+In this one frozen candidate, Raw SQL Rules-only review did not reproduce the
+historical findings with their original confirmed-defect labels. That is not a
+simple quality failure: all reviewers noticed repeat completion and appropriately
+preserved it as uncertainty because supplied requirements did not define retry
+or idempotency semantics. The historical portability issue is technically real,
+but Linux/macOS support was not explicit in the supplied contract.
+
+The reviewers consistently noticed evidence gaps around finite selection and
+page-size bounds. Two of three independently found a historical-corpus-external
+deployability defect, which scoring reproduced at runtime. False positives and
+style/noise findings were zero. The review capability is promising, but finding
+detection stability remains limited in this one case.
 
 This is a detection baseline, not a conclusion that Review Rules are necessary
 or unnecessary, that Raw SQL Rules-only review is complete, or that the result
@@ -53,8 +59,8 @@ generalizes across languages, databases, models, or candidates.
 ## Hypotheses
 
 - A future frozen Review Rules candidate may be worth blind comparison for
-  portability and deployment-boundary detection, but this calibration does not
-  test it.
+  portability and deployment-boundary detection, but this calibration neither
+  tests it nor concludes that Review Rules are needed.
 - Source-clarity comparison may be worth exploring because no source-clarity
   observation arose naturally; that absence is not a defect score.
 - A future recovery-loop dogfood could test whether the detected, classified
@@ -68,4 +74,5 @@ than treated as candidate defects. Reviewers were instructed to avoid
 modification; generated publish/test artifacts occurred only in isolated
 temporary exports, and tracked candidate source comparison reported
 `SOURCE_MISMATCHES=0`. Candidate source and existing dogfood evidence were not
-changed.
+changed. Historical reviewer findings are retained as a comparison corpus, not
+automatic ground truth over explicit contract and runtime evidence.

@@ -4,33 +4,41 @@ Scoring began only after all three run records were frozen in commit
 `1d1e2c9b06704a2d7932a9f664d4e11ff17cd40e`. The preregistration commit was
 `818a2849b484f1bbbf9490ce2b30a344807a4636`.
 
-## Historical answer key
+## Historical comparison corpus
 
-The post-freeze answer key is
-`dogfood/csharp-vsa-postgres/reviews/attempt-00-review.md`. It defines these
-known Attempt 0 items:
+The post-freeze comparison corpus is
+`dogfood/csharp-vsa-postgres/reviews/attempt-00-review.md`. Its historical
+findings are comparison inputs, not ground truth that overrides the supplied
+requirements or runtime evidence. It records these Attempt 0 items:
 
-| ID | Historical classification | Item |
+| ID | Historical classification | Blind-review treatment / contract grounding |
 | --- | --- | --- |
-| K-CD-01 | confirmed defect | Backslash-containing SQL asset lookup is not portable to Linux/macOS. |
-| K-CD-02 | confirmed defect | Repeated/concurrent completion can duplicate events and overwrite completion time. |
-| K-EG-01 | evidence gap | Test fixture does not apply canonical DDL for every test. |
+| K-CD-01 | confirmed portability defect | The cross-platform path issue is technically real, but Linux/macOS support is not explicit in supplied requirements. Treat as a general portability finding, not an unqualified contract-grounded requirement defect. |
+| K-CD-02 | confirmed defect | All 3 runs detected the repeat behavior but classified it as uncertainty. Supplied requirements do not define repeat/idempotency semantics, so this is not a simple confirmed-defect-recall miss. |
+| K-EG-01 | evidence gap | Fixture does not apply canonical DDL for every test. |
 | K-EG-02 | evidence gap | Direct finite SQL asset-selection coverage is incomplete. |
 
 ## Per-run known-corpus scoring
 
 | Item | Run 1 | Run 2 | Run 3 |
 | --- | --- | --- | --- |
-| K-CD-01 portability | missed | missed | missed |
-| K-CD-02 repeat completion | detected but downgraded to uncertainty | detected but downgraded to uncertainty | detected but downgraded to uncertainty |
+| K-CD-01 portability | not raised; contract-ambiguous / out-of-explicit-scope | not raised; contract-ambiguous / out-of-explicit-scope | not raised; contract-ambiguous / out-of-explicit-scope |
+| K-CD-02 repeat completion | detected as uncertainty; contract-ambiguous | detected as uncertainty; contract-ambiguous | detected as uncertainty; contract-ambiguous |
 | K-EG-01 fixture DDL | missed | missed | missed |
 | K-EG-02 asset selection | detected as evidence gap (priority) | detected as evidence gap (priority/default) | detected as evidence gap (priority/default) |
 
-Known confirmed-defect recall is `0/2` for each run and `0/2` for the union
-when recall requires a confirmed-defect report. K-CD-02 was noticed in all
-three runs but consistently classified as uncertainty because repeat semantics
-were absent from the supplied requirements. Known evidence-gap detection is
-`1/2` for every run and `1/2` for the union.
+The historical-corpus confirmed-defect-reproduction metric is `0/2` for each
+run and `0/2` for the union when it requires the historical confirmed-defect
+label. It is not the primary quality conclusion. K-CD-02 was noticed in all
+three runs and consistently preserved as uncertainty because repeat semantics
+were absent from supplied requirements. K-CD-01 is technically real, but its
+OS portability assumption is outside the explicit supplied contract. Known
+evidence-gap detection is `1/2` for every run and `1/2` for the union.
+
+This calibration records the meta-learning that a historical reviewer finding
+must not automatically become ground truth for a new blind review: compare
+historical classification, blind treatment, explicit contract grounding, and
+runtime evidence separately.
 
 ## Additional-finding validation
 
