@@ -2,8 +2,9 @@
 
 ## Scope and historical handling
 
-This is a clean primary run based on current `main` at
-`a27871e9d1f8ead99c764eca6b54ee522744dfa5`.
+This is a clean primary installer/application dogfood run based on current
+`main` at `a27871e9d1f8ead99c764eca6b54ee522744dfa5`. It is not a complete
+rerun of the original full Q1-Q9 preregistered experiment.
 
 Historical evidence is preserved and not aggregated with this result:
 
@@ -23,19 +24,40 @@ repository-level discovery path, initial implementation, two fresh maintenance
 tasks, and final database-backed validation provide primary evidence for this
 specific scenario. Limits are listed below and are not converted into claims.
 
-## Questions
+## Evaluation checks for this clean run
 
-| Question | Result | Evidence classification |
+These E1-E9 checks describe this run only. They are intentionally not named
+Q1-Q9 because their meanings do not match the historical/original
+preregistration.
+
+| Check | Result | Evidence classification |
 | --- | --- | --- |
-| Q1 Installer + generated AGENTS discovery | meets | Observed: actual installer twice, byte identity, managed-block idempotence, fresh agent tool-log discovery. |
-| Q2 Initial Raw SQL implementation | meets | Observed: frozen Attempt 0, independent review, repaired successor, DB tests. |
-| Q3 VSA retention | meets | Observed: endpoint, behavior, SQL assets, and tests remain feature-local. |
-| Q4 SQL source clarity and canonical schema | meets | Observed: `.sql` assets and fixture applying canonical DDL. |
-| Q5 finite reviewed SQL selection | meets | Observed: explicit finite sort-to-asset mapping and tests. |
-| Q6 parameter binding and filters | meets | Observed: named Npgsql parameters and PostgreSQL coverage. |
-| Q7 atomic completion behavior | meets-with-limit | Observed: transaction, state-guarded update, event insertion, retry/concurrency tests. Hypothesis not exercised: forced event-insert failure rollback. |
-| Q8 maintenance 1 | meets | Observed: fresh Attempt 1 preserves patterns and tests. Historical runs excluded from this conclusion. |
-| Q9 maintenance 2 | meets | Observed: fresh Attempt 2 fixes successful-completion predicate in SQL and tests it. Historical runs excluded from this conclusion. |
+| E1 Installer + generated AGENTS discovery | meets | Observed: actual installer twice, byte identity, managed-block idempotence, fresh agent tool-log discovery. |
+| E2 Initial Raw SQL implementation | meets | Observed: frozen Attempt 0, independent review, repaired successor, DB tests. |
+| E3 VSA retention | meets | Observed: endpoint, behavior, SQL assets, and tests remain feature-local. |
+| E4 SQL source clarity and canonical schema | meets | Observed: `.sql` assets and fixture applying canonical DDL. |
+| E5 finite reviewed SQL selection | meets | Observed: explicit finite sort-to-asset mapping and tests. |
+| E6 parameter binding and filters | meets | Observed: named Npgsql parameters and PostgreSQL coverage. |
+| E7 atomic completion behavior | meets-with-limit | Observed: transaction, state-guarded update, event insertion, retry/concurrency tests. Hypothesis not exercised: forced event-insert failure rollback. |
+| E8 maintenance 1 | meets | Observed: fresh Attempt 1 preserves patterns and tests. Historical runs excluded from this conclusion. |
+| E9 maintenance 2 | meets | Observed: fresh Attempt 2 fixes successful-completion predicate in SQL and tests it. Historical runs excluded from this conclusion. |
+
+## Historical/original preregistration coverage
+
+This is a mapping from the existing clean-run evidence only; it does not
+create new evidence or retroactively preregister beta rules.
+
+| Original preregistration question | Coverage in this run |
+| --- | --- |
+| Q1 installer-generated AGENTS discovery | meets — E1 installer and fresh-agent discovery evidence. |
+| Q2 C#/ASP.NET Core/PostgreSQL/VSA architecture neutrality | meets-with-limit — one clean C# / ASP.NET Core / PostgreSQL / VSA scenario. |
+| Q3 native driver; no ORM, query builder, or repository abstraction | meets — Npgsql/native SQL assets and feature-local access code observed. |
+| Q4 bootstrap-to-real-DB regression path | meets — canonical DDL plus PostgreSQL-backed tests observed. |
+| Q5 maintenance reuses SQL/test patterns | meets — fresh Attempts 1 and 2 observed. |
+| Q6 bounded search through fixed reviewed SQL | meets — finite list-sort-to-asset mapping observed. |
+| Q7 VSA retained | meets — feature-local endpoint, behavior, SQL, and tests observed. |
+| Q8 preregistered experimental Raw SQL Review Rules beta | not exercised — no beta rule was preregistered/frozen before Attempt 0. |
+| Q9 preregistered SQL Source Clarity Rules beta | not exercised — no beta rule was preregistered/frozen before Attempt 0. |
 
 ## Verification observed
 
