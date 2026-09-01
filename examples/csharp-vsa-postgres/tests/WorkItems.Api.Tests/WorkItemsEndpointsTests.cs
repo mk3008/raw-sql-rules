@@ -190,6 +190,62 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task GetCompletedWorkItems_ReturnsOnlySuccessfulCompletedItemsAndFiltersByOwnerAndCompletedRange()
+    {
+        await InsertWorkItemAsync(
+            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
+            title: "Latest completed follow-up",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 2,
+            priority: 2,
+            createdAt: DateTimeOffset.Parse("2026-09-01T09:00:00Z"),
+            completedAt: DateTimeOffset.Parse("2026-09-01T10:00:00Z"));
+
+        await InsertWorkItemAsync(
+            id: Guid.Parse("44444444-4444-4444-4444-444444444444"),
+            title: "Failed with timestamp",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 3,
+            priority: 2,
+            createdAt: DateTimeOffset.Parse("2026-09-01T09:30:00Z"),
+            completedAt: DateTimeOffset.Parse("2026-09-01T11:00:00Z"));
+
+        await InsertWorkItemAsync(
+            id: Guid.Parse("55555555-5555-5555-5555-555555555555"),
+            title: "Success without completion timestamp",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 2,
+            priority: 1,
+            createdAt: DateTimeOffset.Parse("2026-09-01T08:00:00Z"),
+            completedAt: null);
+
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync(
+            "/work-items/completed?ownerId=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa&completedFrom=2026-09-01T09:30:00Z&completedTo=2026-09-01T10:30:00Z");
+
+        response.EnsureSuccessStatusCode();
+        var payload = await response.Content.ReadFromJsonAsync<GetCompletedWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        var item = Assert.Single(payload.Items);
+        Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id);
+        Assert.Equal("success", item.Status);
+        Assert.Equal(DateTimeOffset.Parse("2026-09-01T10:00:00Z"), item.CompletedAt);
+    }
+
+    [Fact]
+    public async Task GetCompletedWorkItems_RejectsAnInvertedCompletedRange()
+    {
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync(
+            "/work-items/completed?completedFrom=2026-09-01T10:00:00Z&completedTo=2026-09-01T09:00:00Z");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task PostComplete_MarksSuccessAndWritesEventAtomically()
     {
         var client = _factory.CreateClient();
@@ -352,6 +408,9 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
         IReadOnlyList<WorkItemListItemContract> Items,
         string Sort,
         int PageSize);
+
+    public sealed record GetCompletedWorkItemsResponseContract(
+        IReadOnlyList<WorkItemListItemContract> Items);
 
     public sealed record WorkItemListItemContract(
         Guid Id,
