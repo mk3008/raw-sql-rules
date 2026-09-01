@@ -69,6 +69,72 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task GetWorkItems_UsesCreatedDescByDefault()
+    {
+        await InsertWorkItemAsync(
+            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
+            title: "Newest low priority",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 0,
+            priority: 1,
+            createdAt: DateTimeOffset.Parse("2026-09-01T12:00:00Z"),
+            completedAt: null);
+
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("/work-items");
+
+        response.EnsureSuccessStatusCode();
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        Assert.Equal("created_desc", payload.Sort);
+        Assert.Collection(
+            payload.Items,
+            item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
+            item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id),
+            item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id));
+    }
+
+    [Fact]
+    public async Task GetWorkItems_UsesPriorityDescSortAsset()
+    {
+        await InsertWorkItemAsync(
+            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
+            title: "Newest low priority",
+            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            status: 0,
+            priority: 1,
+            createdAt: DateTimeOffset.Parse("2026-09-01T12:00:00Z"),
+            completedAt: null);
+
+        await InsertWorkItemAsync(
+            id: Guid.Parse("44444444-4444-4444-4444-444444444444"),
+            title: "Older highest priority",
+            ownerId: Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+            status: 0,
+            priority: 5,
+            createdAt: DateTimeOffset.Parse("2026-08-30T12:00:00Z"),
+            completedAt: null);
+
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("/work-items?sort=priority_desc");
+
+        response.EnsureSuccessStatusCode();
+        var payload = await response.Content.ReadFromJsonAsync<GetWorkItemsResponseContract>();
+
+        Assert.NotNull(payload);
+        Assert.Equal("priority_desc", payload.Sort);
+        Assert.Collection(
+            payload.Items,
+            item => Assert.Equal(Guid.Parse("44444444-4444-4444-4444-444444444444"), item.Id),
+            item => Assert.Equal(Guid.Parse("11111111-1111-1111-1111-111111111111"), item.Id),
+            item => Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id),
+            item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id));
+    }
+
+    [Fact]
     public async Task PostComplete_MarksSuccessAndWritesEventAtomically()
     {
         var client = _factory.CreateClient();
@@ -104,6 +170,50 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task PostComplete_IsIdempotentForAnAlreadyCompletedWorkItem()
+    {
+        var completedAtBefore = await GetCompletedAtAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"));
+        var client = _factory.CreateClient();
+
+        var response = await client.PostAsync("/work-items/22222222-2222-2222-2222-222222222222/complete", content: null);
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        var completedAtAfter = await GetCompletedAtAsync(Guid.Parse("22222222-2222-2222-2222-222222222222"));
+        Assert.Equal(completedAtBefore, completedAtAfter);
+        Assert.Equal(0L, await CountCompletedEventsAsync(Guid.Parse("22222222-2222-2222-2222-222222222222")));
+    }
+
+    [Fact]
+    public async Task PostComplete_WritesOneEventAcrossRepeatedCalls()
+    {
+        var client = _factory.CreateClient();
+
+        var firstResponse = await client.PostAsync("/work-items/11111111-1111-1111-1111-111111111111/complete", content: null);
+        var completedAtAfterFirstCall = await GetCompletedAtAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"));
+        var secondResponse = await client.PostAsync("/work-items/11111111-1111-1111-1111-111111111111/complete", content: null);
+
+        Assert.Equal(HttpStatusCode.NoContent, firstResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, secondResponse.StatusCode);
+        Assert.Equal(completedAtAfterFirstCall, await GetCompletedAtAsync(Guid.Parse("11111111-1111-1111-1111-111111111111")));
+        Assert.Equal(1L, await CountCompletedEventsAsync(Guid.Parse("11111111-1111-1111-1111-111111111111")));
+    }
+
+    [Fact]
+    public async Task PostComplete_WritesOneEventAcrossConcurrentCalls()
+    {
+        var firstClient = _factory.CreateClient();
+        var secondClient = _factory.CreateClient();
+
+        var firstCall = firstClient.PostAsync("/work-items/11111111-1111-1111-1111-111111111111/complete", content: null);
+        var secondCall = secondClient.PostAsync("/work-items/11111111-1111-1111-1111-111111111111/complete", content: null);
+
+        var responses = await Task.WhenAll(firstCall, secondCall);
+
+        Assert.All(responses, response => Assert.Equal(HttpStatusCode.NoContent, response.StatusCode));
+        Assert.Equal(1L, await CountCompletedEventsAsync(Guid.Parse("11111111-1111-1111-1111-111111111111")));
+    }
+
+    [Fact]
     public async Task PostComplete_ReturnsNotFoundWhenWorkItemDoesNotExist()
     {
         var client = _factory.CreateClient();
@@ -118,6 +228,69 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
         command.CommandText = "SELECT COUNT(*) FROM work_item_events";
         var eventCount = (long)(await command.ExecuteScalarAsync() ?? 0L);
         Assert.Equal(0L, eventCount);
+    }
+
+    private static async Task InsertWorkItemAsync(
+        Guid id,
+        string title,
+        Guid ownerId,
+        short status,
+        short priority,
+        DateTimeOffset createdAt,
+        DateTimeOffset? completedAt)
+    {
+        await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            INSERT INTO work_items (id, title, owner_id, status, priority, created_at, completed_at)
+            VALUES (@id, @title, @owner_id, @status, @priority, @created_at, @completed_at)
+            """;
+        command.Parameters.AddWithValue("id", id);
+        command.Parameters.AddWithValue("title", title);
+        command.Parameters.AddWithValue("owner_id", ownerId);
+        command.Parameters.AddWithValue("status", status);
+        command.Parameters.AddWithValue("priority", priority);
+        command.Parameters.AddWithValue("created_at", createdAt);
+        command.Parameters.AddWithValue("completed_at", completedAt ?? (object)DBNull.Value);
+        await command.ExecuteNonQueryAsync();
+    }
+
+    private static async Task<DateTimeOffset?> GetCompletedAtAsync(Guid workItemId)
+    {
+        await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT completed_at
+            FROM work_items
+            WHERE id = @id
+            """;
+        command.Parameters.AddWithValue("id", workItemId);
+
+        var value = await command.ExecuteScalarAsync();
+        return value switch
+        {
+            null or DBNull => null,
+            DateTimeOffset timestamp => timestamp,
+            DateTime timestamp => new DateTimeOffset(timestamp, TimeSpan.Zero),
+            _ => throw new InvalidOperationException($"Unexpected completed_at value type: {value.GetType().FullName}")
+        };
+    }
+
+    private static async Task<long> CountCompletedEventsAsync(Guid workItemId)
+    {
+        await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT COUNT(*)
+            FROM work_item_events
+            WHERE work_item_id = @id
+              AND event_type = 'completed'
+            """;
+        command.Parameters.AddWithValue("id", workItemId);
+        return (long)(await command.ExecuteScalarAsync() ?? 0L);
     }
 
     public sealed record GetWorkItemsResponseContract(

@@ -8,6 +8,9 @@ public sealed class DatabaseFixture : IAsyncLifetime
     private const string ConnectionString =
         "Host=localhost;Port=54329;Database=work_items;Username=work_items;Password=work_items";
 
+    private readonly string _schemaSql = File.ReadAllText(
+        Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "database", "schema", "001_work_items.sql")));
+
     private readonly string _seedSql = File.ReadAllText(
         Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "database", "seed", "001_work_items.sql")));
 
@@ -28,9 +31,14 @@ public sealed class DatabaseFixture : IAsyncLifetime
         await using var connection = await dataSource.OpenConnectionAsync();
         await using var command = connection.CreateCommand();
         command.CommandText = """
-            TRUNCATE TABLE work_item_events, work_items RESTART IDENTITY;
+            DROP TABLE IF EXISTS work_item_events;
+            DROP TABLE IF EXISTS work_items;
             """;
         await command.ExecuteNonQueryAsync();
+
+        await using var schemaCommand = connection.CreateCommand();
+        schemaCommand.CommandText = _schemaSql;
+        await schemaCommand.ExecuteNonQueryAsync();
 
         await using var seedCommand = connection.CreateCommand();
         seedCommand.CommandText = _seedSql;

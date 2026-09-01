@@ -38,7 +38,7 @@ internal sealed class CompleteWorkItemHandler(
         await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
 
         await using var updateCommand = new NpgsqlCommand(
-            sqlFileLoader.Load(@"Features\WorkItems\CompleteWorkItem\UpdateWorkItemAsComplete.sql"),
+            sqlFileLoader.Load("Features", "WorkItems", "CompleteWorkItem", "UpdateWorkItemAsComplete.sql"),
             connection,
             transaction);
         updateCommand.Parameters.Add(new NpgsqlParameter<Guid>("id", NpgsqlDbType.Uuid) { TypedValue = id });
@@ -50,12 +50,19 @@ internal sealed class CompleteWorkItemHandler(
         var updatedWorkItemId = await updateCommand.ExecuteScalarAsync(cancellationToken);
         if (updatedWorkItemId is null)
         {
+            await using var findCommand = new NpgsqlCommand(
+                sqlFileLoader.Load("Features", "WorkItems", "CompleteWorkItem", "FindWorkItemById.sql"),
+                connection,
+                transaction);
+            findCommand.Parameters.Add(new NpgsqlParameter<Guid>("id", NpgsqlDbType.Uuid) { TypedValue = id });
+
+            var existingWorkItemId = await findCommand.ExecuteScalarAsync(cancellationToken);
             await transaction.RollbackAsync(cancellationToken);
-            return false;
+            return existingWorkItemId is not null;
         }
 
         await using var insertEventCommand = new NpgsqlCommand(
-            sqlFileLoader.Load(@"Features\WorkItems\CompleteWorkItem\InsertWorkItemCompletedEvent.sql"),
+            sqlFileLoader.Load("Features", "WorkItems", "CompleteWorkItem", "InsertWorkItemCompletedEvent.sql"),
             connection,
             transaction);
         insertEventCommand.Parameters.Add(new NpgsqlParameter<Guid>("id", NpgsqlDbType.Uuid) { TypedValue = Guid.NewGuid() });

@@ -42,16 +42,16 @@ internal sealed class GetWorkItemsHandler(NpgsqlDataSource dataSource, SqlFileLo
     {
         var sortMode = WorkItemSortModeExtensions.ParseOrDefault(request.Sort);
         var pageSize = request.PageSize ?? DefaultPageSize;
-        var sqlPath = sortMode switch
+        string[] sqlPathSegments = sortMode switch
         {
-            WorkItemSortMode.CreatedDesc => @"Features\WorkItems\GetWorkItems\ListWorkItems.CreatedDesc.sql",
-            WorkItemSortMode.CreatedAsc => @"Features\WorkItems\GetWorkItems\ListWorkItems.CreatedAsc.sql",
-            WorkItemSortMode.PriorityDesc => @"Features\WorkItems\GetWorkItems\ListWorkItems.PriorityDesc.sql",
+            WorkItemSortMode.CreatedDesc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.CreatedDesc.sql"],
+            WorkItemSortMode.CreatedAsc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.CreatedAsc.sql"],
+            WorkItemSortMode.PriorityDesc => ["Features", "WorkItems", "GetWorkItems", "ListWorkItems.PriorityDesc.sql"],
             _ => throw new UnreachableException()
         };
 
         await using var connection = await dataSource.OpenConnectionAsync(cancellationToken);
-        await using var command = new NpgsqlCommand(sqlFileLoader.Load(sqlPath), connection);
+        await using var command = new NpgsqlCommand(sqlFileLoader.Load(sqlPathSegments), connection);
 
         command.Parameters.Add(new NpgsqlParameter<Guid?>("owner_id", NpgsqlDbType.Uuid)
         {
