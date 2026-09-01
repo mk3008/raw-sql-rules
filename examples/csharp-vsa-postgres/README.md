@@ -10,7 +10,7 @@ The canonical schema and seed data are under `database/`.
 
 Available endpoints:
 
-- `GET /work-items?ownerId=&status=&createdFrom=&createdTo=&sort=&page=&pageSize=`
+- `GET /work-items?ownerId=&status=&createdFrom=&createdTo=&minimumPriority=&sort=&page=&pageSize=`
 - `POST /work-items/{id}/complete`
 
 Supported `sort` values:
@@ -18,5 +18,6 @@ Supported `sort` values:
 - `created_desc`
 - `created_asc`
 - `priority_desc`
+- `title_asc`
 
 Run the application tests with `dotnet test WorkItems.sln`.

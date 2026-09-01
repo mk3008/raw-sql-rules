@@ -15,7 +15,8 @@ internal static class GetWorkItemsEndpoint
     {
         ["created_desc"] = SqlAsset.Load("Features", "WorkItems", "GetWorkItems", "list_created_desc.sql"),
         ["created_asc"] = SqlAsset.Load("Features", "WorkItems", "GetWorkItems", "list_created_asc.sql"),
-        ["priority_desc"] = SqlAsset.Load("Features", "WorkItems", "GetWorkItems", "list_priority_desc.sql")
+        ["priority_desc"] = SqlAsset.Load("Features", "WorkItems", "GetWorkItems", "list_priority_desc.sql"),
+        ["title_asc"] = SqlAsset.Load("Features", "WorkItems", "GetWorkItems", "list_title_asc.sql")
     };
 
     public static IEndpointRouteBuilder MapGetWorkItems(this IEndpointRouteBuilder app)
@@ -58,6 +59,10 @@ internal static class GetWorkItemsEndpoint
         {
             Value = request.CreatedTo.HasValue ? request.CreatedTo.Value : DBNull.Value
         });
+        command.Parameters.Add(new NpgsqlParameter("minimum_priority", NpgsqlDbType.Smallint)
+        {
+            Value = request.MinimumPriority.HasValue ? request.MinimumPriority.Value : DBNull.Value
+        });
         command.Parameters.AddWithValue("page_size", pageSize);
         command.Parameters.AddWithValue("offset", offset);
 
@@ -95,6 +100,11 @@ internal static class GetWorkItemsEndpoint
             errors["pageSize"] = ["Page size must be greater than 0."];
         }
 
+        if (request.MinimumPriority is < 0)
+        {
+            errors["minimumPriority"] = ["minimumPriority must be greater than or equal to 0."];
+        }
+
         if (request.CreatedFrom.HasValue && request.CreatedTo.HasValue && request.CreatedFrom > request.CreatedTo)
         {
             errors["createdFrom"] = ["createdFrom must be earlier than or equal to createdTo."];
@@ -109,6 +119,7 @@ internal sealed record GetWorkItemsRequest(
     string? Status,
     DateTimeOffset? CreatedFrom,
     DateTimeOffset? CreatedTo,
+    short? MinimumPriority,
     string? Sort,
     int? Page,
     int? PageSize);
