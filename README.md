@@ -16,7 +16,7 @@ The authoritative contract is [raw-sql-rules.md](raw-sql-rules.md).
 
 Raw SQL Rules is an instruction harness for AI-assisted Raw SQL work. Its job is to improve first-pass implementation quality and consistency by constraining the agent's starting choices.
 
-The Rules define how an AI agent should approach Raw SQL work; they do not certify the code it produces. Requirements and prompts still define what should be built, while application tests and normal review determine whether the resulting code is acceptable to ship. Review remains appropriate whenever the risk or change warrants it.
+The Rules define the implementation and review contract for Raw SQL work; they do not certify the code an agent produces. Requirements, canonical DDL, and the Rules remain the review authorities. The installer-generated `AGENTS.md` block triggers a fresh review of Raw SQL data-access changes before merge, without prescribing a dedicated Review Rules methodology.
 
 Bounded application search with many optional inputs remains in scope when the application owns the finite query shape. The boundary is an open-ended user-defined query language — arbitrary predicate trees, join graphs, projections, aggregates, or grouping dimensions — not the number of search fields.
 
@@ -46,7 +46,7 @@ Both installers require the GitHub CLI (`gh`) to be authenticated. They accept
 the same optional environment overrides: `RAW_SQL_RULES_REF`,
 `RAW_SQL_RULES_PATH`, and `AGENTS_FILE`.
 
-The installer copies the Rules to `rules/raw-sql-rules.md` and adds a small managed block to the root `AGENTS.md` telling the coding agent to read that local file before changing or reviewing Raw SQL data access. Re-running it updates the same block instead of duplicating it.
+The installer copies the Rules to `rules/raw-sql-rules.md` and adds a small managed block to the root `AGENTS.md` telling the coding agent to read that local file before changing or reviewing Raw SQL data access and to run a fresh pre-merge review against the requirements, canonical DDL, and Rules. Re-running it updates the same block instead of duplicating it.
 
 ## Why these Rules?
 
