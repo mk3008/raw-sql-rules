@@ -6,4 +6,17 @@ Start PostgreSQL with `docker compose up -d`, and stop it with `docker compose d
 
 The application connection string is `Host=localhost;Port=54329;Database=work_items;Username=work_items;Password=work_items`.
 
-The canonical schema and seed data are under `database/`. No application SQL or database-backed application regression path exists in this initial state.
+The canonical schema and seed data are under `database/`.
+
+Available endpoints:
+
+- `GET /work-items?ownerId=&status=&createdFrom=&createdTo=&sort=&page=&pageSize=`
+- `POST /work-items/{id}/complete`
+
+Supported `sort` values:
+
+- `created_desc`
+- `created_asc`
+- `priority_desc`
+
+Run the application tests with `dotnet test WorkItems.sln`.
