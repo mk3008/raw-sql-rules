@@ -250,6 +250,94 @@ by itself establish universal language or DBMS independence, perfect first-pass
 generation, or either the need for or absence of Review Rules. Do not add or
 formalize Review Rules without the hypothesis comparison above.
 
+## 13. Communication and decision provenance
+
+This section preserves how a result was reached, not merely its final code. It
+supports the existing autonomous detection -> recovery -> verification ->
+convergence objective; it does not make review comments authority or inject
+evaluation instructions into candidate agents.
+
+### Channels and records
+
+- **Initial task or product direction:** Chat is the primary intake channel.
+  For dogfood or research, save the actual candidate prompt verbatim as the
+  immutable repository evidence required above. Chat is the instruction
+  channel; the prompt artifact is the research snapshot. A normal PR body is
+  not a substitute authority for the initial prompt.
+- **Candidate implementation:** commit it and create a PR.
+- **Post-PR findings and correction requests:** use GitHub PR review comments
+  or threads as the primary record where practical. Use inline threads for
+  line-specific findings and PR-level comments for cross-file or behavioral
+  findings. Keep one finding in one thread where practical; comment volume is
+  not a goal.
+- **Sensitive instructions:** do not copy secrets, personal data, private
+  business context, or other sensitive detail into repository evidence or a
+  PR. Record `intentionally omitted / private human instruction` and the
+  non-sensitive scope or effect when possible. If even that cannot be shared,
+  `private human decision; details intentionally omitted` is sufficient.
+
+### Adjudicate before action
+
+Do not blindly implement a review comment. Before changing code, assess it
+against requirements, canonical DDL, Raw SQL Rules, runtime evidence, and
+applicable repository instructions. A reviewer or historical finding is
+comparison evidence, not ground truth that overrides those sources.
+
+Reply on the same review thread with a concise disposition, reasoning/evidence,
+and intended action. Reuse the protocol's classifications as appropriate:
+
+- confirmed defect;
+- resolvable evidence gap;
+- uncertainty;
+- requirement ambiguity;
+- rejected; or
+- out of scope.
+
+For example, a thread can state that a published artifact lacks required SQL
+assets, classify it as a confirmed defect, and state `minimal packaging repair
++ published-artifact regression verification`. The exact template is not
+prescribed; traceability is the purpose.
+
+### Reply after repair or verification strengthening
+
+After action, reply in the same thread with the action taken, commit SHA,
+relevant regression or verification, result, and any remaining uncertainty.
+This keeps the chain visible:
+
+```text
+finding -> adjudication -> action -> commit -> verification
+```
+
+Confirmed defects receive minimal repair in a separate commit. Resolvable
+evidence gaps may instead receive separately recorded verification
+strengthening without changing candidate behavior. Re-review then records
+resolved status, remaining uncertainty, or escalation.
+
+### Ledger and final convergence linkage
+
+When a PR review thread is available as the primary source, the finding ledger
+need only link its finding ID, PR/comment/thread reference, disposition,
+repair or verification SHA, and final status. Do not turn dogfood evidence
+into a duplicate transcript. For blind calibration or another experiment that
+requires reviewer isolation, contamination control takes priority over PR
+thread use.
+
+Before merge-ready convergence, make it possible to trace initial instruction
+provenance, frozen Attempt, findings and adjudications, repair/verification
+commits, human or private decisions, unresolved findings or accepted limits,
+final verification, and convergence status. The PR body may summarize this;
+review threads are the primary detailed record.
+
+### Human decisions and blockers
+
+An ordinary initial instruction is not a human blocker. Record instead when an
+AI needs human judgment for a finding, when a sensitive product decision affects
+behavior, or when external/destructive action requires safety confirmation.
+For a private human decision, retain a non-sensitive decision envelope where
+possible, for example the effect on repeated-completion semantics and the
+commit where it was applied. Do not expose the sensitive rationale merely to
+make provenance complete.
+
 ## Precedent: PR #10
 
 `dogfood/csharp-vsa-postgres/` is a concrete precedent, not a template to copy
