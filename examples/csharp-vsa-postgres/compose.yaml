@@ -8,8 +8,8 @@ services:
     ports:
       - "54329:5432"
     volumes:
-      - ./database/schema:/docker-entrypoint-initdb.d/schema:ro
-      - ./database/seed:/docker-entrypoint-initdb.d/seed:ro
+      - ./database/schema/001_work_items.sql:/docker-entrypoint-initdb.d/001_work_items.sql:ro
+      - ./database/seed/001_work_items.sql:/docker-entrypoint-initdb.d/002_seed_work_items.sql:ro
 
 networks:
   default:
