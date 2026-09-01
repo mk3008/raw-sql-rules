@@ -39,4 +39,3 @@ Implement the feature completely using the existing project and repository
 instructions.
 
 Do not add unrelated infrastructure.
-

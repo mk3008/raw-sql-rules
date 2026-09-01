@@ -11,4 +11,3 @@ It may optionally filter by:
 The caller does not choose the completion status.
 
 Preserve the existing architecture and testing patterns.
-

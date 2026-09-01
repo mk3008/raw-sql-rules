@@ -8,4 +8,3 @@ Add:
 Preserve the existing API behavior and architecture.
 
 Follow the repository's existing implementation and testing patterns.
-

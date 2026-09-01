@@ -26,4 +26,3 @@ Created: 2026-09-01T00:00:00+09:00
 Each question is classified `meets`, `partial`, `misses`, or `not exercised`. Overall is `MEETS`, `MEETS-WITH-LIMIT`, or `NOT-YET`.
 
 The candidate implementation agent must not receive this file, evaluation criteria, beta review rules, or source-clarity rules. The initial schema is frozen before implementation. Amendments are additive; this document is immutable.
-
