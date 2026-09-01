@@ -38,7 +38,7 @@ $env:RAW_SQL_RULES_REF = $ref
 gh api "repos/mk3008/raw-sql-rules/contents/install.ps1?ref=$ref" `
   -H 'Accept: application/vnd.github.raw+json' |
   Out-String |
-  Invoke-Expression
+  ForEach-Object { & ([scriptblock]::Create($_)) }
 ```
 
 Both installers require the GitHub CLI (`gh`) to be authenticated. They accept
