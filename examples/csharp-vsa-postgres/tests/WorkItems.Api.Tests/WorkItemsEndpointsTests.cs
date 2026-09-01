@@ -355,6 +355,55 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
         Assert.Equal(0L, eventCount);
     }
 
+    [Fact]
+    public async Task PatchOwner_WritesOneOwnerChangedEventPerRealOwnerChange()
+    {
+        var workItemId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var firstOwnerId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+        var secondOwnerId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+        var client = _factory.CreateClient();
+
+        var firstResponse = await client.PatchAsJsonAsync($"/work-items/{workItemId}/owner", new { ownerId = firstOwnerId });
+        var firstOwnerChangedAt = await GetLatestEventOccurredAtAsync(workItemId, "owner_changed");
+
+        var secondResponse = await client.PatchAsJsonAsync($"/work-items/{workItemId}/owner", new { ownerId = secondOwnerId });
+        var secondOwnerChangedAt = await GetLatestEventOccurredAtAsync(workItemId, "owner_changed");
+
+        Assert.Equal(HttpStatusCode.NoContent, firstResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, secondResponse.StatusCode);
+        Assert.Equal(secondOwnerId, await GetOwnerIdAsync(workItemId));
+        Assert.Equal(2L, await CountEventsByTypeAsync(workItemId, "owner_changed"));
+        Assert.NotNull(firstOwnerChangedAt);
+        Assert.NotNull(secondOwnerChangedAt);
+    }
+
+    [Fact]
+    public async Task PatchOwner_IsSuccessfulNoOpWhenOwnerDoesNotChange()
+    {
+        var workItemId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var ownerIdBefore = await GetOwnerIdAsync(workItemId);
+        var client = _factory.CreateClient();
+
+        var response = await client.PatchAsJsonAsync($"/work-items/{workItemId}/owner", new { ownerId = ownerIdBefore });
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        Assert.Equal(ownerIdBefore, await GetOwnerIdAsync(workItemId));
+        Assert.Equal(0L, await CountEventsByTypeAsync(workItemId, "owner_changed"));
+    }
+
+    [Fact]
+    public async Task PatchOwner_ReturnsNotFoundWhenWorkItemDoesNotExist()
+    {
+        var client = _factory.CreateClient();
+
+        var response = await client.PatchAsJsonAsync(
+            "/work-items/33333333-3333-3333-3333-333333333333/owner",
+            new { ownerId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb") });
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(0L, await CountEventsByTypeAsync(Guid.Parse("33333333-3333-3333-3333-333333333333"), "owner_changed"));
+    }
+
     private static async Task InsertWorkItemAsync(
         Guid id,
         string title,
@@ -403,7 +452,26 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
         };
     }
 
+    private static async Task<Guid> GetOwnerIdAsync(Guid workItemId)
+    {
+        await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT owner_id
+            FROM work_items
+            WHERE id = @id
+            """;
+        command.Parameters.AddWithValue("id", workItemId);
+        return (Guid)(await command.ExecuteScalarAsync() ?? throw new InvalidOperationException("Expected work item owner."));
+    }
+
     private static async Task<long> CountCompletedEventsAsync(Guid workItemId)
+    {
+        return await CountEventsByTypeAsync(workItemId, "completed");
+    }
+
+    private static async Task<long> CountEventsByTypeAsync(Guid workItemId, string eventType)
     {
         await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
@@ -412,10 +480,37 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
             SELECT COUNT(*)
             FROM work_item_events
             WHERE work_item_id = @id
-              AND event_type = 'completed'
+              AND event_type = @event_type
             """;
         command.Parameters.AddWithValue("id", workItemId);
+        command.Parameters.AddWithValue("event_type", eventType);
         return (long)(await command.ExecuteScalarAsync() ?? 0L);
+    }
+
+    private static async Task<DateTimeOffset?> GetLatestEventOccurredAtAsync(Guid workItemId, string eventType)
+    {
+        await using var dataSource = NpgsqlDataSource.Create(ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT occurred_at
+            FROM work_item_events
+            WHERE work_item_id = @id
+              AND event_type = @event_type
+            ORDER BY occurred_at DESC
+            LIMIT 1
+            """;
+        command.Parameters.AddWithValue("id", workItemId);
+        command.Parameters.AddWithValue("event_type", eventType);
+
+        var value = await command.ExecuteScalarAsync();
+        return value switch
+        {
+            null or DBNull => null,
+            DateTimeOffset timestamp => timestamp,
+            DateTime timestamp => new DateTimeOffset(timestamp, TimeSpan.Zero),
+            _ => throw new InvalidOperationException($"Unexpected occurred_at value type: {value.GetType().FullName}")
+        };
     }
 
     public sealed record GetWorkItemsResponseContract(
