@@ -378,6 +378,23 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
     }
 
     [Fact]
+    public async Task PatchOwner_PersistsTheOperationTimestampOnOwnerChangedEvent()
+    {
+        var expectedOccurredAt = DateTimeOffset.Parse("2026-09-01T15:45:00Z");
+        using var fixedTimeFactory = new WorkItemsApiFactory(new FixedTimeProvider(expectedOccurredAt));
+        var client = fixedTimeFactory.CreateClient();
+
+        var response = await client.PatchAsJsonAsync(
+            "/work-items/11111111-1111-1111-1111-111111111111/owner",
+            new { ownerId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb") });
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        Assert.Equal(
+            expectedOccurredAt,
+            await GetLatestEventOccurredAtAsync(Guid.Parse("11111111-1111-1111-1111-111111111111"), "owner_changed"));
+    }
+
+    [Fact]
     public async Task PatchOwner_IsSuccessfulNoOpWhenOwnerDoesNotChange()
     {
         var workItemId = Guid.Parse("11111111-1111-1111-1111-111111111111");
@@ -529,4 +546,9 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
         short Priority,
         DateTimeOffset CreatedAt,
         DateTimeOffset? CompletedAt);
+
+    private sealed class FixedTimeProvider(DateTimeOffset utcNow) : TimeProvider
+    {
+        public override DateTimeOffset GetUtcNow() => utcNow;
+    }
 }
