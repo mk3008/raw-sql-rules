@@ -11,6 +11,7 @@ The canonical schema and seed data are under `database/`.
 Available endpoints:
 
 - `GET /work-items?ownerId=&status=&createdFrom=&createdTo=&minimumPriority=&sort=&page=&pageSize=`
+- `GET /work-items/completed?ownerId=&completedFrom=&completedTo=`
 - `POST /work-items/{id}/complete`
 
 Supported `sort` values:
