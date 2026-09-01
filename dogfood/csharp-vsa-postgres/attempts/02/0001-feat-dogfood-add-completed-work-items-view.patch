@@ -1,0 +1,254 @@
+From 96d2bd39c0bddf56b08a25e3775f73a7a97fd9c3 Mon Sep 17 00:00:00 2001
+From: MSugiura <mk3008.develop@gmail.com>
+Date: Tue, 1 Sep 2026 12:24:02 +0900
+Subject: [PATCH] feat(dogfood): add completed work items view
+
+---
+ .../GetCompletedWorkItemsEndpoint.cs          | 106 ++++++++++++++++++
+ .../ListCompletedWorkItems.sql                |  15 +++
+ .../src/WorkItems.Api/Program.cs              |   3 +
+ .../WorkItemsEndpointsTests.cs                |  59 ++++++++++
+ 4 files changed, 183 insertions(+)
+ create mode 100644 examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/GetCompletedWorkItemsEndpoint.cs
+ create mode 100644 examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/ListCompletedWorkItems.sql
+
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/GetCompletedWorkItemsEndpoint.cs b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/GetCompletedWorkItemsEndpoint.cs
+new file mode 100644
+index 0000000..6596b71
+--- /dev/null
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/GetCompletedWorkItemsEndpoint.cs
+@@ -0,0 +1,106 @@
++using System.Data;
++using Microsoft.AspNetCore.Http.HttpResults;
++using Npgsql;
++using NpgsqlTypes;
++using WorkItems.Api.Features.WorkItems.GetWorkItems;
++using WorkItems.Api.Infrastructure;
++
++namespace WorkItems.Api.Features.WorkItems.GetCompletedWorkItems;
++
++internal static class GetCompletedWorkItemsEndpoint
++{
++    public static RouteGroupBuilder MapGetCompletedWorkItems(this RouteGroupBuilder group)
++    {
++        group.MapGet("/completed", HandleAsync);
++        return group;
++    }
++
++    private static async Task<Results<Ok<GetCompletedWorkItemsResponse>, ValidationProblem>> HandleAsync(
++        [AsParameters] GetCompletedWorkItemsRequest request,
++        GetCompletedWorkItemsHandler handler,
++        CancellationToken cancellationToken)
++    {
++        var validationErrors = request.Validate();
++        if (validationErrors is not null)
++        {
++            return TypedResults.ValidationProblem(validationErrors);
++        }
++
++        var response = await handler.HandleAsync(request, cancellationToken);
++        return TypedResults.Ok(response);
++    }
++}
++
++internal sealed class GetCompletedWorkItemsHandler(NpgsqlDataSource dataSource, SqlFileLoader sqlFileLoader)
++{
++    public async Task<GetCompletedWorkItemsResponse> HandleAsync(
++        GetCompletedWorkItemsRequest request,
++        CancellationToken cancellationToken)
++    {
++        await using var connection = await dataSource.OpenConnectionAsync(cancellationToken);
++        await using var command = new NpgsqlCommand(
++            sqlFileLoader.Load("Features", "WorkItems", "GetCompletedWorkItems", "ListCompletedWorkItems.sql"),
++            connection);
++
++        command.Parameters.Add(new NpgsqlParameter<Guid?>("owner_id", NpgsqlDbType.Uuid)
++        {
++            TypedValue = request.OwnerId
++        });
++        command.Parameters.Add(new NpgsqlParameter<DateTimeOffset?>("completed_from", NpgsqlDbType.TimestampTz)
++        {
++            TypedValue = request.CompletedFrom
++        });
++        command.Parameters.Add(new NpgsqlParameter<DateTimeOffset?>("completed_to", NpgsqlDbType.TimestampTz)
++        {
++            TypedValue = request.CompletedTo
++        });
++
++        var items = new List<WorkItemListItem>();
++
++        await using var reader = await command.ExecuteReaderAsync(CommandBehavior.SequentialAccess, cancellationToken);
++        while (await reader.ReadAsync(cancellationToken))
++        {
++            items.Add(new WorkItemListItem(
++                reader.GetGuid(0),
++                reader.GetString(1),
++                reader.GetGuid(2),
++                WorkItemStatusExtensions.FromDatabaseValue(reader.GetInt16(3)).ToApiValue(),
++                reader.GetInt16(4),
++                reader.GetFieldValue<DateTimeOffset>(5),
++                reader.GetFieldValue<DateTimeOffset>(6)));
++        }
++
++        return new GetCompletedWorkItemsResponse(items);
++    }
++}
++
++internal sealed record GetCompletedWorkItemsRequest(
++    Guid? OwnerId,
++    DateTimeOffset? CompletedFrom,
++    DateTimeOffset? CompletedTo)
++{
++    public Dictionary<string, string[]>? Validate()
++    {
++        Dictionary<string, string[]>? errors = null;
++
++        if (CompletedFrom is not null && CompletedTo is not null && CompletedFrom > CompletedTo)
++        {
++            errors = AddError(errors, nameof(CompletedFrom), "CompletedFrom must be earlier than or equal to CompletedTo.");
++        }
++
++        return errors;
++    }
++
++    private static Dictionary<string, string[]> AddError(
++        Dictionary<string, string[]>? errors,
++        string key,
++        string message)
++    {
++        errors ??= new Dictionary<string, string[]>(StringComparer.Ordinal);
++        errors[key] = [message];
++        return errors;
++    }
++}
++
++internal sealed record GetCompletedWorkItemsResponse(
++    IReadOnlyList<WorkItemListItem> Items);
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/ListCompletedWorkItems.sql b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/ListCompletedWorkItems.sql
+new file mode 100644
+index 0000000..458e8c1
+--- /dev/null
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Features/WorkItems/GetCompletedWorkItems/ListCompletedWorkItems.sql
+@@ -0,0 +1,15 @@
++SELECT
++    id,
++    title,
++    owner_id,
++    status,
++    priority,
++    created_at,
++    completed_at
++FROM work_items
++WHERE status = 2
++  AND completed_at IS NOT NULL
++  AND (@owner_id IS NULL OR owner_id = @owner_id)
++  AND (@completed_from IS NULL OR completed_at >= @completed_from)
++  AND (@completed_to IS NULL OR completed_at <= @completed_to)
++ORDER BY completed_at DESC, id ASC;
+diff --git a/examples/csharp-vsa-postgres/src/WorkItems.Api/Program.cs b/examples/csharp-vsa-postgres/src/WorkItems.Api/Program.cs
+index fd85816..fdfc8c7 100644
+--- a/examples/csharp-vsa-postgres/src/WorkItems.Api/Program.cs
++++ b/examples/csharp-vsa-postgres/src/WorkItems.Api/Program.cs
+@@ -1,5 +1,6 @@
+ using Npgsql;
+ using WorkItems.Api.Features.WorkItems.CompleteWorkItem;
++using WorkItems.Api.Features.WorkItems.GetCompletedWorkItems;
+ using WorkItems.Api.Features.WorkItems.GetWorkItems;
+ using WorkItems.Api.Infrastructure;
+ 
+@@ -15,6 +16,7 @@ builder.Services.AddSingleton(sp =>
+ builder.Services.AddSingleton(TimeProvider.System);
+ builder.Services.AddScoped<SqlFileLoader>();
+ builder.Services.AddScoped<GetWorkItemsHandler>();
++builder.Services.AddScoped<GetCompletedWorkItemsHandler>();
+ builder.Services.AddScoped<CompleteWorkItemHandler>();
+ 
+ var app = builder.Build();
+@@ -23,6 +25,7 @@ app.MapGet("/", () => "Hello World!");
+ 
+ var workItems = app.MapGroup("/work-items");
+ workItems.MapGetWorkItems();
++workItems.MapGetCompletedWorkItems();
+ workItems.MapCompleteWorkItem();
+ 
+ app.Run();
+diff --git a/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs b/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs
+index 2d4977a..56dcbfb 100644
+--- a/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs
++++ b/examples/csharp-vsa-postgres/tests/WorkItems.Api.Tests/WorkItemsEndpointsTests.cs
+@@ -189,6 +189,62 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
+             item => Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), item.Id));
+     }
+ 
++    [Fact]
++    public async Task GetCompletedWorkItems_ReturnsOnlySuccessfulCompletedItemsAndFiltersByOwnerAndCompletedRange()
++    {
++        await InsertWorkItemAsync(
++            id: Guid.Parse("33333333-3333-3333-3333-333333333333"),
++            title: "Latest completed follow-up",
++            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
++            status: 2,
++            priority: 2,
++            createdAt: DateTimeOffset.Parse("2026-09-01T09:00:00Z"),
++            completedAt: DateTimeOffset.Parse("2026-09-01T10:00:00Z"));
++
++        await InsertWorkItemAsync(
++            id: Guid.Parse("44444444-4444-4444-4444-444444444444"),
++            title: "Failed with timestamp",
++            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
++            status: 3,
++            priority: 2,
++            createdAt: DateTimeOffset.Parse("2026-09-01T09:30:00Z"),
++            completedAt: DateTimeOffset.Parse("2026-09-01T11:00:00Z"));
++
++        await InsertWorkItemAsync(
++            id: Guid.Parse("55555555-5555-5555-5555-555555555555"),
++            title: "Success without completion timestamp",
++            ownerId: Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
++            status: 2,
++            priority: 1,
++            createdAt: DateTimeOffset.Parse("2026-09-01T08:00:00Z"),
++            completedAt: null);
++
++        var client = _factory.CreateClient();
++
++        var response = await client.GetAsync(
++            "/work-items/completed?ownerId=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa&completedFrom=2026-09-01T09:30:00Z&completedTo=2026-09-01T10:30:00Z");
++
++        response.EnsureSuccessStatusCode();
++        var payload = await response.Content.ReadFromJsonAsync<GetCompletedWorkItemsResponseContract>();
++
++        Assert.NotNull(payload);
++        var item = Assert.Single(payload.Items);
++        Assert.Equal(Guid.Parse("33333333-3333-3333-3333-333333333333"), item.Id);
++        Assert.Equal("success", item.Status);
++        Assert.Equal(DateTimeOffset.Parse("2026-09-01T10:00:00Z"), item.CompletedAt);
++    }
++
++    [Fact]
++    public async Task GetCompletedWorkItems_RejectsAnInvertedCompletedRange()
++    {
++        var client = _factory.CreateClient();
++
++        var response = await client.GetAsync(
++            "/work-items/completed?completedFrom=2026-09-01T10:00:00Z&completedTo=2026-09-01T09:00:00Z");
++
++        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
++    }
++
+     [Fact]
+     public async Task PostComplete_MarksSuccessAndWritesEventAtomically()
+     {
+@@ -353,6 +409,9 @@ public sealed class WorkItemsEndpointsTests(DatabaseFixture databaseFixture) : I
+         string Sort,
+         int PageSize);
+ 
++    public sealed record GetCompletedWorkItemsResponseContract(
++        IReadOnlyList<WorkItemListItemContract> Items);
++
+     public sealed record WorkItemListItemContract(
+         Guid Id,
+         string Title,
+-- 
+2.47.1.windows.2
+
