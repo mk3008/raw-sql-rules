@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "f0569cc4836d16ae01d14c82dffe2e27223266e0",
+  "canonicalInputCommit": "03cb7b81980cd9ec9ecd14fd3573aa065dd2840f",
+  "treatmentRelease": "dceb234b42ffa7b32c1a54e0cce0666580c8f68f",
+  "officialLaunchCount": 0,
+  "authoritativeInfrastructure": [
+    {"path":"benchmark/harness/candidate-runtime/Invoke-CandidateTurn.ps1","gitBlob":"a0565c4762405d651605ab60c4a2558f48d03e06","onDiskSha256":"7ae6228e83ae2bf2ea548426e5af03072e94d2f6516b52daf6ab48769a6bd32b","historicalSha256":"8e117cdb88761a219b30e09f3f21e632b44cddd513592e51c4dfb4a560b3a3f3"},
+    {"path":"benchmark/harness/candidate-runtime/candidate-runtime-profile.json","gitBlob":"a332696ad96444980d8ff436816f7c83d8033157","onDiskSha256":"efc3eeaddc808f8d113c30de3dae9b669e6c4d535561060ff08e598598f29108","historicalSha256":"46278fc07b16020d01623da1e4c90160eacbe8a266b2db1d4ee58dd7ff5fef22"},
+    {"path":"benchmark/harness/host-runner/Invoke-BenchmarkHost.ps1","gitBlob":"e7594f2ac30ceb48d51717e9f55992862c4994bc","onDiskSha256":"0697c74356857dd90e096187b2758633be40c10134027dda1c5f256160fff05d","historicalSha256":"cddb38ef4c572adf91faabf955869d4b2ba788c03b40476f20ee7f5d5fa73977"}
+  ],
+  "canonicalPrompts": {"S01":"4427b0530dff97ee3504519e00dab3fe98e78b598cd86a721198655599e5286f","S02":"ba600148209f025b16720fab86bf6fb575948134792b2e2328c67b1edc1e8bd5"}
+}
