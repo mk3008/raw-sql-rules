@@ -15,7 +15,7 @@ function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
  $project="rawsql-v05-eval-$Name-$DbPort"; $app=$null; $probe=$null; $state=[ordered]@{state=$Name;pass=$false;steps=@();error=$null;stdout=$null;stderr=$null}
  try {
   $env:POSTGRES_PORT=$DbPort; & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') up -d; if($LASTEXITCODE -ne 0){throw 'postgres start'}
-  foreach($n in 1..30){ & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') exec -T postgres pg_isready -U postgres -d inventory 2>$null; if($LASTEXITCODE -eq 0){$state.steps+='postgres-ready';break}; Start-Sleep 1 }
+  foreach($n in 1..30){ $null=& docker compose -p $project -f (Join-Path $fixture 'compose.yaml') exec -T postgres pg_isready -U postgres -d inventory 2>$null; if($LASTEXITCODE -eq 0){$state.steps+='postgres-ready';break}; Start-Sleep 1 }
   if($state.steps -notcontains 'postgres-ready'){throw 'postgres readiness'}
   npm ci --ignore-scripts --silent --prefix $Path; if($LASTEXITCODE -ne 0){throw 'npm ci'}; $state.steps+='npm-ci'
   $env:DATABASE_URL="postgres://postgres:postgres@127.0.0.1:$DbPort/inventory"; $env:PORT=$AppPort
