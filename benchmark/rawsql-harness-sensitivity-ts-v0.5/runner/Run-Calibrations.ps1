@@ -1,9 +1,10 @@
-param([Parameter(Mandatory)][string]$EvidenceRoot)
+param([Parameter(Mandatory)][string]$EvidenceRoot,[string[]]$CaseIds)
 $ErrorActionPreference='Stop'
 $root=Split-Path -Parent (Split-Path -Parent $PSCommandPath)
 $cal=Join-Path $EvidenceRoot 'calibration';New-Item -ItemType Directory -Force -Path $cal|Out-Null;$fixture=Join-Path $root 'fixture'
 function Get-FreePort { $listener=[Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback,0);$listener.Start();$port=([Net.IPEndPoint]$listener.LocalEndpoint).Port;$listener.Stop();return $port }
 $cases=@(@('CAL01','S01','PASS'),@('CAL02','S01','PASS'),@('CAL03','S01','FAIL'),@('CAL04','S01','FAIL'),@('CAL05','S01','PASS'),@('CAL06','S02','FAIL'),@('CAL07','S02','FAIL'),@('CAL08','S02','PASS'),@('CAL09','S02','FAIL'),@('CAL10','S01','FAIL'),@('CAL11','S01','FAIL'))
+if($CaseIds){$cases=@($cases|Where-Object{$CaseIds -contains $_[0]});if($cases.Count -eq 0){throw 'No selected calibration cases'}}
 $out=@()
 foreach($case in $cases){
  $port=Get-FreePort

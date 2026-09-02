@@ -14,11 +14,38 @@ $evidence=[ordered]@{}
 function Stop-Descendants([int]$ParentProcessId) {
  foreach($child in @(Get-CimInstance Win32_Process -Filter "ParentProcessId=$ParentProcessId" -ErrorAction SilentlyContinue)) { Stop-Descendants ([int]$child.ProcessId); Stop-Process -Id $child.ProcessId -Force -ErrorAction SilentlyContinue }
 }
+function Invoke-ComposeCommand([string]$Project,[string[]]$ComposeArguments,[int]$TimeoutSeconds=30) {
+ $arguments=@('compose','-p',$Project,'-f',(Join-Path $fixture 'compose.yaml'))+$ComposeArguments
+ $stdout=Join-Path $scratch ("docker-"+[guid]::NewGuid().ToString('N')+".out.log")
+ $stderr=Join-Path $scratch ("docker-"+[guid]::NewGuid().ToString('N')+".err.log")
+ $process=Start-Process -FilePath docker.exe -ArgumentList $arguments -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+ if(-not $process.WaitForExit($TimeoutSeconds*1000)){
+  Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+  throw "docker compose command timed out for $Project"
+ }
+ return $process.ExitCode
+}
+function Stop-ComposeProject([string]$Project) {
+ if((Invoke-ComposeCommand -Project $Project -ComposeArguments @('down','--timeout','15','--volumes','--remove-orphans')) -ne 0){throw "docker compose teardown failed: $Project"}
+}
+function Remove-ScratchBounded([string]$Path) {
+ if(-not (Test-Path $Path)){return 'removed'}
+ $stdout=Join-Path ([System.IO.Path]::GetTempPath()) ("rawsql-v05-cleanup-"+[guid]::NewGuid().ToString('N')+".out.log")
+ $stderr=Join-Path ([System.IO.Path]::GetTempPath()) ("rawsql-v05-cleanup-"+[guid]::NewGuid().ToString('N')+".err.log")
+ try {
+  $cleanup=Start-Process -FilePath cmd.exe -ArgumentList @('/d','/c',"rmdir /s /q `"$Path`"") -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+  if(-not $cleanup.WaitForExit(30000)){Stop-Process -Id $cleanup.Id -Force -ErrorAction SilentlyContinue;return 'deferred-timeout'}
+  if(Test-Path $Path){return "deferred-exit-$($cleanup.ExitCode)"}
+  return 'removed'
+ } finally {
+  Remove-Item -LiteralPath $stdout,$stderr -Force -ErrorAction SilentlyContinue
+ }
+}
 function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
  $project="rawsql-v05-eval-$Name-$DbPort"; $app=$null; $probe=$null; $state=[ordered]@{state=$Name;pass=$false;steps=@();error=$null;stdout=$null;stderr=$null}
  try {
-  $env:POSTGRES_PORT=$DbPort; & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') up -d; if($LASTEXITCODE -ne 0){throw 'postgres start'}
-  foreach($n in 1..30){ $null=& docker compose -p $project -f (Join-Path $fixture 'compose.yaml') exec -T postgres pg_isready -U postgres -d inventory 2>$null; if($LASTEXITCODE -eq 0){$state.steps+='postgres-ready';break}; Start-Sleep 1 }
+  $env:POSTGRES_PORT=$DbPort; if((Invoke-ComposeCommand -Project $project -ComposeArguments @('up','-d')) -ne 0){throw 'postgres start'}
+  foreach($n in 1..30){ if((Invoke-ComposeCommand -Project $project -ComposeArguments @('exec','-T','postgres','pg_isready','-U','postgres','-d','inventory') -TimeoutSeconds 10) -eq 0){$state.steps+='postgres-ready';break}; Start-Sleep 1 }
   if($state.steps -notcontains 'postgres-ready'){throw 'postgres readiness'}
   npm ci --ignore-scripts --silent --prefix $Path; if($LASTEXITCODE -ne 0){throw 'npm ci'}; $state.steps+='npm-ci'
   $env:DATABASE_URL="postgres://postgres:postgres@127.0.0.1:$DbPort/inventory"; $env:PORT=$AppPort
@@ -31,7 +58,7 @@ function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
  } catch {$state.error=$_.Exception.Message} finally {
   if($app){Stop-Descendants ([int]$app.Id);if(-not $app.HasExited){Stop-Process -Id $app.Id -Force};Start-Sleep -Milliseconds 500};if($probe-and(Test-Path $probe)){Remove-Item -LiteralPath $probe -Force -ErrorAction SilentlyContinue}
   if(Test-Path $scratch){$state.stdout=if(Test-Path $out){Get-Content -Raw $out}else{''};$state.stderr=if(Test-Path $err){Get-Content -Raw $err}else{''}}
-  & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') down --timeout 15 --volumes --remove-orphans 2>$null
+  try{Stop-ComposeProject $project}catch{if(-not $state.error){$state.error=$_.Exception.Message}}
  }; return $state
 }
 try {
@@ -42,6 +69,6 @@ try {
  $defects=@();if($checks.normalProductionStart -ne 'PASS'){$defects+='normal declared production start failed'};if($checks.cleanReconstruction -ne 'PASS'){$defects+='clean reconstruction failed'}
  $result=[ordered]@{task=$Task;primary=if($defects.Count){'FAIL'}else{'PASS'};confirmedDefects=$defects;states=$evidence}
 } catch {$result=[ordered]@{task=$Task;primary='FAIL';confirmedDefects=@($_.Exception.Message);states=$evidence}}
-finally {if(Test-Path $scratch){for($attempt=1;$attempt -le 5 -and (Test-Path $scratch);$attempt++){Remove-Item -LiteralPath $scratch -Recurse -Force -ErrorAction SilentlyContinue;if(Test-Path $scratch){Start-Sleep -Milliseconds 500}}}}
+finally {if($result){$result.scratchCleanup=Remove-ScratchBounded $scratch;$result.scratchPath=if(Test-Path $scratch){$scratch}else{$null}}}
 $result|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $OutputPath
 if($result.primary -ne 'PASS'){exit 1}
