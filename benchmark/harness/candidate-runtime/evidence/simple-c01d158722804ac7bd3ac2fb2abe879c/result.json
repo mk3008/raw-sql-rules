@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "cycle": "simple-c01d158722804ac7bd3ac2fb2abe879c",
+  "mode": "simple",
+  "result": "PASS",
+  "classification": "PASS",
+  "startedAtUtc": "2026-09-02T07:21:26.6917990Z",
+  "id": "c01d158722804ac7bd3ac2fb2abe879c",
+  "dummyRepository": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-c01d158722804ac7bd3ac2fb2abe879c",
+  "containerName": "rawsqlcandidatec01d158722804ac7bd3ac2fb2abe879c",
+  "label": "rawsql-candidate-runtime=c01d158722804ac7bd3ac2fb2abe879c",
+  "hostPort": 63452,
+  "profilePath": "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\candidate-runtime-profile.json",
+  "profileSha256": "46278fc07b16020d01623da1e4c90160eacbe8a266b2db1d4ee58dd7ff5fef22",
+  "launcherSha256": "8e117cdb88761a219b30e09f3f21e632b44cddd513592e51c4dfb4a560b3a3f3",
+  "launch": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\b99306303521e97e\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\evidence\\simple-c01d158722804ac7bd3ac2fb2abe879c\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "danger-full-access",
+      "-C",
+      "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-c01d158722804ac7bd3ac2fb2abe879c",
+      "Inspect this dummy repository and report that it is accessible. Do not modify files."
+    ],
+    "workingDirectory": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-c01d158722804ac7bd3ac2fb2abe879c"
+  },
+  "repository": {
+    "head": "59787765bd05787229f21a5df179073e2ff67b1d",
+    "clean": true,
+    "remotes": [],
+    "baselineCommitCount": "1"
+  },
+  "candidateEvidence": {
+    "threadStarted": true,
+    "turnStarted": true,
+    "workingDirectoryObserved": false,
+    "finalResponseCaptured": true,
+    "validExit": true
+  },
+  "parentVerification": {
+    "containerExists": false,
+    "expectedLabel": false,
+    "postgresAccepting": false,
+    "expectedTable": false,
+    "expectedRow": false,
+    "acknowledged": false
+  },
+  "teardown": {
+    "containerRemoved": false,
+    "noLabelLeaks": false,
+    "hostPortReleased": false
+  },
+  "process": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 5348
+  },
+  "error": null,
+  "finishedAtUtc": "2026-09-02T07:21:52.1133824Z"
+}

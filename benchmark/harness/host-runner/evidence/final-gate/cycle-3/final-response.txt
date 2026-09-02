@@ -1,0 +1,7 @@
+**done**
+
+- `docker version` を実行し、Docker Engine を確認。
+- 指定名・指定ラベル・`63522:5432` で PostgreSQL 16 を起動。
+- `candidate_probe` を作成し、`(1, 'candidate-created')` の照会を確認。
+- 空の `.candidate-db-ready` を作成。
+- `.parent-db-verified` を検出後、対象コンテナのみ停止・削除し、不在を確認。

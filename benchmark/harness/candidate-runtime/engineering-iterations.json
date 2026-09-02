@@ -1,0 +1,22 @@
+{
+  "scope": "Engineering iteration only; no benchmark candidate was created or consumed.",
+  "iterations": [
+    {
+      "kind": "launcher-capture-fix",
+      "result": "fixed",
+      "observation": "The first ProcessStartInfo implementation used an ambiguous ContinueWith overload; output capture was changed to CopyToAsync followed by deterministic disposal after WaitAll."
+    },
+    {
+      "kind": "parent-docker-inspection-fix",
+      "result": "fixed",
+      "evidenceDirectory": "evidence/docker-f4178ffcf33742068ed07ef90a012750",
+      "observation": "Docker-Text used parameter name $Args, shadowing PowerShell's automatic argument variable. Parent checks invoked docker without intended arguments. The parameter was renamed to $DockerArguments."
+    },
+    {
+      "kind": "least-privilege-profile-test",
+      "result": "pass",
+      "profile": "workspace-write + approvalPolicy=never",
+      "evidenceDirectory": "evidence/docker-786cf75912cc4b51bd6f64368f4cf5a5"
+    }
+  ]
+}

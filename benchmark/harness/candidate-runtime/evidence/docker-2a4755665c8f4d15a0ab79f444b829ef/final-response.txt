@@ -1,0 +1,9 @@
+done
+
+- Docker client/server access verified.
+- Started only the specified PostgreSQL 16 container with the required name, label, and `58261:5432` mapping.
+- Confirmed PostgreSQL accepted connections.
+- Created `candidate_probe`, inserted and verified exactly `(1, 'candidate-created')`.
+- Created empty `.candidate-db-ready`.
+- Detected `.parent-db-verified` on the first poll.
+- Stopped and removed the specified container.

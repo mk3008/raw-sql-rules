@@ -1,0 +1,8 @@
+done
+
+- Docker 27.3.1 を確認済み。
+- 指定の PostgreSQL 16 コンテナを起動し、ready 状態を確認。
+- `candidate_probe` を作成し、`(1, 'candidate-created')` の投入・取得を確認。
+- 空の `.candidate-db-ready` を作成。
+- `.parent-db-verified` を検出。
+- 指定ラベルを確認した対象コンテナのみ停止・削除済み。

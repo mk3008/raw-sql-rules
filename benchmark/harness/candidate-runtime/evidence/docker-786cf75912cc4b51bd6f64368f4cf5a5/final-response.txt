@@ -1,0 +1,8 @@
+done
+
+- Docker デーモン接続を `docker version` で確認。
+- 指定名・ラベル・ポートの PostgreSQL 16 コンテナを起動。
+- `psql` でテーブル作成、指定行の挿入・読取りを検証（`1|candidate-created`）。
+- 空の `.candidate-db-ready` を作成。
+- `.parent-db-verified` を2秒後に検出。
+- 指定コンテナのみを停止・削除済み。

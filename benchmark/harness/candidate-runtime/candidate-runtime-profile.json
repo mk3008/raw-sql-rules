@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Reusable Windows candidate runtime profile; not a benchmark candidate definition.",
+  "model": "gpt-5.6-terra",
+  "reasoningEffort": "medium",
+  "sandbox": "danger-full-access",
+  "approvalPolicy": "never",
+  "workingDirectory": "The fresh local Git repository supplied to Invoke-CandidateTurn through both -C and ProcessStartInfo.WorkingDirectory.",
+  "environmentInheritance": "inherit parent process environment; no secrets are serialized in harness evidence",
+  "networkExpectation": "ordinary host network access inherited from the local Codex installation",
+  "dockerExpectation": "candidate model turn must use the host Docker daemon itself",
+  "launcher": {
+    "path": "benchmark/harness/candidate-runtime/Invoke-CandidateTurn.ps1",
+    "entryPoint": "Invoke-CandidateTurn",
+    "implementationSha256": "8e117cdb88761a219b30e09f3f21e632b44cddd513592e51c4dfb4a560b3a3f3",
+    "windowsCommandResolution": "Get-Command codex -All, then select the first native Application ending in .exe"
+  }
+}
