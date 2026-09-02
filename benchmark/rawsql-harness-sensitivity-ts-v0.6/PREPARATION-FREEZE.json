@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRIMARY_COMPLETE_BLIND_REVIEW_PENDING",
   "preFreezeHead": "7be833632d7be94527097c62148d717c75fd6c4e",
-  "freezeSourceCommit": "350559db7f1295243c099e4c631e5d05ed0fdfec",
+  "freezeSourceCommit": "7fde0a40ad63c4fda2443d543a1143277e558ba8",
   "amendment": {
     "reason": "v0.5 closed MEASUREMENT-INVALID after three official candidates. A complete mechanical-primary.json with primary PASS or FAIL now denotes completed evaluator execution; only missing, malformed, or invalid primary output is EVALUATOR_EXECUTION_FAILURE.",
     "staticChecksRemovedFromOfficialExecution": [
