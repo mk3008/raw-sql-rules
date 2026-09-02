@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "runtimeRoot": "C:\\tmp\\raw-sql-rules-runner",
+  "candidateRuntimeProfile": "../candidate-runtime/candidate-runtime-profile.json",
+  "candidateLauncher": "../candidate-runtime/Invoke-CandidateTurn.ps1",
+  "purpose": "Ordinary PowerShell host configuration; no parent Codex agent is required."
+}

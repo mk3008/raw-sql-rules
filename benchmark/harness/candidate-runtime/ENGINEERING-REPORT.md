@@ -4,6 +4,8 @@
 
 This engineering work validates a reusable Windows candidate runtime. It is not a benchmark study and does not make a Raw SQL Rules product claim.
 
+Candidate status: `CANDIDATE_RUNTIME_VALIDATED`. Standalone host-runner status is separately recorded at `../host-runner/FINAL-HOST-RUNNER-GATE.md`; it addresses the follow-up concern that an outer Codex task's host policy must not become part of future benchmark execution.
+
 ## Confirmed Windows launcher root cause
 
 The v0.4 launcher used `Start-Process -FilePath codex`. On this machine, PowerShell resolves `codex` to `C:\Users\mssgm\AppData\Roaming\npm\codex.ps1`, an `ExternalScript`. `Start-Process` attempted to create a Win32 process from that `.ps1` path, which causes `%1 は有効な Win32 アプリケーションではありません。`

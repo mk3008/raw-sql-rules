@@ -1,0 +1,8 @@
+done
+
+- Docker Client/Server の稼働を確認。
+- 指定名・ラベル・ポートで PostgreSQL 16 を起動し、ready を確認。
+- `candidate_probe` 作成、指定行の挿入・照会を確認。
+- 空の `.candidate-db-ready` を作成。
+- `.parent-db-verified` を検出。
+- 所有ラベルを確認した専用コンテナのみ停止・削除済み。

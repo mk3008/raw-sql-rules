@@ -1,0 +1,75 @@
+{
+  "result": "PASS",
+  "classification": "PASS",
+  "cycle": 1,
+  "id": "8aea87943e3541f2be9ce026f6fc6cef",
+  "runtimeRoot": "C:\\tmp\\raw-sql-rules-runner",
+  "repository": "C:\\tmp\\raw-sql-rules-runner\\cycle-1-8aea87943e3541f2be9ce026f6fc6cef\\candidate-repository",
+  "hostProcess": {
+    "pid": 26616,
+    "name": "pwsh",
+    "parent": 860
+  },
+  "hostDockerDaemon": true,
+  "port": 50147,
+  "containerName": "rawsqlhost8aea87943e3541f2be9ce026f6fc6cef",
+  "label": "rawsql-host-runner=8aea87943e3541f2be9ce026f6fc6cef",
+  "parentVerification": {
+    "container": true,
+    "label": true,
+    "postgres": true,
+    "table": true,
+    "row": true,
+    "ack": true
+  },
+  "teardown": {
+    "containerRemoved": true,
+    "noLabelLeaks": true,
+    "portReleased": true
+  },
+  "error": null,
+  "repositoryState": {
+    "head": "2d41c9a98c46502e06afaa07fcb6b3b4d8cd88fe",
+    "clean": true,
+    "remotes": [],
+    "commits": "1"
+  },
+  "launch": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\87e5fb3433dabab1\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\raw-sql-rules-runner\\cycle-1-8aea87943e3541f2be9ce026f6fc6cef\\evidence\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "danger-full-access",
+      "-C",
+      "C:\\tmp\\raw-sql-rules-runner\\cycle-1-8aea87943e3541f2be9ce026f6fc6cef\\candidate-repository",
+      "Infrastructure validation only. Work only in this repository. Personally run docker version; start PostgreSQL 16 named rawsqlhost8aea87943e3541f2be9ce026f6fc6cef labelled rawsql-host-runner=8aea87943e3541f2be9ce026f6fc6cef mapping 50147 to 5432; wait for readiness; create candidate_probe(id int primary key,note text); insert (1,'candidate-created'); query it; create empty .candidate-db-ready; wait up to 180 seconds for .parent-db-verified; then stop and remove only your own container. Do not alter Git history or any other Docker resource."
+    ],
+    "workingDirectory": "C:\\tmp\\raw-sql-rules-runner\\cycle-1-8aea87943e3541f2be9ce026f6fc6cef\\candidate-repository"
+  },
+  "process": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 24760
+  },
+  "candidateEvents": {
+    "threadStarted": true,
+    "turnStarted": true,
+    "docker": true,
+    "postgres": true
+  },
+  "finishedAtUtc": "2026-09-02T08:12:46.1323893Z"
+}
