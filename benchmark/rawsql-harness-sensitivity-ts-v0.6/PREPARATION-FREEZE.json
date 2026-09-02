@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "PRE_OFFICIAL_V06_FROZEN",
+  "status": "PRIMARY_COMPLETE_BLIND_REVIEW_PENDING",
   "preFreezeHead": "7be833632d7be94527097c62148d717c75fd6c4e",
   "freezeSourceCommit": "350559db7f1295243c099e4c631e5d05ed0fdfec",
   "amendment": {
@@ -86,19 +86,41 @@
     "dockerUsed": false,
     "candidateLaunched": false
   },
+  "secondaryPhaseRecovery": {
+    "PRIMARY_MEASUREMENT_COMPLETE": "yes",
+    "BLIND_REVIEW_COMPLETE": "no",
+    "preservedRun": "C:\\tmp\\raw-sql-rules-runner\\rawsql-v06-b8a363a00f4c4fcd8fa88d84bb0ac02d",
+    "amendment": "Blind-review packets are initialized as neutral one-commit/no-remote repositories before the Sol turn. Resume verifies all frozen source manifests, all mechanical-primary outputs, and officialLaunchCount 4, then resumes at the first incomplete review without invoking Terra or mechanical evaluators.",
+    "focusedRegression": {
+      "result": "PASS",
+      "evidenceRoot": "C:\\tmp\\rawsql-v06-blind-review-packet-regression",
+      "summarySha256": "e7fa5bc2a59b8e87222e57949bc1d6c40ad2dad8c15ea125d36ba0f15d9cd38c",
+      "oneCommit": true,
+      "noRemote": true,
+      "threadStarted": true,
+      "turnStarted": true,
+      "candidateLaunched": false,
+      "evaluatorRun": false,
+      "dockerUsed": false,
+      "postgresUsed": false,
+      "calibrationRun": false,
+      "qualificationRun": false
+    }
+  },
   "frozenSources": [
-    { "path": "Run-Study.ps1", "sha256": "d8a10fb8b6199c0e7224803dfb4ceaaced52865270c3d20f68289f71b45747de" },
+    { "path": "Run-Study.ps1", "sha256": "83a11b6d8ef5f8e9d037e3ceea6e93c552820253e3730413d5c4e5341a8cda47" },
     { "path": "runner/Run-Calibrations.ps1", "sha256": "fbc95b0bac2871c2729c23244f2ed2a363302e8147b7bd6431010533d11ca310" },
     { "path": "runner/Evaluate.ps1", "sha256": "7893e2e1889be01b6b998fd48b1e15956a0897d51b0dda5cb6f7d78cf406f388" },
     { "path": "runner/Qualification.ps1", "sha256": "89c203caa68e89adcc767c61d5255ad0c2009e28eb5dd0f2e52148b0a4d224ad" },
     { "path": "runner/Invoke-HiddenProcess.ps1", "sha256": "29f671556755b6b8743e9ca17c9ddef53853b8c084fff0ce41ec5de2c57d0442" },
     { "path": "runner/Prepare-Arm.ps1", "sha256": "a244617d63d66405ce286fa627a80325db2826baa39b4353f62a5b701360f1d8" },
-    { "path": "runner/Accept-EvaluatorResult.ps1", "sha256": "41543dce89f74f7d1a601d29e5c59bf4aa78faaf82ec23cb84aec428363b944c" }
+    { "path": "runner/Accept-EvaluatorResult.ps1", "sha256": "41543dce89f74f7d1a601d29e5c59bf4aa78faaf82ec23cb84aec428363b944c" },
+    { "path": "runner/New-BlindReviewPacket.ps1", "sha256": "f4d1a64ecabc4fbe21a38a553d94e33b11ec00ffc69a5d03626ccc76dc110b44" }
   ],
   "finalState": {
     "benchmarkOwnedContainers": 0,
     "benchmarkOwnedProcesses": 0,
     "worktree": "clean"
   },
-  "humanOfficialCommand": "pwsh -NoProfile -File .\\benchmark\\rawsql-harness-sensitivity-ts-v0.6\\Run-Study.ps1 -ExecuteOfficial"
+  "humanBlindReviewResumeCommand": "pwsh -NoProfile -File .\\benchmark\\rawsql-harness-sensitivity-ts-v0.6\\Run-Study.ps1 -ResumeBlindReviewsFrom C:\\tmp\\raw-sql-rules-runner\\rawsql-v06-b8a363a00f4c4fcd8fa88d84bb0ac02d"
 }

@@ -19,3 +19,7 @@ Canonical inputs come only from `03cb7b81980cd9ec9ecd14fd3573aa065dd2840f`. S01/
 ## v0.6 methodological amendment
 
 v0.5 closed `MEASUREMENT-INVALID`: three candidates completed, but the runner misclassified the complete S02-Control evaluator result `primary = FAIL` as evaluator infrastructure failure. For v0.6 only, an existing, parseable `mechanical-primary.json` whose `primary` is `PASS` or `FAIL` means evaluator execution completed. A missing, malformed, or other-value output remains `EVALUATOR_EXECUTION_FAILURE`. Experimental content is otherwise unchanged.
+
+## Secondary-phase recovery
+
+For the preserved v0.6 run only, `PRIMARY_MEASUREMENT_COMPLETE = yes` and `BLIND_REVIEW_COMPLETE = no`. Each blind-review packet is initialized as a neutral one-commit/no-remote Git repository before the Sol turn. The bounded resume mode verifies the four frozen source manifests, four existing mechanical-primary outputs, and official count 4/4; it never invokes Terra candidates or mechanical evaluators, preserves the frozen R01--R04 mapping, and checkpoints completed reviews.

@@ -1,7 +1,7 @@
 [CmdletBinding()]
-param([switch]$PreflightOnly,[switch]$SmokeOnly,[switch]$ExecuteOfficial,[ValidateRange(60,7200)][int]$TimeoutSeconds=1800)
+param([switch]$PreflightOnly,[switch]$SmokeOnly,[switch]$ExecuteOfficial,[string]$ResumeBlindReviewsFrom,[ValidateRange(60,7200)][int]$TimeoutSeconds=1800)
 $ErrorActionPreference='Stop';Set-StrictMode -Version Latest
-if(@($PreflightOnly,$SmokeOnly,$ExecuteOfficial|Where-Object{$_}).Count -gt 1){throw 'Choose at most one execution mode.'}
+if(@($PreflightOnly,$SmokeOnly,$ExecuteOfficial,([bool]$ResumeBlindReviewsFrom)|Where-Object{$_}).Count -gt 1){throw 'Choose at most one execution mode.'}
 $study=$PSScriptRoot;$repo=(Resolve-Path (Join-Path $study '..\..')).Path;$profile=Get-Content -Raw (Join-Path $repo 'benchmark/harness/host-runner/host-runner-profile.json')|ConvertFrom-Json
 function Json($v,$p){$t="$p.tmp";$v|ConvertTo-Json -Depth 30|Set-Content -LiteralPath $t -Encoding utf8;Move-Item -LiteralPath $t -Destination $p -Force}
 function Sha($p){(Get-FileHash -Algorithm SHA256 -LiteralPath $p).Hash.ToLowerInvariant()}
@@ -10,7 +10,7 @@ function Port{$l=[Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback,0);$l.
 function Phase-Start([string]$Name){$script:phaseName=$Name;$script:phaseDisplay=($Name -replace '/','] ');$script:phaseWatch=[Diagnostics.Stopwatch]::StartNew();Write-Host "[$script:phaseDisplay start"}
 function Phase-Pass{Write-Host "[$script:phaseDisplay PASS ($([math]::Round($script:phaseWatch.Elapsed.TotalSeconds,1))s)"}
 $ids=[ordered]@{'benchmark/harness/candidate-runtime/Invoke-CandidateTurn.ps1'='a0565c4762405d651605ab60c4a2558f48d03e06';'benchmark/harness/candidate-runtime/candidate-runtime-profile.json'='a332696ad96444980d8ff436816f7c83d8033157';'benchmark/harness/host-runner/Invoke-BenchmarkHost.ps1'='e7594f2ac30ceb48d51717e9f55992862c4994bc'}
-$runtimeRoot=$profile.runtimeRoot;New-Item -ItemType Directory -Force -Path $runtimeRoot|Out-Null;$run=Join-Path $runtimeRoot ('rawsql-v06-'+[guid]::NewGuid().ToString('N'));New-Item -ItemType Directory -Path $run|Out-Null
+$runtimeRoot=$profile.runtimeRoot;New-Item -ItemType Directory -Force -Path $runtimeRoot|Out-Null;if($ResumeBlindReviewsFrom){$run=(Resolve-Path -LiteralPath $ResumeBlindReviewsFrom).Path}else{$run=Join-Path $runtimeRoot ('rawsql-v06-'+[guid]::NewGuid().ToString('N'));New-Item -ItemType Directory -Path $run|Out-Null}
 function Stop-Study($reason){if($script:phaseWatch){Write-Host "[$script:phaseDisplay FAIL ($([math]::Round($script:phaseWatch.Elapsed.TotalSeconds,1))s): $reason"};Json @{result='FAIL';classification='MEASUREMENT-INVALID';reason=$reason;atUtc=[datetime]::UtcNow.ToString('o')} (Join-Path $run 'STOP.json');throw $reason}
 function Assert-RuntimeLock {
  foreach($x in $ids.GetEnumerator()){if((Blob $x.Key)-ne$x.Value){Stop-Study "AUTHORITATIVE_BLOB_MISMATCH: $($x.Key)"}}
@@ -28,8 +28,42 @@ function Assert-FrozenPreparation {
 }
 function Freeze-Source($source,$slotRoot){$target=Join-Path $slotRoot 'final-source';New-Item -ItemType Directory $target|Out-Null;Get-ChildItem -Force $source|Where-Object{$_.Name-ne'.git'}|Copy-Item -Destination $target -Recurse -Force;$manifest=@();Get-ChildItem -Recurse -File $target|ForEach-Object{$manifest+=@{path=$_.FullName.Substring($target.Length+1);sha256=(Sha $_.FullName)}};Json $manifest (Join-Path $slotRoot 'source-manifest.json');Compress-Archive -Path (Join-Path $target '*') -DestinationPath (Join-Path $slotRoot 'final-source.zip') -Force}
 function Observe($events,$slotRoot){$t=Get-Content -Raw $events;$o=[ordered]@{ddlInspected=($t-match'001_inventory|schema');dockerAttempted=($t-match'(?i)docker');dockerSucceeded=($t-match'(?i)docker.*(version|ps|compose)');postgresConnectionSucceeded=($t-match'(?i)(psql|postgres|DATABASE_URL)');applicationExecutedAgainstRealPostgres=($t-match'(?i)(DATABASE_URL|postgres://)');adHocDbVerification=($t-match'(?i)(select .*inventory|psql)');reusableRealDbHarnessCreated=($t-match'(?i)(test|harness).*postgres');driverRepresentationChecked=($t-match'(?i)(int|timestamp|Date)');productionArtifactChecked=($t-match'(?i)(npm start|dist/)');idempotencyChecked=($t-match'(?i)idempot');realConcurrentRequestsExecuted=($t-match'(?i)(concurrent|Promise.all)');dbFinalStateInspected=($t-match'(?i)(select .*reservation|inventory_events)');featureOrDbFailureObserved=($t-match'(?i)(error|fail|defect)');environmentFailureObserved=($t-match'(?i)(docker.*(not found|denied)|ECONNREFUSED)');repairAttempted=($t-match'(?i)(fix|repair|patch)');reverificationAfterRepair=($t-match'(?i)(re-test|rerun|verify)');humanIntervention=$false};Json $o (Join-Path $slotRoot 'process-observations.json')}
+function Assert-PrimaryMeasurement([string]$RunRoot,[object[]]$Order){
+ $state=Get-Content -Raw (Join-Path $RunRoot 'official-launch-state.json')|ConvertFrom-Json;if($state.officialLaunchCount -ne 4 -or $state.maximumOfficialLaunches -ne 4){throw 'PRIMARY_MEASUREMENT_NOT_COMPLETE'}
+ foreach($slot in $Order){
+  $slotRoot=Join-Path $RunRoot $slot;$source=Join-Path $slotRoot 'final-source';$manifestPath=Join-Path $slotRoot 'source-manifest.json';if(-not(Test-Path $source)-or -not(Test-Path $manifestPath)){throw "FROZEN_SOURCE_MISSING_$slot"}
+  foreach($entry in (Get-Content -Raw $manifestPath|ConvertFrom-Json)){$path=Join-Path $source $entry.path;if(-not(Test-Path $path)-or (Sha $path)-ne$entry.sha256){throw "FROZEN_SOURCE_MANIFEST_MISMATCH_$slot"}}
+  $primaryPath=Join-Path $slotRoot 'mechanical-primary.json';if(-not(Test-Path $primaryPath)){throw "MECHANICAL_PRIMARY_MISSING_$slot"};$primary=Get-Content -Raw $primaryPath|ConvertFrom-Json;if([string]$primary.primary -notin @('PASS','FAIL')){throw "MECHANICAL_PRIMARY_INVALID_$slot"}
+ }
+}
+function Invoke-BlindReview([string]$RunRoot,[string]$ReviewId,[string]$Slot){
+ $packet=& (Join-Path $study 'runner/New-BlindReviewPacket.ps1') -StudyRoot $study -RunRoot $RunRoot -Slot $Slot -ReviewId $ReviewId
+ $checkpoint=Join-Path $packet 'review-checkpoint.json';if(Test-Path $checkpoint){$saved=Get-Content -Raw $checkpoint|ConvertFrom-Json;if($saved.result -eq 'PASS'){return @{reviewId=$ReviewId;slot=$Slot;packet=$packet;status='SKIPPED_COMPLETED'}}}
+ $reviewPrompt='Review this opaque application packet for objective defects only. Return STRUCTURED JSON findings with findingId, objectiveCategory, concreteFailureCondition, expectedBehavior, predictedActualBehavior, minimalReproduction, confidence. Check PostgreSQL semantics, transactions, concurrency/idempotency, node-postgres runtime values, security, errors, and production build/start. Do not discuss SQL file style, parameter style, architecture, Rules conformance, formatting, comments, or maintainability. Do not modify files.'
+ $reviewWatch=[Diagnostics.Stopwatch]::StartNew();Write-Host "[review $ReviewId] start";$reviewTurn=Invoke-CandidateTurn -WorkingDirectory $packet -Model 'gpt-5.6-sol' -ReasoningEffort 'high' -Sandbox 'read-only' -ApprovalPolicy 'never' -Prompt $reviewPrompt -JsonlPath (Join-Path $packet 'events.jsonl') -StderrPath (Join-Path $packet 'stderr.txt') -FinalResponsePath (Join-Path $packet 'findings.json');$reviewWait=Wait-CandidateTurn $reviewTurn $TimeoutSeconds;$reviewEvents=Get-Content -Raw (Join-Path $packet 'events.jsonl');if($reviewWait.timedOut -or $reviewWait.exitCode -ne 0 -or $reviewEvents -notmatch 'thread.started' -or $reviewEvents -notmatch 'turn.started'){throw "BLIND_REVIEW_FAILURE_$ReviewId"};Json @{result='PASS';reviewId=$ReviewId;slot=$Slot;completedAtUtc=[datetime]::UtcNow.ToString('o')} $checkpoint;Write-Host "[review $ReviewId] PASS ($([math]::Round($reviewWatch.Elapsed.TotalSeconds,1))s)";@{reviewId=$ReviewId;slot=$Slot;packet=$packet;status='COMPLETED'}
+}
+function Resume-BlindReviews {
+ $lock=Get-Content -Raw (Join-Path $run 'runtime-lock.json')|ConvertFrom-Json
+ $order=(git -C $repo show "$($lock.baseCommit):benchmark/rawsql-harness-sensitivity-ts-v0.6/execution-order.json"|ConvertFrom-Json).order
+ if(@($order).Count-ne4){throw 'INVALID_FROZEN_OFFICIAL_ORDER'}
+ Assert-PrimaryMeasurement $run $order
+ $mapPath=Join-Path $run 'blind-review-map.json'
+ if(Test-Path $mapPath){
+  $map=Get-Content -Raw $mapPath|ConvertFrom-Json
+ }else{
+  $map=@()
+  for($i=0;$i -lt 4;$i++){
+   $map+=@{reviewId=('R{0:d2}' -f ($i+1));slot=$order[$i]}
+  }
+  Json $map $mapPath
+ }
+ if(@($map).Count-ne4){throw 'INVALID_BLIND_REVIEW_MAP'};Json @{PRIMARY_MEASUREMENT_COMPLETE='yes';BLIND_REVIEW_COMPLETE='no';reviewMap=$map;updatedAtUtc=[datetime]::UtcNow.ToString('o')} (Join-Path $run 'SECONDARY-PHASE-STATUS.json')
+ foreach($entry in $map){Invoke-BlindReview $run $entry.reviewId $entry.slot|Out-Null}
+ Json @{PRIMARY_MEASUREMENT_COMPLETE='yes';BLIND_REVIEW_COMPLETE='yes';reviewMap=$map;updatedAtUtc=[datetime]::UtcNow.ToString('o')} (Join-Path $run 'SECONDARY-PHASE-STATUS.json');Json @{result='COMPLETE_PENDING_UNBLIND';officialLaunchCount=4;blindReviewMap=$map} (Join-Path $run 'RUN-SUMMARY.json');Write-Host '[done] COMPLETE_PENDING_UNBLIND'
+}
 try {
  foreach($x in $ids.GetEnumerator()){if((Blob $x.Key)-ne$x.Value){Stop-Study "AUTHORITATIVE_BLOB_MISMATCH: $($x.Key)"}};. (Join-Path $repo 'benchmark/harness/candidate-runtime/Invoke-CandidateTurn.ps1');$native=Resolve-CodexLaunchCommand
+ if($ResumeBlindReviewsFrom){Resume-BlindReviews;return}
  $lock=[ordered]@{baseCommit=(git -C $repo rev-parse HEAD).Trim();createdAtUtc=[datetime]::UtcNow.ToString('o');runtimeRoot=$runtimeRoot;nativeCodex=@{path=$native.fileName;sha256=(Sha $native.fileName);version=(& $native.fileName --version|Out-String).Trim()};powershell=$PSVersionTable.PSVersion.ToString();hostProcess=@{pid=$PID;name=(Get-Process -Id $PID).ProcessName};model=@{candidate='gpt-5.6-terra';candidateEffort='medium';reviewer='gpt-5.6-sol';reviewerEffort='high'};infrastructure=@();historicalValidationSha256=@{candidateLauncher='8e117cdb88761a219b30e09f3f21e632b44cddd513592e51c4dfb4a560b3a3f3';candidateProfile='46278fc07b16020d01623da1e4c90160eacbe8a266b2db1d4ee58dd7ff5fef22';hostRunner='cddb38ef4c572adf91faabf955869d4b2ba788c03b40476f20ee7f5d5fa73977'}};foreach($x in $ids.GetEnumerator()){$lock.infrastructure+=@{path=$x.Key;gitBlob=$x.Value;onDiskSha256=(Sha (Join-Path $repo $x.Key))}};Json $lock (Join-Path $run 'runtime-lock.json')
  Phase-Start 'preflight/runtime lock';Assert-RuntimeLock;Phase-Pass
  Phase-Start 'preflight/frozen preparation';Assert-FrozenPreparation;Phase-Pass
@@ -58,14 +92,7 @@ try {
  }
  # Blind reviews occur only after all candidate trees and primary results are frozen.
  $reviewMap=@();$reviewNo=0;foreach($slot in $order){
-  $reviewNo++;$reviewId=('R{0:d2}' -f $reviewNo);$packet=Join-Path $run "blind-review-$reviewId";New-Item -ItemType Directory $packet|Out-Null
-  $source=Join-Path (Join-Path $run $slot) 'final-source';Get-ChildItem -Force $source|Where-Object{$_.Name -notin @('AGENTS.md','rules','SOURCE-MANIFEST.json')}|Copy-Item -Destination $packet -Recurse -Force
-  Copy-Item -LiteralPath (Join-Path $study "prompts/$($slot.Substring(0,3)).txt") -Destination (Join-Path $packet 'BUSINESS-REQUIREMENT.txt');Copy-Item -LiteralPath (Join-Path $study 'fixture/database/schema/001_inventory.sql') -Destination (Join-Path $packet 'CANONICAL-DDL.sql')
-  $reviewPrompt='Review this opaque application packet for objective defects only. Return STRUCTURED JSON findings with findingId, objectiveCategory, concreteFailureCondition, expectedBehavior, predictedActualBehavior, minimalReproduction, confidence. Check PostgreSQL semantics, transactions, concurrency/idempotency, node-postgres runtime values, security, errors, and production build/start. Do not discuss SQL file style, parameter style, architecture, Rules conformance, formatting, comments, or maintainability. Do not modify files.'
-  Assert-RuntimeLock;$reviewWatch=[Diagnostics.Stopwatch]::StartNew();Write-Host "[review $reviewNo/4] start"
-  $reviewTurn=Invoke-CandidateTurn -WorkingDirectory $packet -Model 'gpt-5.6-sol' -ReasoningEffort 'high' -Sandbox 'read-only' -ApprovalPolicy 'never' -Prompt $reviewPrompt -JsonlPath (Join-Path $packet 'events.jsonl') -StderrPath (Join-Path $packet 'stderr.txt') -FinalResponsePath (Join-Path $packet 'findings.json')
-  $reviewWait=Wait-CandidateTurn $reviewTurn $TimeoutSeconds;$reviewEvents=Get-Content -Raw (Join-Path $packet 'events.jsonl');if($reviewWait.timedOut -or $reviewWait.exitCode -ne 0 -or $reviewEvents -notmatch 'thread.started' -or $reviewEvents -notmatch 'turn.started'){Stop-Study "BLIND_REVIEW_FAILURE_$reviewId"}
-  Write-Host "[review $reviewNo/4] PASS ($([math]::Round($reviewWatch.Elapsed.TotalSeconds,1))s)";$reviewMap+=@{reviewId=$reviewId;slot=$slot;packet=$packet}
+  $reviewNo++;$reviewId=('R{0:d2}' -f $reviewNo);Assert-RuntimeLock;$reviewMap+=Invoke-BlindReview $run $reviewId $slot
  }
  Json @{result='COMPLETE_PENDING_UNBLIND';officialLaunchCount=$state.officialLaunchCount;runtimeLock=(Join-Path $run 'runtime-lock.json');blindReviewMap=$reviewMap} (Join-Path $run 'RUN-SUMMARY.json');Write-Host '[done] COMPLETE_PENDING_UNBLIND'
 }catch{if(-not(Test-Path (Join-Path $run 'STOP.json'))){Json @{result='FAIL';classification='MEASUREMENT-INVALID';reason=$_.Exception.Message} (Join-Path $run 'STOP.json')};throw}
