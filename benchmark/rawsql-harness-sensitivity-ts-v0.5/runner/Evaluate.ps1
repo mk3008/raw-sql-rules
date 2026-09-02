@@ -34,11 +34,11 @@ function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
 try {
  New-Item -ItemType Directory -Path $scratch|Out-Null
  $normal=Invoke-State 'normal' $CandidatePath $PostgresPort $ApplicationPort; $evidence.normalProductionStart=$normal; if($normal.pass){$checks.normalProductionStart='PASS'}
- $rebuild=Join-Path $scratch 'reconstruction'; Copy-Item -LiteralPath $CandidatePath -Destination $rebuild -Recurse -Force; $mods=Join-Path $rebuild 'node_modules';if(Test-Path $mods){Remove-Item $mods -Recurse -Force}; npm run build --silent --prefix $rebuild; if($LASTEXITCODE-ne0){throw 'clean reconstruction build'}
+ $rebuild=Join-Path $scratch 'reconstruction'; Copy-Item -LiteralPath $CandidatePath -Destination $rebuild -Recurse -Force; $mods=Join-Path $rebuild 'node_modules';if(Test-Path $mods){Remove-Item $mods -Recurse -Force}; npm run build --silent --prefix $rebuild; if($LASTEXITCODE -ne 0){throw 'clean reconstruction build'}
  $clean=Invoke-State 'clean-build' $rebuild ($PostgresPort+20) ($ApplicationPort+20); $evidence.cleanReconstruction=$clean; if($clean.pass){$checks.cleanReconstruction='PASS'}
- $defects=@();if($checks.normalProductionStart-ne'PASS'){$defects+='normal declared production start failed'};if($checks.cleanReconstruction-ne'PASS'){$defects+='clean reconstruction failed'}
+ $defects=@();if($checks.normalProductionStart -ne 'PASS'){$defects+='normal declared production start failed'};if($checks.cleanReconstruction -ne 'PASS'){$defects+='clean reconstruction failed'}
  $result=[ordered]@{task=$Task;primary=if($defects.Count){'FAIL'}else{'PASS'};confirmedDefects=$defects;states=$evidence}
 } catch {$result=[ordered]@{task=$Task;primary='FAIL';confirmedDefects=@($_.Exception.Message);states=$evidence}}
 finally {if(Test-Path $scratch){Remove-Item -LiteralPath $scratch -Recurse -Force}}
 $result|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $OutputPath
-if($result.primary-ne'PASS'){exit 1}
+if($result.primary -ne 'PASS'){exit 1}
