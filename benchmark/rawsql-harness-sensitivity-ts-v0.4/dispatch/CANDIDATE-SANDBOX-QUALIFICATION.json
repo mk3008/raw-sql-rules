@@ -1,0 +1,16 @@
+{
+  "result": "FAIL",
+  "kind": "PRELAUNCH_INFRA_FAILURE",
+  "id": "6b6f3b240d744cc389b8a099dcbeed17",
+  "dummyRepository": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v04-docker-qualification-6b6f3b240d744cc389b8a099dcbeed17",
+  "port": 59219,
+  "containerName": "rawsqlv04q6b6f3b240d744cc389b8a099dcbeed17",
+  "model": "gpt-5.6-terra",
+  "reasoningEffort": "medium",
+  "sandbox": "workspace-write",
+  "eventsPath": "C:\\tmp\\rawsql-harness-sensitivity-ts-v0.4\\benchmark\\rawsql-harness-sensitivity-ts-v0.4\\dispatch\\candidate-sandbox-events-6b6f3b240d744cc389b8a099dcbeed17.jsonl",
+  "finalResponsePath": "C:\\tmp\\rawsql-harness-sensitivity-ts-v0.4\\benchmark\\rawsql-harness-sensitivity-ts-v0.4\\dispatch\\candidate-sandbox-final-6b6f3b240d744cc389b8a099dcbeed17.txt",
+  "candidateEvidence": {},
+  "independentEvidence": {},
+  "error": "This command cannot be run due to the error: %1 は有効な Win32 アプリケーションではありません。"
+}
