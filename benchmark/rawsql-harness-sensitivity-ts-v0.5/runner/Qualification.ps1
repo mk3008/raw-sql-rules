@@ -1,5 +1,5 @@
-param([Parameter(Mandatory)][int]$Cycle,[Parameter(Mandatory)][int]$PostgresPort,[Parameter(Mandatory)][int]$ApplicationPort)
-$ErrorActionPreference='Stop';$root=Split-Path -Parent (Split-Path -Parent $PSCommandPath);$fixture=Join-Path $root 'fixture';$project="rawsql-v04-qualification-$Cycle-$PostgresPort";$out=Join-Path $root "qualification/cycle-$Cycle.json";$app=$null
+param([Parameter(Mandatory)][int]$Cycle,[Parameter(Mandatory)][int]$PostgresPort,[Parameter(Mandatory)][int]$ApplicationPort,[Parameter(Mandatory)][string]$EvidenceRoot)
+$ErrorActionPreference='Stop';$root=Split-Path -Parent (Split-Path -Parent $PSCommandPath);$fixture=Join-Path $root 'fixture';$project="rawsql-v05-qualification-$Cycle-$PostgresPort";New-Item -ItemType Directory -Force -Path (Join-Path $EvidenceRoot 'qualification')|Out-Null;$out=Join-Path $EvidenceRoot "qualification/cycle-$Cycle.json";$app=$null
 $checks=[ordered]@{postgresImageRuntime=$false;canonicalDdl=$false;seed=$false;nodeDependencies=$false;typescriptBuild=$false;neutralAppStart=$false;healthEndpoint=$false;representativeDbAccess=$false;evaluatorStartup=$false;productionPublishPath=$false;cleanTeardown=$false;portReleased=$false;noBenchmarkLeaks=$false}
 try{
  $env:POSTGRES_PORT=$PostgresPort;&docker compose -p $project -f (Join-Path $fixture 'compose.yaml') up -d;if($LASTEXITCODE-ne0){throw 'docker compose up'}

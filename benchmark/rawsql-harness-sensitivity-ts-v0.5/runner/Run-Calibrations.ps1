@@ -1,6 +1,7 @@
+param([Parameter(Mandatory)][string]$EvidenceRoot)
 $ErrorActionPreference='Stop'
 $root=Split-Path -Parent (Split-Path -Parent $PSCommandPath)
-$cal=Join-Path $root 'calibration';$fixture=Join-Path $root 'fixture'
+$cal=Join-Path $EvidenceRoot 'calibration';New-Item -ItemType Directory -Force -Path $cal|Out-Null;$fixture=Join-Path $root 'fixture'
 $cases=@(@('CAL01','S01','PASS'),@('CAL02','S01','PASS'),@('CAL03','S01','FAIL'),@('CAL04','S01','FAIL'),@('CAL05','S01','PASS'),@('CAL06','S02','FAIL'),@('CAL07','S02','FAIL'),@('CAL08','S02','PASS'),@('CAL09','S02','FAIL'),@('CAL10','S01','FAIL'),@('CAL11','S01','FAIL'))
 $out=@();$port=58000
 foreach($case in $cases){
