@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "PREPARATION_COMPLETE",
+  "preFreezeHead": "bb66e8fb6358d04e09896200554af9cd99856386",
+  "officialCandidates": {
+    "launchCount": 0,
+    "maximum": 4,
+    "gate": "CLOSED"
+  },
+  "finalCalibration": {
+    "result": "PASS",
+    "evidenceRoot": "C:\\tmp\\rawsql-v05-calibration-final\\calibration",
+    "summarySha256": "c547a53a1cbe830ad9e39670e9f1691096b1f0c32e7f55a543f754b7a1012a3f",
+    "cases": [
+      { "id": "CAL01", "expected": "PASS", "actual": "PASS", "sha256": "ad2f1b5650a2d6d205c6092d3f88221f7753375a784990df65471a70c5ab5d03" },
+      { "id": "CAL02", "expected": "PASS", "actual": "PASS", "sha256": "ad2f1b5650a2d6d205c6092d3f88221f7753375a784990df65471a70c5ab5d03" },
+      { "id": "CAL03", "expected": "FAIL", "actual": "FAIL", "sha256": "bcc0a3bd0c21d79095f2b7f3361737d107dfe2929604477ebdaf51af0e80d480" },
+      { "id": "CAL04", "expected": "FAIL", "actual": "FAIL", "sha256": "65ba32195e34567a387656532ebdf22f04949f2f054321c0fb9519bbd9ae4a0a" },
+      { "id": "CAL05", "expected": "PASS", "actual": "PASS", "sha256": "ad2f1b5650a2d6d205c6092d3f88221f7753375a784990df65471a70c5ab5d03" },
+      { "id": "CAL06", "expected": "FAIL", "actual": "FAIL", "sha256": "751131290913668b171256bb93b15a62cbb2a3312bda1e89103ef9db9cb2c8ed" },
+      { "id": "CAL07", "expected": "FAIL", "actual": "FAIL", "sha256": "42f6e1f59464a2dc3e4366e774a6736b6349b77047a2784fcbbdd736cab358da" },
+      { "id": "CAL08", "expected": "PASS", "actual": "PASS", "sha256": "50b65de6bc68072d56351d3dc591749bc258b68ea806d43a05bf0b20672f6214" },
+      { "id": "CAL09", "expected": "FAIL", "actual": "FAIL", "sha256": "42f6e1f59464a2dc3e4366e774a6736b6349b77047a2784fcbbdd736cab358da" },
+      { "id": "CAL10", "expected": "FAIL", "actual": "FAIL", "sha256": "73c848f2d04bc7b641f298011d45962ebc06d3b49ebf47bf352c3c6463ecda4c" },
+      { "id": "CAL11", "expected": "FAIL", "actual": "FAIL", "sha256": "a505beb116d8dc9b66d7f7a19886943003ec0c966910215fb9d78136eea3c12b" }
+    ]
+  },
+  "runnerQualification": {
+    "result": "PASS",
+    "cycles": 3,
+    "evidenceRoot": "C:\\tmp\\rawsql-v05-qualification-preflight-full-4\\qualification",
+    "cycleSha256": {
+      "cycle-1.json": "6a78d85e967410b50bc931f58b6f0272ae0892d6973453530dd4771e3634f8f9",
+      "cycle-2.json": "5356a60d9f1ec328e0c36fe3b187087569a1857dd32b516474b0aad169309b65",
+      "cycle-3.json": "5d0029ad7703367d7070a58ff12e3d8f49a739dcf04c7e0a75a4dba1ad6ddc26"
+    }
+  },
+  "finalState": {
+    "benchmarkOwnedContainers": 0,
+    "benchmarkOwnedProcesses": 0,
+    "worktree": "clean"
+  },
+  "humanOfficialCommand": "pwsh -NoProfile -File .\\benchmark\\rawsql-harness-sensitivity-ts-v0.5\\Run-Study.ps1 -ExecuteOfficial"
+}
