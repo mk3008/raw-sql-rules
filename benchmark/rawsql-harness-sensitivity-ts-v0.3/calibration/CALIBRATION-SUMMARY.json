@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "cases": [
+    {
+      "id": "CAL01",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL02",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL03",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL04",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL05",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL06",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL07",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL08",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL09",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true
+    },
+    {
+      "id": "CAL10",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true
+    }
+  ]
+}

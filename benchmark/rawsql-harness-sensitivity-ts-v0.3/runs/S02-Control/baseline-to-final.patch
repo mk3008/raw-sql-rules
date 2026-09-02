@@ -1,0 +1,193 @@
+diff --git a/dist/server.js b/dist/server.js
+index a986d0a..a24ff68 100644
+--- a/dist/server.js
++++ b/dist/server.js
+@@ -1,5 +1,72 @@
+ import express from 'express';
++import { Pool } from 'pg';
+ const app = express();
++const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+ app.use(express.json());
+ app.get('/health', (_request, response) => response.status(200).json({ status: 'ok' }));
++const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
++app.post('/inventory-items/:id/reserve', async (request, response) => {
++    const body = request.body;
++    const requestId = body?.requestId;
++    const quantity = body?.quantity;
++    if (typeof requestId !== 'string' || !UUID_PATTERN.test(requestId) ||
++        typeof quantity !== 'number' || !Number.isInteger(quantity) || quantity <= 0) {
++        return response.status(400).json({ error: 'requestId must be a UUID and quantity must be a positive integer' });
++    }
++    if (!UUID_PATTERN.test(request.params.id)) {
++        return response.status(404).json({ error: 'inventory item not found' });
++    }
++    const client = await pool.connect();
++    try {
++        await client.query('BEGIN');
++        const previousReservation = await client.query('SELECT request_id FROM inventory_reservations WHERE request_id = $1', [requestId]);
++        if (previousReservation.rowCount !== 0) {
++            await client.query('COMMIT');
++            return response.status(200).json({ status: 'already_reserved' });
++        }
++        const item = await client.query('SELECT id FROM inventory_items WHERE id = $1 FOR UPDATE', [request.params.id]);
++        if (item.rowCount === 0) {
++            await client.query('ROLLBACK');
++            return response.status(404).json({ error: 'inventory item not found' });
++        }
++        const reservationAfterLock = await client.query('SELECT request_id FROM inventory_reservations WHERE request_id = $1', [requestId]);
++        if (reservationAfterLock.rowCount !== 0) {
++            await client.query('COMMIT');
++            return response.status(200).json({ status: 'already_reserved' });
++        }
++        const reservation = await client.query(`INSERT INTO inventory_reservations (request_id, inventory_item_id, quantity)
++       VALUES ($1, $2, $3)
++       ON CONFLICT (request_id) DO NOTHING
++       RETURNING request_id`, [requestId, request.params.id, quantity]);
++        if (reservation.rowCount === 0) {
++            await client.query('COMMIT');
++            return response.status(200).json({ status: 'already_reserved' });
++        }
++        const stock = await client.query(`UPDATE inventory_items
++       SET quantity = quantity - $2
++       WHERE id = $1 AND quantity >= $2
++       RETURNING id`, [request.params.id, quantity]);
++        if (stock.rowCount === 0) {
++            await client.query('ROLLBACK');
++            return response.status(409).json({ error: 'insufficient stock' });
++        }
++        await client.query(`INSERT INTO inventory_events (request_id, inventory_item_id, event_type, quantity)
++       VALUES ($1, $2, 'reserved', $3)`, [requestId, request.params.id, quantity]);
++        await client.query('COMMIT');
++        return response.status(201).json({ status: 'reserved' });
++    }
++    catch (error) {
++        try {
++            await client.query('ROLLBACK');
++        }
++        catch {
++            // The transaction may already have been closed by a failed COMMIT.
++        }
++        console.error('Failed to reserve inventory item', error);
++        return response.status(500).json({ error: 'failed to reserve inventory item' });
++    }
++    finally {
++        client.release();
++    }
++});
+ app.listen(Number(process.env.PORT ?? 3000));
+diff --git a/src/server.ts b/src/server.ts
+index 569ad29..2b4482e 100644
+--- a/src/server.ts
++++ b/src/server.ts
+@@ -1,6 +1,111 @@
+ import express from 'express';
++import { Pool } from 'pg';
+ 
+ const app = express();
++const pool = new Pool({ connectionString: process.env.DATABASE_URL });
++
+ app.use(express.json());
+ app.get('/health', (_request, response) => response.status(200).json({ status: 'ok' }));
++
++type ReservationRequest = {
++  requestId?: unknown;
++  quantity?: unknown;
++};
++
++const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
++
++app.post('/inventory-items/:id/reserve', async (request, response) => {
++  const body = request.body as ReservationRequest | undefined;
++  const requestId = body?.requestId;
++  const quantity = body?.quantity;
++
++  if (typeof requestId !== 'string' || !UUID_PATTERN.test(requestId) ||
++      typeof quantity !== 'number' || !Number.isInteger(quantity) || quantity <= 0) {
++    return response.status(400).json({ error: 'requestId must be a UUID and quantity must be a positive integer' });
++  }
++
++  // Invalid UUID path parameters cannot identify an inventory item.
++  if (!UUID_PATTERN.test(request.params.id)) {
++    return response.status(404).json({ error: 'inventory item not found' });
++  }
++
++  const client = await pool.connect();
++  try {
++    await client.query('BEGIN');
++
++    // Check before and after taking the item lock: the second check makes
++    // same-item concurrent retries observe the reservation just committed.
++    const previousReservation = await client.query(
++      'SELECT request_id FROM inventory_reservations WHERE request_id = $1',
++      [requestId],
++    );
++    if (previousReservation.rowCount !== 0) {
++      await client.query('COMMIT');
++      return response.status(200).json({ status: 'already_reserved' });
++    }
++
++    const item = await client.query(
++      'SELECT id FROM inventory_items WHERE id = $1 FOR UPDATE',
++      [request.params.id],
++    );
++    if (item.rowCount === 0) {
++      await client.query('ROLLBACK');
++      return response.status(404).json({ error: 'inventory item not found' });
++    }
++
++    const reservationAfterLock = await client.query(
++      'SELECT request_id FROM inventory_reservations WHERE request_id = $1',
++      [requestId],
++    );
++    if (reservationAfterLock.rowCount !== 0) {
++      await client.query('COMMIT');
++      return response.status(200).json({ status: 'already_reserved' });
++    }
++
++    // Insert the idempotency record before changing stock. A conflict here is
++    // a retry that raced with a reservation on another item.
++    const reservation = await client.query(
++      `INSERT INTO inventory_reservations (request_id, inventory_item_id, quantity)
++       VALUES ($1, $2, $3)
++       ON CONFLICT (request_id) DO NOTHING
++       RETURNING request_id`,
++      [requestId, request.params.id, quantity],
++    );
++    if (reservation.rowCount === 0) {
++      await client.query('COMMIT');
++      return response.status(200).json({ status: 'already_reserved' });
++    }
++
++    const stock = await client.query(
++      `UPDATE inventory_items
++       SET quantity = quantity - $2
++       WHERE id = $1 AND quantity >= $2
++       RETURNING id`,
++      [request.params.id, quantity],
++    );
++    if (stock.rowCount === 0) {
++      await client.query('ROLLBACK');
++      return response.status(409).json({ error: 'insufficient stock' });
++    }
++
++    await client.query(
++      `INSERT INTO inventory_events (request_id, inventory_item_id, event_type, quantity)
++       VALUES ($1, $2, 'reserved', $3)`,
++      [requestId, request.params.id, quantity],
++    );
++    await client.query('COMMIT');
++    return response.status(201).json({ status: 'reserved' });
++  } catch (error) {
++    try {
++      await client.query('ROLLBACK');
++    } catch {
++      // The transaction may already have been closed by a failed COMMIT.
++    }
++    console.error('Failed to reserve inventory item', error);
++    return response.status(500).json({ error: 'failed to reserve inventory item' });
++  } finally {
++    client.release();
++  }
++});
++
+ app.listen(Number(process.env.PORT ?? 3000));

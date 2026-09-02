@@ -1,0 +1,13 @@
+{
+  "arm": "Control",
+  "candidatePath": "C:\\tmp\\rawsql-v03-official-s02-control-2ce9b47a",
+  "releasedProductCommit": null,
+  "rawSqlRulesPresent": false,
+  "managedTreatmentBlockPresent": false,
+  "rulesSha256": null,
+  "baselineCommit": "916d208e40050253e923dd0bd15963e979c61c5e",
+  "gitCommitCount": 1,
+  "gitStatus": [],
+  "gitRemotes": [],
+  "pass": true
+}

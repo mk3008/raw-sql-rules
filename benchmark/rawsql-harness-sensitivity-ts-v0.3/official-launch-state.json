@@ -1,0 +1,14 @@
+{
+  "gate": "CLOSED",
+  "officialLaunchCount": 4,
+  "maximumOfficialLaunches": 4,
+  "order": [
+    "S01-Control",
+    "S02-Treatment",
+    "S02-Control",
+    "S01-Treatment"
+  ],
+  "candidateModel": "gpt-5.6-terra",
+  "candidateReasoningEffort": "medium",
+  "dispatchQualification": "PASS"
+}

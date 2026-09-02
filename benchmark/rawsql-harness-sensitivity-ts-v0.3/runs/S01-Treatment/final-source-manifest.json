@@ -1,0 +1,77 @@
+[
+  {
+    "path": "AGENTS.md",
+    "sha256": "eb3937797987b058192e6fe8e59f523312309047de7603aede92fe0b617b3545",
+    "bytes": 340
+  },
+  {
+    "path": "compose.yaml",
+    "sha256": "1f50579037eaafd226bf8342bfb4bf6ab4bebc76268ebe7c13ba8a167581b469",
+    "bytes": 398
+  },
+  {
+    "path": "database\\schema\\001_inventory.sql",
+    "sha256": "f3c38750a6dff73481a977108d6471d34bd96a7185145d5f15bc07d32d19f2f9",
+    "bytes": 742
+  },
+  {
+    "path": "database\\seed\\001_inventory.sql",
+    "sha256": "bf039b5897faff526765f2cdf891003bed06347b111e2c2d57975b41bb98525b",
+    "bytes": 408
+  },
+  {
+    "path": "dist\\server.js",
+    "sha256": "bf57bef742f177d3eb0f48d64c4415caf91a1a575571d2b03ec64a56f0b6d64b",
+    "bytes": 1264
+  },
+  {
+    "path": "dist\\sql\\inventory-items-stats.sql",
+    "sha256": "977a5ae667ea75eddddce88248328cdb83e0aea8954c400166ccc129152a4e7f",
+    "bytes": 169
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "2a0ce11f1b17b6cdce6313f49661286a64fe360af46a0045aee4ebf5eeb4f324",
+    "bytes": 44187
+  },
+  {
+    "path": "package.json",
+    "sha256": "8ebafbaa9280da76b3f62ffaa0f5942146a8ad5400b5df76ecf530fc2dd98204",
+    "bytes": 408
+  },
+  {
+    "path": "README.md",
+    "sha256": "df76966e0a91008c6a275db4e5bbe761d71b75e3690c74d8cef7993970a631e9",
+    "bytes": 271
+  },
+  {
+    "path": "rules\\raw-sql-rules.md",
+    "sha256": "a0e1f71bfbf4ce664f581757284a08b8c9eb6eb28ae9e953cc38965189ab7375",
+    "bytes": 5073
+  },
+  {
+    "path": "scripts\\copy-sql-assets.mjs",
+    "sha256": "f90f9505dcdbc579de96d7b1622584e766275986da9db319a30955abce9c0559",
+    "bytes": 380
+  },
+  {
+    "path": "src\\server.ts",
+    "sha256": "8a5fad7f93bcff70fe078352ebaa8a7a3d996c2808eae7ae292c8395afaf2308",
+    "bytes": 1445
+  },
+  {
+    "path": "src\\sql\\inventory-items-stats.sql",
+    "sha256": "977a5ae667ea75eddddce88248328cdb83e0aea8954c400166ccc129152a4e7f",
+    "bytes": 169
+  },
+  {
+    "path": "test\\inventory-items-stats.integration.test.mjs",
+    "sha256": "2f5f761452c1f090456c03649b055a9048fb09e851a0a8b1931a0572d4145b99",
+    "bytes": 2434
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "752c62ca5f7cd9ffc2d34c4ea4f904467362eb61e7a55b0305581f67d08f6360",
+    "bytes": 182
+  }
+]

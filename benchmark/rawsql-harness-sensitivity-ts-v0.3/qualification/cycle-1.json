@@ -1,0 +1,20 @@
+{
+  "cycle": 1,
+  "checks": {
+    "postgresStartup": true,
+    "authentication": true,
+    "canonicalDdl": true,
+    "seed": true,
+    "nodeDependencyReadiness": true,
+    "typescriptBuild": true,
+    "baselineApplicationStart": true,
+    "baselineHealth": true,
+    "representativeDbQuery": true,
+    "productionArtifactStart": true,
+    "teardown": true,
+    "portFree": true,
+    "noBenchmarkOwnedLeak": true
+  },
+  "pass": true,
+  "error": null
+}

@@ -1,0 +1,7 @@
+{
+  "task": "S02",
+  "primary": "FAIL",
+  "confirmedDefects": [
+    "published application health failed"
+  ]
+}

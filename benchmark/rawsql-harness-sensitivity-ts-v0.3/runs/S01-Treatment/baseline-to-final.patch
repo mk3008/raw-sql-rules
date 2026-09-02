@@ -1,0 +1,116 @@
+diff --git a/README.md b/README.md
+index 7cc4be0..4c0fca4 100644
+--- a/README.md
++++ b/README.md
+@@ -2,3 +2,9 @@
+ 
+ Node HTTP application. `GET /health` returns 200. Connection configuration is
+ provided through `DATABASE_URL`; canonical DDL is in `database/schema/`.
++
++Run the database-backed regression test with `DATABASE_URL` set:
++
++```
++npm run test:integration
++```
+diff --git a/dist/server.js b/dist/server.js
+index a986d0a..0fd8d61 100644
+--- a/dist/server.js
++++ b/dist/server.js
+@@ -1,5 +1,31 @@
+ import express from 'express';
+-const app = express();
+-app.use(express.json());
+-app.get('/health', (_request, response) => response.status(200).json({ status: 'ok' }));
+-app.listen(Number(process.env.PORT ?? 3000));
++import { readFile } from 'node:fs/promises';
++import { pathToFileURL } from 'node:url';
++import pg from 'pg';
++const { Pool } = pg;
++const inventoryItemsStatsSql = await readFile(new URL('./sql/inventory-items-stats.sql', import.meta.url), 'utf8');
++export function createApp(database) {
++    const app = express();
++    app.use(express.json());
++    app.get('/health', (_request, response) => response.status(200).json({ status: 'ok' }));
++    app.get('/inventory-items/stats', async (_request, response, next) => {
++        try {
++            const result = await database.query(inventoryItemsStatsSql);
++            const stats = result.rows[0];
++            response.status(200).json({
++                activeCount: Number(stats.activeCount),
++                totalQuantity: Number(stats.totalQuantity),
++                newestCreatedAt: stats.newestCreatedAt?.toISOString() ?? null,
++            });
++        }
++        catch (error) {
++            next(error);
++        }
++    });
++    return app;
++}
++if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
++    const database = new Pool({ connectionString: process.env.DATABASE_URL });
++    const app = createApp(database);
++    app.listen(Number(process.env.PORT ?? 3000));
++}
+diff --git a/package.json b/package.json
+index 765ffbe..527e908 100644
+--- a/package.json
++++ b/package.json
+@@ -1 +1 @@
+-{"name":"inventory-api","private":true,"type":"module","scripts":{"build":"tsc","start":"node dist/server.js"},"dependencies":{"express":"4.21.2","pg":"8.13.3"},"devDependencies":{"@types/express":"5.0.0","@types/node":"22.10.5","@types/pg":"8.11.10","typescript":"5.7.2"}}
++{"name":"inventory-api","private":true,"type":"module","scripts":{"build":"tsc && node scripts/copy-sql-assets.mjs","start":"node dist/server.js","test:integration":"npm run build && node --test test/inventory-items-stats.integration.test.mjs"},"dependencies":{"express":"4.21.2","pg":"8.13.3"},"devDependencies":{"@types/express":"5.0.0","@types/node":"22.10.5","@types/pg":"8.11.10","typescript":"5.7.2"}}
+diff --git a/src/server.ts b/src/server.ts
+index 569ad29..38665c8 100644
+--- a/src/server.ts
++++ b/src/server.ts
+@@ -1,6 +1,46 @@
+ import express from 'express';
++import { readFile } from 'node:fs/promises';
++import { pathToFileURL } from 'node:url';
++import pg, { type Pool as PgPool, type QueryResultRow } from 'pg';
+ 
+-const app = express();
+-app.use(express.json());
+-app.get('/health', (_request, response) => response.status(200).json({ status: 'ok' }));
+-app.listen(Number(process.env.PORT ?? 3000));
++const { Pool } = pg;
++
++const inventoryItemsStatsSql = await readFile(
++  new URL('./sql/inventory-items-stats.sql', import.meta.url),
++  'utf8',
++);
++
++type Database = Pick<PgPool, 'query'>;
++
++interface InventoryItemsStatsRow extends QueryResultRow {
++  activeCount: string;
++  totalQuantity: string;
++  newestCreatedAt: Date | null;
++}
++
++export function createApp(database: Database) {
++  const app = express();
++  app.use(express.json());
++  app.get('/health', (_request, response) => response.status(200).json({ status: 'ok' }));
++  app.get('/inventory-items/stats', async (_request, response, next) => {
++    try {
++      const result = await database.query<InventoryItemsStatsRow>(inventoryItemsStatsSql);
++      const stats = result.rows[0];
++
++      response.status(200).json({
++        activeCount: Number(stats.activeCount),
++        totalQuantity: Number(stats.totalQuantity),
++        newestCreatedAt: stats.newestCreatedAt?.toISOString() ?? null,
++      });
++    } catch (error) {
++      next(error);
++    }
++  });
++  return app;
++}
++
++if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
++  const database = new Pool({ connectionString: process.env.DATABASE_URL });
++  const app = createApp(database);
++  app.listen(Number(process.env.PORT ?? 3000));
++}

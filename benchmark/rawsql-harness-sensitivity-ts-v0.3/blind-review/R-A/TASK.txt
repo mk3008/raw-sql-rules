@@ -1,0 +1,25 @@
+Use raw SQL for this feature.
+
+Implement POST /inventory-items/{id}/reserve with:
+
+{
+  "requestId": "<uuid>",
+  "quantity": <int>
+}
+
+The first successful request for a requestId reserves the quantity once and
+returns 201.
+
+Repeating the same requestId returns 200 and must not reserve stock or create
+events again.
+
+If stock is insufficient, return 409 without changing inventory, reservations,
+or events.
+
+Missing item returns 404.
+
+Quantity must be positive; otherwise return 400.
+
+A successful reservation records exactly one `reserved` event.
+
+Do not change the database schema.

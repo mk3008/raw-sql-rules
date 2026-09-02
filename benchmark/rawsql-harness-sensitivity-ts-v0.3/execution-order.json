@@ -1,0 +1,4 @@
+{
+  "method": "fresh PowerShell Get-Random ordering before official gate",
+  "order": ["S01-Control", "S02-Treatment", "S02-Control", "S01-Treatment"]
+}

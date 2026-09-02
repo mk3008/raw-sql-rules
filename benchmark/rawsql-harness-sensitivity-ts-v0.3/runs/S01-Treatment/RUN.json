@@ -1,0 +1,11 @@
+{
+  "run": "S01-Treatment",
+  "task": "S01",
+  "arm": "Treatment",
+  "candidateLaunchCount": 4,
+  "baselineCommit": "c27b427bb3b879642b2389860d8e46842b832cc5",
+  "finalHead": "c27b427bb3b879642b2389860d8e46842b832cc5",
+  "mechanicalPrimary": "PASS",
+  "finalSourceArchiveSha256": "356d5d03e37dc555f10b37d0dea31fa7e67ebfd88062171fa38e1cf439483847",
+  "eventsSha256": "cab9729f1f67c9464f82d34a4e3be664dd034e1669a5b1deb5d80ceb47d67c46"
+}
