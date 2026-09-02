@@ -1,0 +1,13 @@
+{
+  "slot": "task-2-treatment",
+  "finalCorrectness": "PASS",
+  "minimalReproduction": "YES",
+  "broadPathExecutions": {
+    "command": "npm run e2e",
+    "total": 1,
+    "rerunsAfterFirst": 0
+  },
+  "wallClockSeconds": 30.628,
+  "postAcceptanceWork": "NO",
+  "evidence": "The raw event log shows `node focused-check.mjs` followed by `npm run e2e` after the minimal mapper correction. The successful broad E2E check establishes the endpoint acceptance condition; no unrelated work followed it. Independent focused and broad observer checks both passed."
+}

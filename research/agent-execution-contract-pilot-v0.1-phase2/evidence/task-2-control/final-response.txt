@@ -1,0 +1,8 @@
+done
+
+`mapper.mjs` のレスポンス変換を修正し、`status` が元アカウントの値をそのまま返すよう復元しました。
+
+検証済み:
+
+- `npm run e2e` 成功
+- `node focused-check.mjs` 成功

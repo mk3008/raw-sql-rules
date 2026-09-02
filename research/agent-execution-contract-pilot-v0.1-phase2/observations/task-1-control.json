@@ -1,0 +1,13 @@
+{
+  "slot": "task-1-control",
+  "finalCorrectness": "PASS",
+  "minimalReproduction": "YES",
+  "broadPathExecutions": {
+    "command": "npm test",
+    "total": 2,
+    "rerunsAfterFirst": 1
+  },
+  "wallClockSeconds": 32.822,
+  "postAcceptanceWork": "NO",
+  "evidence": "The raw event log shows an initial broad failure, then a successful broad run followed by `node runner.mjs --scenario \"expected failure\"`. Independent focused and broad observer checks both passed."
+}

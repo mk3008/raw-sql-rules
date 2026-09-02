@@ -1,0 +1,13 @@
+{
+  "slot": "task-1-treatment",
+  "finalCorrectness": "PASS",
+  "minimalReproduction": "NO",
+  "broadPathExecutions": {
+    "command": "npm test",
+    "total": 2,
+    "rerunsAfterFirst": 1
+  },
+  "wallClockSeconds": 32.767,
+  "postAcceptanceWork": "NO",
+  "evidence": "The raw event log shows an initial broad failure and a successful broad rerun; it does not show a deterministic focused scenario command. Independent focused and broad observer checks both passed."
+}

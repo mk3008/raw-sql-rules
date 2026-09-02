@@ -1,0 +1,9 @@
+done
+
+想定内失敗を処理した際の `process.exitCode = 1` を削除しました。
+
+検証済み:
+
+- `npm test` → 終了コード `0`
+- `node runner.mjs --scenario "expected failure"` → 終了コード `0`
+- 出力・既存のシナリオ処理は維持されています。

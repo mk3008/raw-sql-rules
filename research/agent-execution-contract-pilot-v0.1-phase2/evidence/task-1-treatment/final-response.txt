@@ -1,0 +1,3 @@
+done — 期待失敗を処理した際の終了コード設定を削除しました。
+
+`npm test` は従来の出力を維持し、全シナリオ処理後に `EXIT_CODE=0` となることを確認済みです。変更: [runner.mjs](C:\Users\mssgm\github\raw-sql-rules\work\agent-execution-contract-pilot-phase-2\official-slots\task-1-treatment\runner.mjs:35)
