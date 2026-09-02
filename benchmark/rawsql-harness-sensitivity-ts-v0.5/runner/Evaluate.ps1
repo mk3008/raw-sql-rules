@@ -11,6 +11,9 @@ $fixture=Join-Path $root 'fixture'
 $scratch=Join-Path ([System.IO.Path]::GetTempPath()) ("rawsql-v05-eval-"+[guid]::NewGuid().ToString('N'))
 $checks=[ordered]@{normalProductionStart='FAIL';cleanReconstruction='FAIL'}
 $evidence=[ordered]@{}
+function Stop-Descendants([int]$ParentProcessId) {
+ foreach($child in @(Get-CimInstance Win32_Process -Filter "ParentProcessId=$ParentProcessId" -ErrorAction SilentlyContinue)) { Stop-Descendants ([int]$child.ProcessId); Stop-Process -Id $child.ProcessId -Force -ErrorAction SilentlyContinue }
+}
 function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
  $project="rawsql-v05-eval-$Name-$DbPort"; $app=$null; $probe=$null; $state=[ordered]@{state=$Name;pass=$false;steps=@();error=$null;stdout=$null;stderr=$null}
  try {
@@ -26,7 +29,7 @@ function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
   $probe=Join-Path $Path '.rawsql-v05-evaluate.mjs';Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'evaluate.mjs') -Destination $probe -Force;$json=& node $probe $Task $AppPort | Select-Object -Last 1; $result=$json|ConvertFrom-Json
   if($result.primary -ne 'PASS'){throw ($result.confirmedDefects -join '; ')}; $state.steps+='mechanical-checks'; $state.pass=$true
  } catch {$state.error=$_.Exception.Message} finally {
-  if($app){$children=@(Get-CimInstance Win32_Process -Filter "ParentProcessId=$($app.Id)" -ErrorAction SilentlyContinue|Select-Object -ExpandProperty ProcessId);$children|ForEach-Object{Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue};if(-not $app.HasExited){Stop-Process -Id $app.Id -Force};Start-Sleep -Milliseconds 500};if($probe-and(Test-Path $probe)){Remove-Item -LiteralPath $probe -Force -ErrorAction SilentlyContinue}
+  if($app){Stop-Descendants ([int]$app.Id);if(-not $app.HasExited){Stop-Process -Id $app.Id -Force};Start-Sleep -Milliseconds 500};if($probe-and(Test-Path $probe)){Remove-Item -LiteralPath $probe -Force -ErrorAction SilentlyContinue}
   if(Test-Path $scratch){$state.stdout=if(Test-Path $out){Get-Content -Raw $out}else{''};$state.stderr=if(Test-Path $err){Get-Content -Raw $err}else{''}}
   & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') down --volumes --remove-orphans 2>$null
  }; return $state
