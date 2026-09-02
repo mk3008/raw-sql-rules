@@ -1,0 +1,1 @@
+The documented test command reports all expected scenarios handled but exits with status 1. Restore the command contract so successful completion exits 0. Preserve the existing documented behavior. Acceptance: `npm test` exits 0 when all scenarios are handled.

@@ -1,0 +1,13 @@
+{
+  "slot": "task-2-control",
+  "finalCorrectness": "PASS",
+  "minimalReproduction": "YES",
+  "broadPathExecutions": {
+    "command": "npm run e2e",
+    "total": 1,
+    "rerunsAfterFirst": 0
+  },
+  "wallClockSeconds": 25.826,
+  "postAcceptanceWork": "NO",
+  "evidence": "The raw event log shows `npm run e2e` followed by `node focused-check.mjs` after the minimal mapper correction. Independent focused and broad observer checks both passed."
+}

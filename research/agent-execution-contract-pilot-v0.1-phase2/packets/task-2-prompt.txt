@@ -1,0 +1,1 @@
+The documented response contract says the JSON response `status` must equal the supplied source account status value. The existing endpoint produces an incorrect field. Restore the contract. Acceptance: `npm run e2e` succeeds.

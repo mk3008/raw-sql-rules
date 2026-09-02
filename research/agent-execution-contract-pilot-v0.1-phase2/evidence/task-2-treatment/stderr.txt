@@ -1,0 +1,8 @@
+Reading additional input from stdin...
+2026-09-02T15:55:16.847187Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-09-02T15:55:16.847355Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-09-02T15:55:16.887430Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+2026-09-02T15:55:17.253119Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-09-02T15:55:17.253138Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-09-02T15:55:46.234375Z  WARN codex_mcp::rmcp_client: failed to initialize MCP client during shutdown: MCP startup failed: handshaking with MCP server failed: connection closed: initialize response
+2026-09-02T15:55:46.264957Z  WARN codex_core::tasks: failed to flush rollout after emitting terminal turn event: thread 01a062d4-ed9a-7052-939c-157c6df35328 not found

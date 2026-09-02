@@ -1,0 +1,8 @@
+done
+
+`status` を source account の値そのまま返すよう修正しました（`toLowerCase()` を削除）。
+
+検証済み:
+
+- `node focused-check.mjs` ✅
+- `npm run e2e` ✅
