@@ -18,7 +18,8 @@ function Invoke-ComposeCommand([string]$Project,[string[]]$ComposeArguments,[int
  $arguments=@('compose','-p',$Project,'-f',(Join-Path $fixture 'compose.yaml'))+$ComposeArguments
  $stdout=Join-Path $scratch ("docker-"+[guid]::NewGuid().ToString('N')+".out.log")
  $stderr=Join-Path $scratch ("docker-"+[guid]::NewGuid().ToString('N')+".err.log")
- $process=Start-Process -FilePath docker.exe -ArgumentList $arguments -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+ $commandLine=(($arguments|ForEach-Object{if($_ -match '\s'){'"'+$_+'"'}else{$_}})-join ' ')
+ $process=Start-Process -FilePath docker.exe -ArgumentList $commandLine -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
  if(-not $process.WaitForExit($TimeoutSeconds*1000)){
   Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
   throw "docker compose command timed out for $Project"
