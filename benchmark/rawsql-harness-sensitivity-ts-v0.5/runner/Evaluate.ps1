@@ -8,6 +8,7 @@ param(
 $ErrorActionPreference='Stop'
 $root=Split-Path -Parent (Split-Path -Parent $PSCommandPath)
 $fixture=Join-Path $root 'fixture'
+. (Join-Path $PSScriptRoot 'Invoke-HiddenProcess.ps1')
 $scratch=Join-Path ([System.IO.Path]::GetTempPath()) ("rawsql-v05-eval-"+[guid]::NewGuid().ToString('N'))
 $checks=[ordered]@{normalProductionStart='FAIL';cleanReconstruction='FAIL'}
 $evidence=[ordered]@{}
@@ -19,7 +20,7 @@ function Invoke-ComposeCommand([string]$Project,[string[]]$ComposeArguments,[int
  $stdout=Join-Path $scratch ("docker-"+[guid]::NewGuid().ToString('N')+".out.log")
  $stderr=Join-Path $scratch ("docker-"+[guid]::NewGuid().ToString('N')+".err.log")
  $commandLine=(($arguments|ForEach-Object{if($_ -match '\s'){'"'+$_+'"'}else{$_}})-join ' ')
- $process=Start-Process -FilePath docker.exe -ArgumentList $commandLine -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+ $process=Start-HiddenProcess -FilePath docker.exe -ArgumentList $commandLine -RedirectStandardOutput $stdout -RedirectStandardError $stderr
  if(-not $process.WaitForExit($TimeoutSeconds*1000)){
   Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
   throw "docker compose command timed out for $Project"
@@ -34,7 +35,7 @@ function Remove-ScratchBounded([string]$Path) {
  $stdout=Join-Path ([System.IO.Path]::GetTempPath()) ("rawsql-v05-cleanup-"+[guid]::NewGuid().ToString('N')+".out.log")
  $stderr=Join-Path ([System.IO.Path]::GetTempPath()) ("rawsql-v05-cleanup-"+[guid]::NewGuid().ToString('N')+".err.log")
  try {
-  $cleanup=Start-Process -FilePath cmd.exe -ArgumentList @('/d','/c',"rmdir /s /q `"$Path`"") -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+  $cleanup=Start-HiddenProcess -FilePath cmd.exe -ArgumentList @('/d','/c',"rmdir /s /q `"$Path`"") -RedirectStandardOutput $stdout -RedirectStandardError $stderr
   if(-not $cleanup.WaitForExit(30000)){Stop-Process -Id $cleanup.Id -Force -ErrorAction SilentlyContinue;return 'deferred-timeout'}
   if(Test-Path $Path){return "deferred-exit-$($cleanup.ExitCode)"}
   return 'removed'
@@ -51,7 +52,7 @@ function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
   npm ci --ignore-scripts --silent --prefix $Path; if($LASTEXITCODE -ne 0){throw 'npm ci'}; $state.steps+='npm-ci'
   $env:DATABASE_URL="postgres://postgres:postgres@127.0.0.1:$DbPort/inventory"; $env:PORT=$AppPort
   $out=Join-Path $scratch "$Name-app.out.log"; $err=Join-Path $scratch "$Name-app.err.log"
-  $app=Start-Process npm.cmd -ArgumentList @('start','--silent') -WorkingDirectory $Path -RedirectStandardOutput $out -RedirectStandardError $err -PassThru
+  $app=Start-HiddenProcess -FilePath npm.cmd -ArgumentList @('start','--silent') -WorkingDirectory $Path -RedirectStandardOutput $out -RedirectStandardError $err
   $healthy=$false; foreach($n in 1..30){try{if((Invoke-WebRequest "http://127.0.0.1:$AppPort/health" -SkipHttpErrorCheck).StatusCode -eq 200){$healthy=$true;break}}catch{};Start-Sleep 1}
   if(-not$healthy){throw 'declared npm start health failed'}; $state.steps+='declared-start-health'
   $probe=Join-Path $Path '.rawsql-v05-evaluate.mjs';Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'evaluate.mjs') -Destination $probe -Force;$json=& node $probe $Task $AppPort | Select-Object -Last 1; $result=$json|ConvertFrom-Json

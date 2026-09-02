@@ -22,4 +22,4 @@ foreach($case in $cases){
  $result=Join-Path $cal "$id-result.json"; & $PSScriptRoot\Evaluate.ps1 -Task $task -CandidatePath $path -PostgresPort $port -ApplicationPort ($port+100) -OutputPath $result 2>&1|Tee-Object (Join-Path $cal "$id.log")
  $actual=(Get-Content -Raw $result|ConvertFrom-Json).primary;$out+=[ordered]@{id=$id;expected=$expect;actual=$actual;matchesExpected=($expect-eq$actual)}
 }
-$summary=[ordered]@{result=if($out.matchesExpected -notcontains $false){'PASS'}else{'FAIL'};cases=$out};$summary|ConvertTo-Json -Depth 6|Set-Content (Join-Path $cal 'CALIBRATION-SUMMARY.json');if($summary.result -ne 'PASS'){exit 1}
+$summary=[ordered]@{result=if($out.matchesExpected -notcontains $false){'PASS'}else{'FAIL'};cases=$out};$summary|ConvertTo-Json -Depth 6|Set-Content (Join-Path $cal 'CALIBRATION-SUMMARY.json');if($summary.result -eq 'PASS'){exit 0};exit 1
