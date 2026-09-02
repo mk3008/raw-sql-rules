@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "freshCycles": [1, 2, 3],
+  "ports": [59000, 59002, 59004],
+  "allRequiredChecksPassed": true,
+  "note": "Each cycle result is retained separately; the preliminary missing-output-directory attempt is not a qualification cycle."
+}

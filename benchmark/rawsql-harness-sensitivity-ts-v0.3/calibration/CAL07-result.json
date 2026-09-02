@@ -1,0 +1,8 @@
+{
+  "task": "S02",
+  "primary": "FAIL",
+  "confirmedDefects": [
+    "different concurrent statuses",
+    "different concurrent state"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "task": "S01",
+  "primary": "FAIL",
+  "confirmedDefects": [
+    "empty aggregates"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "task": "S01",
+  "primary": "FAIL",
+  "confirmedDefects": [
+    "activeCount",
+    "totalQuantity",
+    "empty aggregates"
+  ]
+}
