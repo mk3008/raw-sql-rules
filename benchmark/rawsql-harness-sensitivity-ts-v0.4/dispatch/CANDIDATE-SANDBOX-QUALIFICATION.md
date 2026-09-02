@@ -1,0 +1,5 @@
+# Candidate-sandbox Docker/PostgreSQL qualification
+
+The qualification is a non-study Terra/medium turn in a newly created, one-commit, no-remote dummy Git repository. It uses exactly the official candidate invocation: the local `codex` executable, `gpt-5.6-terra`, `model_reasoning_effort="medium"`, `workspace-write`, JSON event streaming, and ordinary inherited environment/network/Docker permissions. It does not use `--skip-git-repo-check`.
+
+The dummy turn must itself run `docker version`, start a uniquely named PostgreSQL container on a unique host port, wait for readiness, connect, create a table, insert and query a row, and tear down the container. The parent records the full event stream but does not perform those operations for the candidate. Afterwards it independently confirms that the container existed, `pg_isready` succeeded, the expected row existed, teardown occurred, the port is free, and no uniquely labelled resources remain. Any failure is a prelaunch infrastructure failure and prevents all official launches.

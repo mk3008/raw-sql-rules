@@ -1,0 +1,10 @@
+{
+  "algorithm": "Fisher-Yates using crypto-random bytes",
+  "seedCommitment": "eef06862acdbf426cd3079b28f2f2be92d1ff9153d8f52741447e888113734cb",
+  "order": [
+    "S02-Treatment",
+    "S01-Treatment",
+    "S01-Control",
+    "S02-Control"
+  ]
+}
