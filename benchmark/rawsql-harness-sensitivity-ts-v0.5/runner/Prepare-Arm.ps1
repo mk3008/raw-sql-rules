@@ -53,7 +53,24 @@ if ($Arm -eq 'Treatment') {
     if ($identity.rawSqlRulesPresent) { $identity.rulesSha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $rules).Hash.ToLower() }
     $releaseRules = Join-Path ([IO.Path]::GetTempPath()) ("rawsql-v05-release-"+[guid]::NewGuid().ToString('N'))
     try {
-        & git -C $root show "$($identity.releasedProductCommit):raw-sql-rules.md" | Set-Content -LiteralPath $releaseRules -NoNewline -Encoding utf8
+        $startInfo = [Diagnostics.ProcessStartInfo]::new()
+        $startInfo.FileName = 'git.exe'
+        $startInfo.UseShellExecute = $false
+        $startInfo.RedirectStandardOutput = $true
+        $startInfo.RedirectStandardError = $true
+        $startInfo.ArgumentList.Add('-C')
+        $startInfo.ArgumentList.Add($root)
+        $startInfo.ArgumentList.Add('cat-file')
+        $startInfo.ArgumentList.Add('blob')
+        $startInfo.ArgumentList.Add("$($identity.releasedProductCommit):raw-sql-rules.md")
+        $releaseProcess = [Diagnostics.Process]::new()
+        $releaseProcess.StartInfo = $startInfo
+        if (-not $releaseProcess.Start()) { throw 'Could not start git cat-file for released Rules' }
+        $releaseFile = [IO.File]::Open($releaseRules, [IO.FileMode]::CreateNew, [IO.FileAccess]::Write, [IO.FileShare]::None)
+        try { $releaseProcess.StandardOutput.BaseStream.CopyTo($releaseFile) }
+        finally { $releaseFile.Dispose() }
+        $releaseProcess.WaitForExit()
+        if ($releaseProcess.ExitCode -ne 0) { throw "Could not read released Rules bytes: $($releaseProcess.StandardError.ReadToEnd())" }
         $identity.expectedRulesSha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $releaseRules).Hash.ToLower()
     } finally { if(Test-Path $releaseRules){Remove-Item -LiteralPath $releaseRules -Force} }
     if (-not $identity.rawSqlRulesPresent -or -not $identity.managedTreatmentBlockPresent -or $identity.rulesSha256 -ne $identity.expectedRulesSha256) { throw 'Treatment artifact identity failed' }
