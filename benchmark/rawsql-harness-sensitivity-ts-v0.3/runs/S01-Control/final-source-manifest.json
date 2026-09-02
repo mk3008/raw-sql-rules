@@ -1,0 +1,47 @@
+[
+  {
+    "path": "compose.yaml",
+    "sha256": "1f50579037eaafd226bf8342bfb4bf6ab4bebc76268ebe7c13ba8a167581b469",
+    "bytes": 398
+  },
+  {
+    "path": "database\\schema\\001_inventory.sql",
+    "sha256": "f3c38750a6dff73481a977108d6471d34bd96a7185145d5f15bc07d32d19f2f9",
+    "bytes": 742
+  },
+  {
+    "path": "database\\seed\\001_inventory.sql",
+    "sha256": "bf039b5897faff526765f2cdf891003bed06347b111e2c2d57975b41bb98525b",
+    "bytes": 408
+  },
+  {
+    "path": "dist\\server.js",
+    "sha256": "5e7484e61fdf7e596ee19fa9f75596addaaf7bdb0b5841c5e418d2697660713e",
+    "bytes": 982
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "2a0ce11f1b17b6cdce6313f49661286a64fe360af46a0045aee4ebf5eeb4f324",
+    "bytes": 44187
+  },
+  {
+    "path": "package.json",
+    "sha256": "dcd1543adeb1bd5c7b5cfafc922a5e5fab64755f093847bc630e6f605911fbd5",
+    "bytes": 275
+  },
+  {
+    "path": "README.md",
+    "sha256": "526e71f097408626f55865fd6938a25415db636cceb678afa4087bc55a3b82db",
+    "bytes": 172
+  },
+  {
+    "path": "src\\server.ts",
+    "sha256": "278e469db6b5ff42a61717f992d8b59fcca6c0a635315ce8c0d152814ff4de78",
+    "bytes": 1040
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "752c62ca5f7cd9ffc2d34c4ea4f904467362eb61e7a55b0305581f67d08f6360",
+    "bytes": 182
+  }
+]

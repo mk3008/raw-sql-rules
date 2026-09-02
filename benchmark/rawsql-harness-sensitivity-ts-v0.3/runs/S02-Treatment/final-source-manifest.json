@@ -1,0 +1,87 @@
+[
+  {
+    "path": "AGENTS.md",
+    "sha256": "eb3937797987b058192e6fe8e59f523312309047de7603aede92fe0b617b3545",
+    "bytes": 340
+  },
+  {
+    "path": "compose.yaml",
+    "sha256": "1f50579037eaafd226bf8342bfb4bf6ab4bebc76268ebe7c13ba8a167581b469",
+    "bytes": 398
+  },
+  {
+    "path": "database\\queries\\reservations\\acquire-request-lock.sql",
+    "sha256": "a2432fcebcb9117afe881d622d7363f14c5843e930d581060ef39184f8266927",
+    "bytes": 163
+  },
+  {
+    "path": "database\\queries\\reservations\\create-reservation.sql",
+    "sha256": "f12b875269da581a96504980d823986d8a10989108ec2d7ff11f12d8ea06d6ef",
+    "bytes": 180
+  },
+  {
+    "path": "database\\queries\\reservations\\create-reserved-event.sql",
+    "sha256": "0edbeefce9d22d2ae30393e4633a65c875033067d9b25078c9f54cf5f78e6476",
+    "bytes": 148
+  },
+  {
+    "path": "database\\queries\\reservations\\decrement-inventory.sql",
+    "sha256": "21b8b149cb331f50f8206bfaadd9f27309bfed130c0b66b0ec2664f7ab136850",
+    "bytes": 131
+  },
+  {
+    "path": "database\\queries\\reservations\\find-by-request-id.sql",
+    "sha256": "9cfb04d408ef31d5a13c2253807094cdc463cb18f36c1becb611fd71af9257bc",
+    "bytes": 107
+  },
+  {
+    "path": "database\\queries\\reservations\\lock-inventory-item.sql",
+    "sha256": "7437b076d844ec04bdf1087bd4efd3917618c42a1fbb055808dcec1be58f5dbd",
+    "bytes": 73
+  },
+  {
+    "path": "database\\schema\\001_inventory.sql",
+    "sha256": "f3c38750a6dff73481a977108d6471d34bd96a7185145d5f15bc07d32d19f2f9",
+    "bytes": 742
+  },
+  {
+    "path": "database\\seed\\001_inventory.sql",
+    "sha256": "bf039b5897faff526765f2cdf891003bed06347b111e2c2d57975b41bb98525b",
+    "bytes": 408
+  },
+  {
+    "path": "dist\\server.js",
+    "sha256": "af2d0a045be6524bbed08cb5bf14e642847bee86f0bccdcef54cc17617e65adf",
+    "bytes": 219
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "2a0ce11f1b17b6cdce6313f49661286a64fe360af46a0045aee4ebf5eeb4f324",
+    "bytes": 44187
+  },
+  {
+    "path": "package.json",
+    "sha256": "dcd1543adeb1bd5c7b5cfafc922a5e5fab64755f093847bc630e6f605911fbd5",
+    "bytes": 275
+  },
+  {
+    "path": "README.md",
+    "sha256": "526e71f097408626f55865fd6938a25415db636cceb678afa4087bc55a3b82db",
+    "bytes": 172
+  },
+  {
+    "path": "rules\\raw-sql-rules.md",
+    "sha256": "a0e1f71bfbf4ce664f581757284a08b8c9eb6eb28ae9e953cc38965189ab7375",
+    "bytes": 5073
+  },
+  {
+    "path": "src\\server.ts",
+    "sha256": "0ae1e9c27a6a4fbe46a932502c721a51689ea11f45fbc9b86ef4459938ae2cf7",
+    "bytes": 4317
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "752c62ca5f7cd9ffc2d34c4ea4f904467362eb61e7a55b0305581f67d08f6360",
+    "bytes": 182
+  }
+]

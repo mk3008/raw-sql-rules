@@ -1,0 +1,23 @@
+Use raw SQL for this feature.
+
+Implement GET /inventory-items/stats.
+
+For active items, return:
+
+{
+  "activeCount": number,
+  "totalQuantity": number,
+  "newestCreatedAt": string | null
+}
+
+When there are no active items, return:
+
+{
+  "activeCount": 0,
+  "totalQuantity": 0,
+  "newestCreatedAt": null
+}
+
+newestCreatedAt must represent the correct instant as an ISO 8601 timestamp.
+
+Do not change the database schema.

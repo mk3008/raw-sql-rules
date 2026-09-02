@@ -1,0 +1,11 @@
+{
+  "run": "S01-Control",
+  "task": "S01",
+  "arm": "Control",
+  "candidateLaunchCount": 1,
+  "baselineCommit": "348953a2dba2294d30818932965571ea3344deee",
+  "finalHead": "348953a2dba2294d30818932965571ea3344deee",
+  "mechanicalPrimary": "FAIL",
+  "finalSourceArchiveSha256": "b7ff8f5425e411afb6d06245cdaf1fcce0e8465f3c9f3a906d1e73ddf36c65c4",
+  "eventsSha256": "27f5ab6b3788369c06c3f57b1358c86aad7343a68f942d54eb97e26c191767b0"
+}

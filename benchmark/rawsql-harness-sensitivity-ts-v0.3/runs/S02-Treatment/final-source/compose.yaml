@@ -1,0 +1,8 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: inventory, POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres }
+    ports: ["${POSTGRES_PORT:-5432}:5432"]
+    volumes:
+      - ./database/schema/001_inventory.sql:/docker-entrypoint-initdb.d/001_inventory.sql:ro
+      - ./database/seed/001_inventory.sql:/docker-entrypoint-initdb.d/002_inventory.sql:ro

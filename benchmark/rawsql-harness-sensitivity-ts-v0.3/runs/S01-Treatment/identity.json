@@ -1,0 +1,13 @@
+{
+  "arm": "Treatment",
+  "candidatePath": "C:\\tmp\\rawsql-v03-official-s01-treatment-4d92af63",
+  "releasedProductCommit": "dceb234b42ffa7b32c1a54e0cce0666580c8f68f",
+  "rawSqlRulesPresent": true,
+  "managedTreatmentBlockPresent": true,
+  "rulesSha256": "a0e1f71bfbf4ce664f581757284a08b8c9eb6eb28ae9e953cc38965189ab7375",
+  "baselineCommit": "c27b427bb3b879642b2389860d8e46842b832cc5",
+  "gitCommitCount": 1,
+  "gitStatus": [],
+  "gitRemotes": [],
+  "pass": true
+}
