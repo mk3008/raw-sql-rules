@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "cycle": "simple-9b790af8a6574ba5b59a79a9f4bd4967",
+  "mode": "simple",
+  "result": "FAIL",
+  "classification": "LAUNCHER_FAILURE",
+  "startedAtUtc": "2026-09-02T07:04:04.9317811Z",
+  "id": "9b790af8a6574ba5b59a79a9f4bd4967",
+  "dummyRepository": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-9b790af8a6574ba5b59a79a9f4bd4967",
+  "containerName": "rawsqlcandidate9b790af8a6574ba5b59a79a9f4bd4967",
+  "label": "rawsql-candidate-runtime=9b790af8a6574ba5b59a79a9f4bd4967",
+  "hostPort": 56782,
+  "profilePath": "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\candidate-runtime-profile.json",
+  "profileSha256": "88d7163e7c939fcac39044390be29b9365a2b6778107223f22795eaaa3c9202d",
+  "launcherSha256": "3ecbbf1e51df14844e230ee8b6ed35b9cf890499f3f4daa4b19f3e1dc34eaeaf",
+  "launch": null,
+  "repository": {
+    "head": "6f0f24d75cc2957d413c6fa85d44bb059d91e764",
+    "clean": true,
+    "remotes": [],
+    "baselineCommitCount": "1"
+  },
+  "candidateEvidence": {},
+  "parentVerification": {},
+  "teardown": {},
+  "process": null,
+  "error": "Multiple ambiguous overloads found for \"ContinueWith\" and the argument count: \"1\".",
+  "finishedAtUtc": "2026-09-02T07:04:05.2778321Z"
+}

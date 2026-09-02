@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "cycle": "simple-accdffd9aedb4d9280bbaf4fb9945124",
+  "mode": "simple",
+  "result": "PASS",
+  "classification": "PASS",
+  "startedAtUtc": "2026-09-02T07:04:38.9841008Z",
+  "id": "accdffd9aedb4d9280bbaf4fb9945124",
+  "dummyRepository": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-accdffd9aedb4d9280bbaf4fb9945124",
+  "containerName": "rawsqlcandidateaccdffd9aedb4d9280bbaf4fb9945124",
+  "label": "rawsql-candidate-runtime=accdffd9aedb4d9280bbaf4fb9945124",
+  "hostPort": 50973,
+  "profilePath": "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\candidate-runtime-profile.json",
+  "profileSha256": "88d7163e7c939fcac39044390be29b9365a2b6778107223f22795eaaa3c9202d",
+  "launcherSha256": "8e117cdb88761a219b30e09f3f21e632b44cddd513592e51c4dfb4a560b3a3f3",
+  "launch": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\b99306303521e97e\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\evidence\\simple-accdffd9aedb4d9280bbaf4fb9945124\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "workspace-write",
+      "-C",
+      "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-accdffd9aedb4d9280bbaf4fb9945124",
+      "Inspect this dummy repository and report that it is accessible. Do not modify files."
+    ],
+    "workingDirectory": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-accdffd9aedb4d9280bbaf4fb9945124"
+  },
+  "repository": {
+    "head": "199b7fdace5d16f49d7672ac05e6fd7f0eff89a1",
+    "clean": true,
+    "remotes": [],
+    "baselineCommitCount": "1"
+  },
+  "candidateEvidence": {
+    "threadStarted": true,
+    "turnStarted": true,
+    "workingDirectoryObserved": false,
+    "finalResponseCaptured": true,
+    "validExit": true
+  },
+  "parentVerification": {},
+  "teardown": {},
+  "process": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 29620
+  },
+  "error": null,
+  "finishedAtUtc": "2026-09-02T07:04:59.5976798Z"
+}

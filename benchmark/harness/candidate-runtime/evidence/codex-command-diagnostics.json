@@ -1,0 +1,266 @@
+{
+  "observedAtUtc": "2026-09-02T07:02:17.0646310Z",
+  "powerShell": {
+    "OS": "Microsoft Windows 10.0.26200",
+    "Platform": "Win32NT",
+    "SerializationVersion": {
+      "Major": 1,
+      "Minor": 1,
+      "Build": 0,
+      "Revision": 1,
+      "MajorRevision": 0,
+      "MinorRevision": 1
+    },
+    "PSVersion": {
+      "Major": 7,
+      "Minor": 6,
+      "Patch": 5,
+      "PreReleaseLabel": null,
+      "BuildLabel": null
+    },
+    "GitCommitId": "7.6.5",
+    "PSRemotingProtocolVersion": {
+      "Major": 2,
+      "Minor": 4,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    "PSCompatibleVersions": [
+      {
+        "Major": 1,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 2,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 3,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 4,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 5,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 5,
+        "Minor": 1,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 6,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      {
+        "Major": 7,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      }
+    ],
+    "PSEdition": "Core",
+    "WSManStackVersion": {
+      "Major": 3,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    }
+  },
+  "windows": {
+    "WindowsProductName": "Windows 10 Home",
+    "WindowsVersion": "2009",
+    "OsBuildNumber": "26200",
+    "OsName": "Microsoft Windows 11 Home",
+    "OsVersion": "10.0.26200"
+  },
+  "getCommandCodex": {
+    "name": "codex.ps1",
+    "commandType": "ExternalScript",
+    "path": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.ps1",
+    "definition": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.ps1",
+    "extension": ".ps1"
+  },
+  "getCommandCodexAll": [
+    {
+      "name": "codex.ps1",
+      "commandType": "ExternalScript",
+      "path": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.ps1",
+      "definition": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.ps1",
+      "extension": ".ps1"
+    },
+    {
+      "name": "codex.cmd",
+      "commandType": "Application",
+      "path": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.cmd",
+      "definition": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.cmd",
+      "extension": ".cmd"
+    },
+    {
+      "name": "codex",
+      "commandType": "Application",
+      "path": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex",
+      "definition": "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex",
+      "extension": ""
+    },
+    {
+      "name": "codex.exe",
+      "commandType": "Application",
+      "path": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\b99306303521e97e\\codex.exe",
+      "definition": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\b99306303521e97e\\codex.exe",
+      "extension": ".exe"
+    }
+  ],
+  "whereExeCodex": [
+    "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex",
+    "C:\\Users\\mssgm\\AppData\\Roaming\\npm\\codex.cmd",
+    "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\b99306303521e97e\\codex.exe"
+  ],
+  "codexVersion": [
+    "codex-cli 0.144.4"
+  ],
+  "directNoninteractiveProbe": {
+    "command": "codex exec --help",
+    "output": [
+      "Run Codex non-interactively",
+      "",
+      "Usage: codex exec [OPTIONS] [PROMPT]",
+      "       codex exec [OPTIONS] <COMMAND> [ARGS]",
+      "",
+      "Commands:",
+      "  resume  Resume a previous session by id or pick the most recent with --last",
+      "  review  Run a code review against the current repository",
+      "  help    Print this message or the help of the given subcommand(s)",
+      "",
+      "Arguments:",
+      "  [PROMPT]",
+      "          Initial instructions for the agent. If not provided as an argument (or if `-` is used),",
+      "          instructions are read from stdin. If stdin is piped and a prompt is also provided, stdin",
+      "          is appended as a `<stdin>` block",
+      "",
+      "Options:",
+      "  -c, --config <key=value>",
+      "          Override a configuration value that would otherwise be loaded from `~/.codex/config.toml`.",
+      "          Use a dotted path (`foo.bar.baz`) to override nested values. The `value` portion is parsed",
+      "          as TOML. If it fails to parse as TOML, the raw string is used as a literal.",
+      "          ",
+      "          Examples: - `-c model=\"o3\"` - `-c 'sandbox_permissions=[\"disk-full-read-access\"]'` - `-c",
+      "          shell_environment_policy.inherit=all`",
+      "",
+      "      --enable <FEATURE>",
+      "          Enable a feature (repeatable). Equivalent to `-c features.<name>=true`",
+      "",
+      "      --disable <FEATURE>",
+      "          Disable a feature (repeatable). Equivalent to `-c features.<name>=false`",
+      "",
+      "      --strict-config",
+      "          Error out when config.toml contains fields that are not recognized by this version of",
+      "          Codex",
+      "",
+      "  -i, --image <FILE>...",
+      "          Optional image(s) to attach to the initial prompt",
+      "",
+      "  -m, --model <MODEL>",
+      "          Model the agent should use",
+      "",
+      "      --oss",
+      "          Use open-source provider",
+      "",
+      "      --local-provider <OSS_PROVIDER>",
+      "          Specify which local provider to use (lmstudio or ollama). If not specified with --oss,",
+      "          will use config default or show selection",
+      "",
+      "  -p, --profile <CONFIG_PROFILE_V2>",
+      "          Layer $CODEX_HOME/<name>.config.toml on top of the base user config",
+      "",
+      "  -s, --sandbox <SANDBOX_MODE>",
+      "          Select the sandbox policy to use when executing model-generated shell commands",
+      "          ",
+      "          [possible values: read-only, workspace-write, danger-full-access]",
+      "",
+      "      --dangerously-bypass-approvals-and-sandbox",
+      "          Skip all confirmation prompts and execute commands without sandboxing. EXTREMELY",
+      "          DANGEROUS. Intended solely for running in environments that are externally sandboxed",
+      "",
+      "      --dangerously-bypass-hook-trust",
+      "          Run enabled hooks without requiring persisted hook trust for this invocation. DANGEROUS.",
+      "          Intended only for automation that already vets hook sources",
+      "",
+      "  -C, --cd <DIR>",
+      "          Tell the agent to use the specified directory as its working root",
+      "",
+      "      --add-dir <DIR>",
+      "          Additional directories that should be writable alongside the primary workspace",
+      "",
+      "      --skip-git-repo-check",
+      "          Allow running Codex outside a Git repository",
+      "",
+      "      --ephemeral",
+      "          Run without persisting session files to disk",
+      "",
+      "      --ignore-user-config",
+      "          Do not load `$CODEX_HOME/config.toml`; auth still uses `CODEX_HOME`",
+      "",
+      "      --ignore-rules",
+      "          Do not load user or project execpolicy `.rules` files",
+      "",
+      "      --output-schema <FILE>",
+      "          Path to a JSON Schema file describing the model's final response shape",
+      "",
+      "      --color <COLOR>",
+      "          Specifies color settings for use in the output",
+      "          ",
+      "          [default: auto]",
+      "          [possible values: always, never, auto]",
+      "",
+      "      --json",
+      "          Print events to stdout as JSONL",
+      "",
+      "  -o, --output-last-message <FILE>",
+      "          Specifies file where the last message from the agent should be written",
+      "",
+      "  -h, --help",
+      "          Print help (see a summary with '-h')",
+      "",
+      "  -V, --version",
+      "          Print version"
+    ],
+    "exitCode": 0
+  }
+}

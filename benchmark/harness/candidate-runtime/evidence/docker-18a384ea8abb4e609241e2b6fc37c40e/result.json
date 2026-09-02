@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "cycle": "docker-18a384ea8abb4e609241e2b6fc37c40e",
+  "mode": "docker",
+  "result": "FAIL",
+  "classification": "LAUNCHER_FAILURE",
+  "startedAtUtc": "2026-09-02T07:15:09.4646472Z",
+  "id": "18a384ea8abb4e609241e2b6fc37c40e",
+  "dummyRepository": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-18a384ea8abb4e609241e2b6fc37c40e",
+  "containerName": "rawsqlcandidate18a384ea8abb4e609241e2b6fc37c40e",
+  "label": "rawsql-candidate-runtime=18a384ea8abb4e609241e2b6fc37c40e",
+  "hostPort": 61694,
+  "profilePath": "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\candidate-runtime-profile.json",
+  "profileSha256": "663964f14228ca89cc470ee4b0224b901710ba12abcc124e7895d5e9c64f675f",
+  "launcherSha256": "8e117cdb88761a219b30e09f3f21e632b44cddd513592e51c4dfb4a560b3a3f3",
+  "launch": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\b99306303521e97e\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\raw-sql-rules-candidate-runtime-environment-validation\\benchmark\\harness\\candidate-runtime\\evidence\\docker-18a384ea8abb4e609241e2b6fc37c40e\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "workspace-write",
+      "-C",
+      "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-18a384ea8abb4e609241e2b6fc37c40e",
+      "This is a candidate runtime Docker/PostgreSQL validation, not a product task. Work only in this dummy repository. You must personally use shell tools to do all of the following: run docker version and prove Docker daemon access; start exactly one isolated PostgreSQL 16 container named rawsqlcandidate18a384ea8abb4e609241e2b6fc37c40e with label rawsql-candidate-runtime=18a384ea8abb4e609241e2b6fc37c40e and host port 61694 mapped to 5432; wait until it accepts connections; connect with psql; create table candidate_probe(id int primary key, note text); insert exactly (1,'candidate-created'); query and verify that row; create the empty file .candidate-db-ready; then wait (poll once per second for up to 180 seconds) until .parent-db-verified exists. Only after that acknowledgement, stop and remove your own named container and complete normally. Do not use, inspect, stop, or remove any Docker resource other than the named/labelled container. Do not alter Git history."
+    ],
+    "workingDirectory": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-candidate-runtime-18a384ea8abb4e609241e2b6fc37c40e"
+  },
+  "repository": {
+    "head": "c99573315f7eb452bac4b8cb28a1279b101792bf",
+    "clean": true,
+    "remotes": [],
+    "baselineCommitCount": "1"
+  },
+  "candidateEvidence": {
+    "threadStarted": true,
+    "turnStarted": true,
+    "workingDirectoryObserved": false,
+    "finalResponseCaptured": true,
+    "validExit": true,
+    "modelDockerActivity": true,
+    "modelPostgresActivity": true
+  },
+  "parentVerification": {},
+  "teardown": {
+    "containerRemoved": false,
+    "noLabelLeaks": false,
+    "hostPortReleased": false,
+    "residualAfterFailure": [
+      "f39dace7e885"
+    ]
+  },
+  "process": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 13160
+  },
+  "error": "The property 'acknowledged' cannot be found on this object. Verify that the property exists.",
+  "finishedAtUtc": "2026-09-02T07:17:14.1420265Z"
+}

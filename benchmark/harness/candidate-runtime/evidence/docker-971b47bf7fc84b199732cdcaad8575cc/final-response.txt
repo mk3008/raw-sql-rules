@@ -1,0 +1,8 @@
+done
+
+- Docker daemon access confirmed via `docker version`.
+- Started the specified PostgreSQL 16 container on host port 62911.
+- Created `candidate_probe`, inserted and verified `1|candidate-created`.
+- Created empty `.candidate-db-ready`.
+- Received `.parent-db-verified` acknowledgement.
+- Stopped and removed only the specified container.
