@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRE_OFFICIAL_AMENDED_AND_COMPLETE",
   "preFreezeHead": "bb66e8fb6358d04e09896200554af9cd99856386",
-  "freezeSourceCommit": "bb1c573da340b6b54989117302c19db5e982a0d5",
+  "freezeSourceCommit": "1765fa43cecf97adbdd56e7d293d2cf55e2c311c",
   "amendment": {
     "reason": "No official candidate had started. Run-Calibrations now exits from the suite summary; ExecuteOfficial consumes frozen static preparation evidence instead of repeating CAL01-CAL11 and three qualification cycles.",
     "staticChecksRemovedFromOfficialExecution": [
@@ -14,7 +14,8 @@
       "candidate-runtime qualification",
       "trivial Sol reviewer probe",
       "one neutral runtime smoke"
-    ]
+    ],
+    "treatmentArtifactIdentityCorrection": "No official candidate had started. The released Rules expectation is now obtained byte-for-byte via git cat-file blob stdout BaseStream, rather than PowerShell text conversion. The required released commit and identity gate remain unchanged."
   },
   "officialCandidates": {
     "launchCount": 0,
@@ -58,12 +59,23 @@
     "progressLogSha256": "db6c3866e51c1165fcb5a2743dd39cb468dc10c40d28e3d31561acc78d3c6f45",
     "childProcessWindowStyle": "Hidden"
   },
+  "treatmentArtifactIdentity": {
+    "result": "PASS",
+    "releasedProductCommit": "dceb234b42ffa7b32c1a54e0cce0666580c8f68f",
+    "releasedRulesSha256": "a0e1f71bfbf4ce664f581757284a08b8c9eb6eb28ae9e953cc38965189ab7375",
+    "regressionEvidenceRoot": "C:\\tmp\\rawsql-v05-treatment-identity-regression",
+    "identitySha256": "ecdd37a8e5dc94f28684e91b85de9ccdaa5c2cfd9b4298819fbdfefc280b639e",
+    "tamperedRulesSha256": "4411eaf949852aecb447d93db2c217f57417483a63f5c739e9d34b6ca9d2c6e9",
+    "tamperDetected": true,
+    "verificationMethod": "git cat-file blob stdout BaseStream"
+  },
   "frozenSources": [
     { "path": "Run-Study.ps1", "sha256": "f09b90b321e67dea7bba01ea662f7c548466e72c1145bdc137dec1fdb8e12a6d" },
     { "path": "runner/Run-Calibrations.ps1", "sha256": "fbc95b0bac2871c2729c23244f2ed2a363302e8147b7bd6431010533d11ca310" },
     { "path": "runner/Evaluate.ps1", "sha256": "61000ccf7e8812ab8a79b7a30520a1f71363f448e5853d7fdfddaab89965613d" },
     { "path": "runner/Qualification.ps1", "sha256": "89c203caa68e89adcc767c61d5255ad0c2009e28eb5dd0f2e52148b0a4d224ad" },
-    { "path": "runner/Invoke-HiddenProcess.ps1", "sha256": "29f671556755b6b8743e9ca17c9ddef53853b8c084fff0ce41ec5de2c57d0442" }
+    { "path": "runner/Invoke-HiddenProcess.ps1", "sha256": "29f671556755b6b8743e9ca17c9ddef53853b8c084fff0ce41ec5de2c57d0442" },
+    { "path": "runner/Prepare-Arm.ps1", "sha256": "a244617d63d66405ce286fa627a80325db2826baa39b4353f62a5b701360f1d8" }
   ],
   "finalState": {
     "benchmarkOwnedContainers": 0,
