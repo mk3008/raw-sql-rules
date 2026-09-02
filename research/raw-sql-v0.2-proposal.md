@@ -50,11 +50,11 @@ or maintaining duplicate sources.
 
 ### 2. Parameters are named by meaning at the human review surface
 
-Where source exposes a parameter identity, it is meaningful to a reviewer, such
-as `customerId` or `status`. Placeholder syntax and binding mechanism are not
-prescribed. Positional-only placeholders remain allowed when the surrounding
-binding makes each value's identity reviewable; this requirement does not
-require an adapter or conversion mechanism.
+The reviewable SQL representation identifies parameters by meaningful names,
+such as `customerId` or `status`. Driver-specific positional binding may exist
+below that review boundary, but positional placeholders alone are not the
+intended human review representation. Placeholder syntax, translation
+mechanism, and binding implementation are not prescribed.
 
 ### 3. Current schema is directly inspectable
 
@@ -99,7 +99,8 @@ Raw SQL-specific product requirements and must earn adoption separately.
   migrations, schema sources, driver control statements, or documentation.
   Whether any project needs further exceptions should be decided before a
   normative revision.
-- The proposal preserves a human review surface for parameter meaning but does
-  not decide how a positional-only driver exposes that surface.
+- How particular positional-only stacks satisfy the named review-surface
+  Requirement without unnecessary infrastructure remains an implementation
+  portability question.
 - This document proposes no product-version change. A later human decision is
   required before changing the v0.1 contract, README, or installer.
