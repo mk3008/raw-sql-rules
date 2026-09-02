@@ -31,7 +31,7 @@ function Invoke-State([string]$Name,[string]$Path,[int]$DbPort,[int]$AppPort) {
  } catch {$state.error=$_.Exception.Message} finally {
   if($app){Stop-Descendants ([int]$app.Id);if(-not $app.HasExited){Stop-Process -Id $app.Id -Force};Start-Sleep -Milliseconds 500};if($probe-and(Test-Path $probe)){Remove-Item -LiteralPath $probe -Force -ErrorAction SilentlyContinue}
   if(Test-Path $scratch){$state.stdout=if(Test-Path $out){Get-Content -Raw $out}else{''};$state.stderr=if(Test-Path $err){Get-Content -Raw $err}else{''}}
-  & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') down --volumes --remove-orphans 2>$null
+  & docker compose -p $project -f (Join-Path $fixture 'compose.yaml') down --timeout 15 --volumes --remove-orphans 2>$null
  }; return $state
 }
 try {
