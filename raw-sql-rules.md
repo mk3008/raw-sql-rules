@@ -10,9 +10,7 @@ representation.
 ### 1. Raw SQL is the selected query representation
 
 For covered paths, application data access is expressed as directly reviewable
-ordinary SQL and executed through the selected database driver. This selects the
-representation for those paths; it does not prescribe the rest of the
-application architecture.
+ordinary SQL and executed through the selected database driver.
 
 ### 2. Application concerns remain application-owned
 
