@@ -60,9 +60,9 @@ inspectable current-schema representation may satisfy this requirement. Migratio
 history alone does not satisfy it when current state cannot be determined
 directly.
 
-### 4. Runtime input does not own arbitrary SQL syntax
+### 4. Runtime input does not supply arbitrary SQL syntax
 
-Arbitrary runtime input does not own SQL syntax. The application retains control
+Arbitrary runtime input does not supply SQL syntax. The application retains control
 of SQL syntax and structural choices. Application-controlled, reviewed structural
 variation remains permitted.
 
