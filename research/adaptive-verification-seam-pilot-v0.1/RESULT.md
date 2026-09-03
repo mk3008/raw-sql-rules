@@ -8,3 +8,5 @@ Pre-dispatch qualification stopped the pilot before packet freeze or any officia
 | Expensive | `npm test` | FAIL | 24.372 s |
 
 The cheap broad path did not satisfy the required approximate `<= 1 second` cost boundary. Per the frozen instruction, the fixture must not be enlarged or otherwise adjusted to rescue this pilot. No candidate packet was dispatched and no official candidate turn was consumed.
+
+This INVALID classification reflects failure of the preregistered fixture qualification boundary, not an observed Treatment/Control result; no candidate turn was dispatched.
