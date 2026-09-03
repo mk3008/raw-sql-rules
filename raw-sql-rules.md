@@ -27,7 +27,7 @@ architecture, framework, or a transaction, retry, mapping, or testing strategy.
 
 ### 1. Executable application SQL has a dedicated reviewable source
 
-Each executable application SQL statement has one dedicated authoritative source
+Each executable application SQL statement has one dedicated authoritative source file
 that a reviewer can locate and read directly as ordinary SQL. A runtime `.sql`
 asset is not required: a dedicated host-language source file is acceptable when
 the SQL remains directly visible. Do not hide it behind query construction,
@@ -66,13 +66,13 @@ directly.
 
 ### 4. Runtime input does not own arbitrary SQL syntax
 
-Runtime and user data supply values. The application retains control of SQL
-syntax and structural choices; arbitrary runtime input must not become SQL
-syntax. Application-controlled, reviewed structural variation remains permitted.
+Arbitrary runtime input does not own SQL syntax. The application retains control
+of SQL syntax and structural choices. Application-controlled, reviewed structural
+variation remains permitted.
 
 ### 5. DB/driver-dependent behavior is verifiable at the real boundary
 
 When correctness depends on database-engine or driver behavior, the project has
-a path to verify that behavior through the actual target database and selected
+a path to verify that behavior through the target database engine and selected
 driver. These Rules do not prescribe a test framework, test architecture, or
 execution environment.
