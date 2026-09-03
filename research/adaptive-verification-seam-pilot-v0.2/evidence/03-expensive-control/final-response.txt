@@ -1,0 +1,5 @@
+**done** 完了済みバッチが `complete` を返すよう修正しました。
+
+- 変更: [pipeline.mjs](C:/tmp/adaptive-verification-seam-pilot-v0-2/03-expensive-control/task-expensive/pipeline.mjs:6)
+- 検証: `npm test` 成功（完了・未完了の両ケース）
+- `git diff --check` も問題ありません。

@@ -1,0 +1,25 @@
+{
+  "slot": "01-cheap-control",
+  "primary": "PASS",
+  "broadObserverExitCode": 0,
+  "broadObserverSeconds": 0.0515056,
+  "unrelatedBehaviorVerified": true,
+  "sourceManifest": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "a0eb78a5dbcbf019e010f1912917381c9146dfbef473557ea115857205ef96c5"
+    },
+    {
+      "path": "task-cheap/package.json",
+      "sha256": "c8acfd43cc0319e3ef9a9a94be05c0ff96b13baf794788e4005b9509d0e59990"
+    },
+    {
+      "path": "task-cheap/pipeline.mjs",
+      "sha256": "348d18dcde53c162db1045e483ac59c48c73358d925f93f7522d972fb9677f81"
+    },
+    {
+      "path": "task-cheap/test.mjs",
+      "sha256": "f333271293f855ca55257545e9540e4fd3eb6b9c83d9612d05ab6cfc5609aa71"
+    }
+  ]
+}

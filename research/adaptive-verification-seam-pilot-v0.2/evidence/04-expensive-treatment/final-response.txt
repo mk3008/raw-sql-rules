@@ -1,0 +1,7 @@
+**done**
+
+完了済みバッチが `complete`、未完了バッチが従来どおり `pending` になるよう修正しました。
+
+- 修正: [pipeline.mjs](C:/tmp/adaptive-verification-seam-pilot-v0-2/04-expensive-treatment/task-expensive/pipeline.mjs:6)
+- 検証: `npm test` 成功（既存の完了・未完了ケース）
+- `git diff --check` も成功しました。
