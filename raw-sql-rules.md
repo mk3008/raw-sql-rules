@@ -3,9 +3,7 @@
 ## Scope
 
 These Rules apply to application paths where Raw SQL is the selected query
-representation. They do not claim that Raw SQL is superior to other approaches,
-and they do not require every application or every data-access path to use Raw
-SQL.
+representation.
 
 ## Contracts
 
@@ -18,10 +16,10 @@ application architecture.
 
 ### 2. Application concerns remain application-owned
 
-The application owns connections and pools, transactions, retries, logging where
-applicable, result mapping, migrations, tests, deployment and execution
-integration, and business semantics. These Rules do not prescribe an application
-architecture, framework, or a transaction, retry, mapping, or testing strategy.
+Connections and pools, transactions, retries, logging, result mapping,
+migrations, tests, deployment and execution integration, and business semantics
+remain application-owned. Application architecture and framework remain
+application choices.
 
 ## Requirements
 
