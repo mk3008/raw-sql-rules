@@ -35,3 +35,7 @@ The cost-aware Treatment Rule showed no practical separation in this pilot. It h
 - Extension recommendation: `NO`.
 - v0.1 remains unchanged historical `INVALID / INSUFFICIENT PILOT` evidence.
 - No Raw SQL normative change was made.
+
+## Provenance limitation
+
+The pre-dispatch Git freeze preserved the five possible classification labels and the observer rubric, but it did not preserve the full detailed A–E decision criteria from the pre-dispatch human instruction. Those detailed criteria therefore cannot be independently reconstructed from the freeze commit alone. This does not change the recorded four-turn observations or the `NO_PRACTICAL_SEPARATION_OBSERVED` result.
