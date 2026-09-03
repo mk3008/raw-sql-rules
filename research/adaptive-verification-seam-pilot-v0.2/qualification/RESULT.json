@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "broad": {
+    "cheapSeconds": [
+      0.0382281,
+      0.03386410000000001,
+      0.0335308
+    ],
+    "expensiveSeconds": [
+      24.092775399999997,
+      24.1239266,
+      24.094441800000002
+    ],
+    "cheapMedian": 0.03386410000000001,
+    "expensiveMedian": 24.094441800000002
+  },
+  "focused": {
+    "expensiveSeconds": [
+      0.036406400000007125,
+      0.03548990000000049,
+      0.033622000000003024
+    ],
+    "median": 0.03548990000000049,
+    "preRepairFails": true,
+    "preRepairSeconds": 0.041121799999993526
+  },
+  "ratios": {
+    "expensiveToCheap": 711.5039761871716,
+    "expensiveToFocused": 678.9098250488074
+  },
+  "correctness": {
+    "cheapBaselineFails": true,
+    "cheapKnownRepairPasses": true,
+    "expensiveBaselineFails": true,
+    "expensiveKnownRepairPasses": true,
+    "knownSeamAvoidsUnrelatedWaits": true
+  }
+}

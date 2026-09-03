@@ -1,0 +1,1 @@
+The pipeline reports an item with quantity 0 as available. It should report it as sold-out. Fix the observed behavior while preserving unrelated behavior.
