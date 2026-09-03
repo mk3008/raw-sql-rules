@@ -1,0 +1,37 @@
+{
+  "slot": "01-cheap-control",
+  "startedAt": "2026-09-03T02:10:04.8274033+00:00",
+  "finishedAt": "2026-09-03T02:10:35.8563916+00:00",
+  "elapsedSeconds": 31.0289883,
+  "outcome": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 11752
+  },
+  "invocation": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\87e5fb3433dabab1\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\evidence\\01-cheap-control\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "workspace-write",
+      "-C",
+      "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\01-cheap-control",
+      "The pipeline reports an item with quantity 0 as available. It should report it as sold-out. Fix the observed behavior while preserving unrelated behavior.\r\n"
+    ],
+    "workingDirectory": "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\01-cheap-control"
+  }
+}

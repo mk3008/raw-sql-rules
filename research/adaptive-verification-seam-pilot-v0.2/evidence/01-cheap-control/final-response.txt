@@ -1,0 +1,7 @@
+done
+
+数量判定を `>= 0` から `> 0` に修正し、数量 `0` は `sold-out` となるようにしました。
+
+変更: [pipeline.mjs](C:\tmp\adaptive-verification-seam-pilot-v0-2\01-cheap-control\task-cheap\pipeline.mjs:4)
+
+検証済み: `node task-cheap/test.mjs` は成功しました。

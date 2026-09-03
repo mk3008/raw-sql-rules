@@ -1,0 +1,37 @@
+{
+  "slot": "04-expensive-treatment",
+  "startedAt": "2026-09-03T02:14:51.9842460+00:00",
+  "finishedAt": "2026-09-03T02:15:53.2145863+00:00",
+  "elapsedSeconds": 61.2303403,
+  "outcome": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 16744
+  },
+  "invocation": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\87e5fb3433dabab1\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\evidence\\04-expensive-treatment\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "workspace-write",
+      "-C",
+      "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\04-expensive-treatment",
+      "The pipeline reports a completed batch as pending. It should report it as complete. Fix the observed behavior while preserving unrelated behavior.\r\n"
+    ],
+    "workingDirectory": "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\04-expensive-treatment"
+  }
+}

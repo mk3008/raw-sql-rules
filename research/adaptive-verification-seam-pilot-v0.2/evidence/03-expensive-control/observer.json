@@ -1,0 +1,25 @@
+{
+  "slot": "03-expensive-control",
+  "primary": "PASS",
+  "broadObserverExitCode": 0,
+  "broadObserverSeconds": 24.0937358,
+  "unrelatedBehaviorVerified": true,
+  "sourceManifest": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "a0eb78a5dbcbf019e010f1912917381c9146dfbef473557ea115857205ef96c5"
+    },
+    {
+      "path": "task-expensive/package.json",
+      "sha256": "c8acfd43cc0319e3ef9a9a94be05c0ff96b13baf794788e4005b9509d0e59990"
+    },
+    {
+      "path": "task-expensive/pipeline.mjs",
+      "sha256": "e97131be5fc6c6f989aba5e327a14aac52c83d24999f7bbd584eba4660443d19"
+    },
+    {
+      "path": "task-expensive/test.mjs",
+      "sha256": "ad6826772ebd5279a0e1853dd729e4dc5908af1b5d26343b5d55007a2bf21a04"
+    }
+  ]
+}

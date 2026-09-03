@@ -1,0 +1,7 @@
+done
+
+数量 `0` は `sold-out` になるよう修正しました。
+
+- 変更: `quantity >= 0` → `quantity > 0`
+- 確認: `npm test` 成功
+- 変更ファイル: [pipeline.mjs](C:/tmp/adaptive-verification-seam-pilot-v0-2/02-cheap-treatment/task-cheap/pipeline.mjs:4)

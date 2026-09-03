@@ -1,0 +1,37 @@
+{
+  "slot": "02-cheap-treatment",
+  "startedAt": "2026-09-03T02:11:11.6108334+00:00",
+  "finishedAt": "2026-09-03T02:11:53.0245401+00:00",
+  "elapsedSeconds": 41.4137067,
+  "outcome": {
+    "timedOut": false,
+    "exitCode": 0,
+    "processId": 17908
+  },
+  "invocation": {
+    "fileName": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\87e5fb3433dabab1\\codex.exe",
+    "commandType": "Application",
+    "extension": ".exe",
+    "resolution": "Get-Command codex -All; first Application with .exe extension",
+    "arguments": [
+      "exec",
+      "--json",
+      "--color",
+      "never",
+      "-o",
+      "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\evidence\\02-cheap-treatment\\final-response.txt",
+      "-m",
+      "gpt-5.6-terra",
+      "-c",
+      "model_reasoning_effort=\"medium\"",
+      "-c",
+      "approval_policy=\"never\"",
+      "-s",
+      "workspace-write",
+      "-C",
+      "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\02-cheap-treatment",
+      "The pipeline reports an item with quantity 0 as available. It should report it as sold-out. Fix the observed behavior while preserving unrelated behavior.\r\n"
+    ],
+    "workingDirectory": "C:\\tmp\\adaptive-verification-seam-pilot-v0-2\\02-cheap-treatment"
+  }
+}
