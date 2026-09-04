@@ -76,7 +76,7 @@ function New-Workspace([string] $Slot) {
   Copy-Item -LiteralPath $rules -Destination (Join-Path $workspace 'rules\raw-sql-rules.md') -Force
   Copy-Item -LiteralPath (Join-Path $study "packets\$arm-AGENTS.md") -Destination (Join-Path $workspace 'AGENTS.md') -Force
   Initialize-Repo $workspace $task
-  npm install --ignore-scripts --silent --prefix $workspace
+  npm.cmd --prefix $workspace install --ignore-scripts --silent
   if ($LASTEXITCODE -ne 0) { throw "npm install failed before $Slot" }
   return @{ task=$task; arm=$arm; workspace=$workspace }
 }
@@ -141,7 +141,7 @@ export function createServer(connectionString) {
     } else {
       (Get-Content -Raw (Join-Path $root 'src\server.mjs')).Replace('balance: Number(result.rows[0].balance)', 'balance: String(result.rows[0].balance)') | Set-Content -LiteralPath (Join-Path $root 'src\server.mjs') -Encoding utf8
     }
-    npm install --ignore-scripts --silent --prefix $root; if ($LASTEXITCODE -ne 0) { throw "calibration npm install $task" }
+    npm.cmd --prefix $root install --ignore-scripts --silent; if ($LASTEXITCODE -ne 0) { throw "calibration npm install $task" }
     $good = Invoke-Evaluator $task $root (Port) (Port)
     $bad = Invoke-Evaluator $task (Join-Path $study "fixtures\$task") (Port) (Port)
     $results += [ordered]@{ task=$task; knownGood=$good.primary; knownBad=$bad.primary; goodDefects=@($good.confirmedDefects); badDefects=@($bad.confirmedDefects) }
