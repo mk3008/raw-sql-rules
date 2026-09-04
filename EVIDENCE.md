@@ -1,58 +1,58 @@
 # Evidence and provenance
 
-## Origin
+## Current normative revision
 
-This standalone artifact is derived from prior Ashiba research, but standalone use has no Ashiba runtime, configuration, CLI, or package dependency.
+- Raw SQL Rules: **v0.2**
+- Normative source: [raw-sql-rules.md](raw-sql-rules.md)
+- `raw-sql-rules.md` SHA-256: `D4DAD2A3225CDD5F59E83B5BC13BD38F6D9FA0740217F65D9BAEF4DAAF73B94D`
+- v0.1 remains historical provenance; no v0.2 tag or GitHub Release is claimed
+  here.
 
-For the reasoning behind each Rule and direct links to the underlying studies, see [RATIONALE.md](RATIONALE.md).
+The current product has three non-customizable Contracts and four
+project-customizable Default Requirements. This is a human product structure,
+not a flat list of seven equally mandatory agent instructions.
 
-## Release and normative revision
+## Evidence ladder
 
-- Standalone release: **0.1**
-- Validated Raw SQL Rules research revision: **v6**
-- `raw-sql-rules.md` SHA-256: `A0E1F71BFBF4CE664F581757284A08B8C9EB6EB28AE9E953CC38965189AB7375`
+| Evidence | Question and status | What it supports | What it does not support |
+| --- | --- | --- | --- |
+| Historical Ashiba / v0.1 origin | Archived research provenance. | The historical origin of the standalone boundary and engineering exploration. | A current v0.2 release claim, a runtime dependency, or universal conclusions. |
+| [Valid Raw SQL harness comparison](benchmark/rawsql-harness-sensitivity-ts-v0.6/FINAL-REPORT.md) | No-Rules vs Full-Rules bounded comparison; no practical Primary-quality separation observed. | In these tasks, the complete instruction bundle did not demonstrate a practical final-quality advantage. | Zero isolated effect for every historical Rule or universal agent behavior. |
+| [v0.1 reclassification](research/raw-sql-rules-v0.1-reclassification.md) | Evidence synthesis and product-direction analysis. | Separating durable human/product boundaries from model-dependent operational instructions. | A normative revision or a new causal benchmark. |
+| [v0.2 feasibility](research/raw-sql-v0.2-feasibility-v0.1/RESULT.md) | `PROCEED_TO_NORMATIVE_DRAFT`. | Directly visible dedicated host-language SQL, meaningful review-surface parameter identity with positional drivers, and incremental adoption are practical in the tested scope. | Language/DBMS universality or a prescribed lowering technique/package. |
+| [v0.2 subtraction gate](research/raw-sql-v0.2-subtraction-gate-v0.1/RESULT.md) | `NO_PRACTICAL_SEPARATION_OBSERVED`; four Primary-PASS final trees. | Removing the tested legacy non-Requirement operational/HOW bundle did not show practical degradation on top of identical v0.2 material. | Zero isolated effect for every G1--G5 sentence or universal irrelevance of operational guidance. |
 
-The standalone release number describes product maturity. The v6 label records the research revision that produced the current normative text.
+## Invalid studies
 
-## Primary evidence summary
+Invalid studies are retained as engineering evidence, including harness and
+environment observations. They are not used as valid causal benchmark claims
+and their INVALID findings are not promoted to Primary evidence.
 
-The dedicated Raw SQL Rules work included:
+## Current supported statement
 
-- 20 adversarial scenarios;
-- 10 important boundaries, each receiving two independent fresh judgments;
-- five goal-driven implementation probes whose actual candidate code was retained;
-- a live MySQL 8.4 + mysql2 3.22.3 native-driver lane;
-- an inconclusive completion-contract experiment retained rather than rewritten;
-- one bootstrap-from-zero validation plus two steady-state reuse changes;
-- one final fresh bootstrap and one final fresh steady-state confirmation against the v6 wording;
-- independent read-only review of the final confirmation;
-- no framework, helper, testkit, or mechanical gate required in the evaluated scope.
+In the evaluated tasks, adding the full legacy operational Rules bundle did not
+demonstrate a practical final-quality advantage. Removing the legacy
+non-Requirement operational/HOW layer from the v0.2 Contracts and Default
+Requirements likewise produced no observed practical degradation.
 
-The evaluation intentionally recorded negative evidence. In V3, two fresh implementation probes stopped at mock-only tests, so the result was downgraded to `NOT-YET`. Later V5/V6 work isolated the zero-test bootstrap case and confirmed the final two-state Rule 8 contract instead of hiding those failures.
-
-## Standalone repository dogfood
-
-The standalone repository adds bounded product evidence without replacing the
-Ashiba-derived V0-V6 provenance above:
-
-- A Windows PowerShell portability failure was observed in [PR #8](https://github.com/mk3008/raw-sql-rules/pull/8); a native PowerShell 7+ installer was then added and verified, and exercised by the [clean primary C# / ASP.NET Core / PostgreSQL / VSA dogfood](dogfood/csharp-vsa-postgres/).
-- A [Raw-SQL-Rules-only blind review calibration](dogfood/review-calibration/csharp-vsa-postgres-attempt-0/) measured fresh review behavior without dedicated Review Rules.
-- A [recovery/adjudication calibration](dogfood/recovery-calibration/csharp-vsa-postgres-attempt-0/) preserved separate repair and verification-strengthening outcomes.
-- One [owner-reassignment end-to-end run](dogfood/end-to-end/csharp-vsa-postgres-owner-reassignment/) connected fresh review, adjudication, verification strengthening, re-review, and convergence.
-- The [0.1 readiness assessment](dogfood/0.1-readiness/) concluded `KEEP-AS-IS`: confirmed repeated Raw SQL implementation-contract gaps were `0`; dedicated Review Rules were not adopted; and Source Clarity remains unproven.
+This bounded evidence is distinct from the human product choice: the three
+Contracts define the Raw SQL Rules core, while the four Default Requirements
+are project-customizable defaults.
 
 ## Known limits
 
-- Evidence includes MySQL/mysql2 research and bounded C# / ASP.NET Core / PostgreSQL dogfood; language and DBMS universality are not proven.
-- Agent and task diversity remains small.
-- PostgreSQL named-parameter adaptation remains a separate concern.
-- PowerShell 7+ is tested; Windows PowerShell 5.1 is not evaluated.
-- Review detection is not perfect, and no dedicated Review Rules Arm B comparison has been run.
-- The one connected end-to-end run included a contained orchestration misrouting event; it is not evidence of fully uninterrupted autonomous development.
-- This is not proof of universal agent compliance, universal zero human blockers, or universal irrelevance of dedicated Review Rules.
+- Samples of tasks and models are small.
+- Recent comparisons are PostgreSQL-heavy.
+- The subtraction gate is a bounded four-turn bundle comparison.
+- No universal agent-behavior claim is supported.
+- Bundle comparisons cannot establish zero isolated effect for every sentence.
+- Default Requirements are not proven universally necessary.
+- Raw SQL Rules does not claim Raw SQL universally beats ORM or query-builder
+  approaches.
 
 ## Provenance
 
-Research history remains in [mk3008/ashiba PR #114](https://github.com/mk3008/ashiba/pull/114), merged as `e2211aa2d4048c5b739ba4fc233e898fbb3bad76`. The complete V0-V6 report is [archived in Ashiba](https://github.com/mk3008/ashiba/blob/main/packages/raw-sql-rules/EVALUATION_REPORT.md).
-
-Those links are provenance/evidence only; [raw-sql-rules.md](raw-sql-rules.md) is independently usable here.
+The archived [Ashiba PR #114](https://github.com/mk3008/ashiba/pull/114) and
+its linked materials remain historical provenance. They do not create a
+runtime, configuration, CLI, or package dependency for this standalone
+repository.
