@@ -1,103 +1,79 @@
-# Raw SQL Rules (v6)
+# Raw SQL Rules v0.2
 
-## 1. One visible query representation
+## Scope
 
-Express application data access as ordinary SQL for the selected database
-dialect, executed through that database driver's native API. Do not introduce
-an ORM, query builder, generated query abstraction, hidden data-access layer,
-or alternate execution path to solve a local problem.
+These Rules apply to application paths where Raw SQL is the selected query
+representation.
 
-## 2. Application SQL is source
+## Contracts
 
-Keep application DDL and application DML in independent `.sql` assets,
-including one-line DML. Inline SQL is limited to driver/control/probe statements
-that carry no application data logic: for example `BEGIN`, `COMMIT`,
-`ROLLBACK`, `SELECT 1`, and `SELECT NOW()`. Applications choose how assets are
-loaded, bundled, or imported; filesystem access is not required by these Rules.
+Contracts are the non-customizable core of Raw SQL Rules.
 
-## 3. Current schema is directly inspectable
+### 1. Raw SQL is the selected query representation
 
-Keep canonical DDL for the current database structure in the repository.
-Migration history may be retained, but is not authority for discovering the
-current schema. Organize DDL so a relevant object can be found without replaying
-migrations or treating an impractically large dump as the only useful context.
-There is no file-size threshold: a schema layout fails this Rule when a reviewer
-cannot practically locate the relevant object from repository context alone.
+For covered paths, application data access is expressed as directly reviewable
+ordinary SQL and executed through the selected database driver.
 
-## 4. Runtime data never supplies SQL syntax
+### 2. Application concerns remain application-owned
 
-Bind runtime values with the driver's parameter mechanism. Do not concatenate
-or interpolate external input into application SQL, and do not derive
-identifiers, predicates, joins, projections, expressions, grouping, or other
-SQL syntax from it. Two reviewed, source-controlled exceptions are allowed:
+Connections and pools, transactions, retries, logging, result mapping,
+migrations, tests, deployment and execution integration, and business semantics
+remain application-owned. Application architecture and framework remain
+application choices.
 
-1. Choose an `ORDER BY` form from a finite whitelist of complete clauses.
-2. Choose among complete reviewed SQL assets.
+### 3. Runtime input does not supply arbitrary SQL syntax
 
-The choice itself must be application-controlled; unrecognized input is
-rejected or mapped to a safe default before SQL is selected. A whitelist cannot
-be a disguised free-form fragment channel.
+Runtime input must not supply arbitrary SQL syntax. The application retains
+control of SQL syntax and structural choices. Application-controlled, reviewed
+structural variation remains permitted.
 
-For optional filters, prefer one fixed statement whose values are bound (for
-example a null guard). When that cannot express the needed semantics, choose
-between complete reviewed SQL assets; do not assemble predicate fragments at
-runtime. This keeps the exception finite and reviewable without making a
-fragment-building API.
+## Default Requirements
 
-## 5. Preserve parameter meaning
+Projects may customize or omit these requirements without changing the
+Contracts.
 
-When the selected driver's application-facing API supports native named
-parameters, write the driver's named placeholders in source SQL and bind by
-name. Names describe a value's meaning, not its position. Repeated placeholders
-reuse the same meaning; a maintenance change updates the SQL asset and named
-binding together.
+### 1. Executable application SQL has a dedicated reviewable source
 
-For a positional-only driver, deterministic named-to-positional lowering may be
-needed. That adapter is application-owned and remains outside these Rules; it
-must not require adopting a framework.
+Each executable application SQL statement has one dedicated authoritative source file
+that a reviewer can locate and read directly as ordinary SQL. A runtime `.sql`
+asset is not required: a dedicated host-language source file is acceptable when
+the SQL remains directly visible. Do not hide it behind query construction,
+generated output, or another opaque representation, and do not maintain a
+generated mirror or duplicate canonical source.
 
-## 6. Make non-obvious SQL reviewable
+CTEs and subqueries remain part of one statement. When an operation executes
+multiple executable application statements, each has its own dedicated source.
+File extension and directory layout are application choices.
 
-Format SQL normally. Add comments only for non-obvious business intent,
-correctness/concurrency or locking assumptions, and performance decisions.
-Do not hide meaningful behavior in generated or proprietary syntax.
+This requirement applies only to executable application SQL. It does not impose
+one-statement-per-file on migrations, current or canonical schema sources,
+driver or control statements, non-application health or probe statements, or
+non-executable documentation and examples. These boundaries do not permit
+application query logic to be reclassified to avoid review.
 
-## 7. Keep application ownership with the application
+### 2. Parameters are named by meaning at the human review surface
 
-The application owns connections/pools, transactions, retries, logging, result
-mapping, migrations, deployment, tests, and business semantics. These Rules do
-not prescribe their architecture and must not grow into a framework.
+At the human SQL review surface, parameters are identified by meaningful names,
+such as `customerId`, `tenantId`, `status`, or `completedFrom`. Positional
+placeholders alone, such as `$1`, `$2`, `?`, or `:1`, do not satisfy this
+requirement.
 
-## 8. Verify behavior at the real database boundary
+Driver-specific positional or anonymous binding may exist below that review
+boundary. A derived driver representation is not a second authoritative source
+merely because the selected driver ultimately receives positional placeholders.
 
-The target database engine and its native driver are the authority for query
-behavior and application-facing runtime result types. Exercise representative
-application SQL through that driver against the target engine, preferably in
-automated regression tests using a disposable local or container database.
+### 3. Current schema is directly inspectable
 
-Do not establish a runtime result contract solely from DDL declarations, static
-language types, mocks, or type assertions. Unit and static tests are useful,
-but do not replace database-backed tests for SQL behavior, driver mappings,
-constraints, transactions, or database-specific semantics. Changes to SQL keep
-or extend the relevant regression coverage.
+The current relevant database structure is directly inspectable without requiring
+a reviewer to mentally reconstruct current state by replaying migration history.
+A canonical current DDL source, a schema definition, or another directly
+inspectable current-schema representation may satisfy this requirement. Migration
+history alone does not satisfy it when current state cannot be determined
+directly.
 
-Test architecture remains application-owned. These Rules prescribe no testkit,
-mocking layer, loader, or test pyramid.
+### 4. DB/driver-dependent behavior is verifiable at the real boundary
 
-Follow the application's existing database-backed regression pattern. Changed
-database behavior remains covered by that pattern; an existing regression may
-be reused when it already proves the changed behavior.
-
-If no database-backed regression path exists, establish the smallest reusable
-path: apply only the relevant canonical DDL to the target database, execute
-representative application SQL through the native driver, assert meaningful
-behavior and relevant runtime result representations, and provide one
-repeatable command. Do not create broad test infrastructure merely to satisfy
-this bootstrap.
-
-## Decision rule
-
-When a request appears to need a new abstraction, first try: existing SQL asset
-+ canonical DDL + native driver + application test. If this cannot work, state
-the exact mechanical fact that requires code; do not silently add a framework
-or helper.
+When correctness depends on database-engine or driver behavior, the project has
+a path to verify that behavior through the target database engine and selected
+driver. These Rules do not prescribe a test framework, test architecture, or
+execution environment.
