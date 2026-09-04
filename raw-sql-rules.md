@@ -1,4 +1,4 @@
-# Raw SQL Rules v0.2 — Draft
+# Raw SQL Rules v0.2
 
 ## Scope
 
