@@ -1,0 +1,7 @@
+CREATE TABLE accounts (
+  id uuid PRIMARY KEY,
+  balance bigint NOT NULL
+);
+
+INSERT INTO accounts (id, balance) VALUES
+  ('11111111-1111-1111-1111-111111111111', 9007199254740993);
