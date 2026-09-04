@@ -7,6 +7,8 @@ representation.
 
 ## Contracts
 
+Contracts are the non-customizable core of Raw SQL Rules.
+
 ### 1. Raw SQL is the selected query representation
 
 For covered paths, application data access is expressed as directly reviewable
@@ -19,7 +21,16 @@ migrations, tests, deployment and execution integration, and business semantics
 remain application-owned. Application architecture and framework remain
 application choices.
 
-## Requirements
+### 3. Runtime input does not supply arbitrary SQL syntax
+
+Runtime input must not supply arbitrary SQL syntax. The application retains
+control of SQL syntax and structural choices. Application-controlled, reviewed
+structural variation remains permitted.
+
+## Default Requirements
+
+Projects may customize or omit these requirements without changing the
+Contracts.
 
 ### 1. Executable application SQL has a dedicated reviewable source
 
@@ -60,13 +71,7 @@ inspectable current-schema representation may satisfy this requirement. Migratio
 history alone does not satisfy it when current state cannot be determined
 directly.
 
-### 4. Runtime input does not supply arbitrary SQL syntax
-
-Arbitrary runtime input does not supply SQL syntax. The application retains control
-of SQL syntax and structural choices. Application-controlled, reviewed structural
-variation remains permitted.
-
-### 5. DB/driver-dependent behavior is verifiable at the real boundary
+### 4. DB/driver-dependent behavior is verifiable at the real boundary
 
 When correctness depends on database-engine or driver behavior, the project has
 a path to verify that behavior through the target database engine and selected
