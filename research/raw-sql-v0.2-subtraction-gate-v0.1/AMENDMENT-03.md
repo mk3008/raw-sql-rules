@@ -9,4 +9,4 @@ only assigning `process.exitCode`.
 This changes evaluator process termination only. The HTTP/DB checks, produced
 JSON, PASS/FAIL semantics, fixtures, prompts, arm packets, candidate profile,
 order, and classification remain unchanged. `FREEZE.md` remains unchanged; this
-is the third and final recorded pre-launch infrastructure correction.
+is the third recorded pre-launch infrastructure correction.

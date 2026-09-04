@@ -61,7 +61,7 @@ function Stop-Database([string] $Name) { if ($Name) { & docker.exe rm -f $Name *
 function Install-Dependencies([string] $Path) {
   Push-Location $Path
   try {
-    npm.cmd install --ignore-scripts --silent
+    npm.cmd install --ignore-scripts --silent --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) { throw "npm install failed in $Path" }
   } finally { Pop-Location }
 }
