@@ -58,6 +58,13 @@ function Start-Database([string] $Task, [int] $DbPort) {
   return $name
 }
 function Stop-Database([string] $Name) { if ($Name) { & docker.exe rm -f $Name *> $null } }
+function Install-Dependencies([string] $Path) {
+  Push-Location $Path
+  try {
+    npm.cmd install --ignore-scripts --silent
+    if ($LASTEXITCODE -ne 0) { throw "npm install failed in $Path" }
+  } finally { Pop-Location }
+}
 function Invoke-Evaluator([string] $Task, [string] $Workspace, [int] $DbPort, [int] $AppPort) {
   $container = $null
   try {
@@ -76,8 +83,7 @@ function New-Workspace([string] $Slot) {
   Copy-Item -LiteralPath $rules -Destination (Join-Path $workspace 'rules\raw-sql-rules.md') -Force
   Copy-Item -LiteralPath (Join-Path $study "packets\$arm-AGENTS.md") -Destination (Join-Path $workspace 'AGENTS.md') -Force
   Initialize-Repo $workspace $task
-  npm.cmd --prefix $workspace install --ignore-scripts --silent
-  if ($LASTEXITCODE -ne 0) { throw "npm install failed before $Slot" }
+  Install-Dependencies $workspace
   return @{ task=$task; arm=$arm; workspace=$workspace }
 }
 function Observe([string] $Slot, [hashtable] $Prepared, [object] $Evaluation, [object] $Turn, [object] $Wait) {
@@ -141,7 +147,7 @@ export function createServer(connectionString) {
     } else {
       (Get-Content -Raw (Join-Path $root 'src\server.mjs')).Replace('balance: Number(result.rows[0].balance)', 'balance: String(result.rows[0].balance)') | Set-Content -LiteralPath (Join-Path $root 'src\server.mjs') -Encoding utf8
     }
-    npm.cmd --prefix $root install --ignore-scripts --silent; if ($LASTEXITCODE -ne 0) { throw "calibration npm install $task" }
+    Install-Dependencies $root
     $good = Invoke-Evaluator $task $root (Port) (Port)
     $bad = Invoke-Evaluator $task (Join-Path $study "fixtures\$task") (Port) (Port)
     $results += [ordered]@{ task=$task; knownGood=$good.primary; knownBad=$bad.primary; goodDefects=@($good.confirmedDefects); badDefects=@($bad.confirmedDefects) }
