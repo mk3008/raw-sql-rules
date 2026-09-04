@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "officialLaunchCount": 0,
+  "sourceRun": "run-ea85c90dab4a484b99ffc2a1eaef179a",
+  "taskA": {
+    "knownGood": "PASS",
+    "knownBad": "FAIL",
+    "knownBadDefects": [
+      "optional status filter is wrong",
+      "closed filter is wrong",
+      "unknown sort is not rejected",
+      "injection-shaped sort is not rejected"
+    ]
+  },
+  "taskB": {
+    "knownGood": "PASS",
+    "knownBad": "FAIL",
+    "knownBadDefects": [
+      "bigint decimal representation lost precision or is not a string"
+    ]
+  }
+}

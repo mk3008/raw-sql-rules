@@ -1,0 +1,22 @@
+[
+  {
+    "path": "package.json",
+    "sha256": "4557c3aaf1f803ec38e69582a0f52dd1c9474946b31ea6254c47a2ffac4d5e95"
+  },
+  {
+    "path": "database\\schema.sql",
+    "sha256": "efaec521de3ccc66d559140507d9f32d8182a21b62908ea631f9f2445df14be2"
+  },
+  {
+    "path": "rules\\raw-sql-rules.md",
+    "sha256": "989ea5bd3758b948fc0855b331d0e2d863769cb4c17656b4cae27bee4fa61c47"
+  },
+  {
+    "path": "src\\server.mjs",
+    "sha256": "49dea5edc660e50747810255cdbc86f9c36aa3471b1d4104837a211e75ead5d7"
+  },
+  {
+    "path": "src\\WorkItems.sql.mjs",
+    "sha256": "a53eddae52b3cc2ad4d6087d5c7d193f03b02b6a073fb3960aaecd2cfdb0a680"
+  }
+]
