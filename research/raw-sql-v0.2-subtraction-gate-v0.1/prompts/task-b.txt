@@ -1,0 +1,3 @@
+Fix `GET /accounts/:id` so that it returns the stored account balance as an exact
+decimal string for every valid account. Preserve the existing response shape and
+not-found behavior.

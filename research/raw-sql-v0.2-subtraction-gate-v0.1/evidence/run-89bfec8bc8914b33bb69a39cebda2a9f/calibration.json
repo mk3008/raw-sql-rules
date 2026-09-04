@@ -1,0 +1,23 @@
+[
+  {
+    "task": "task-a",
+    "knownGood": "PASS",
+    "knownBad": "FAIL",
+    "goodDefects": [],
+    "badDefects": [
+      "optional status filter is wrong",
+      "closed filter is wrong",
+      "unknown sort is not rejected",
+      "injection-shaped sort is not rejected"
+    ]
+  },
+  {
+    "task": "task-b",
+    "knownGood": "PASS",
+    "knownBad": "FAIL",
+    "goodDefects": [],
+    "badDefects": [
+      "bigint decimal representation lost precision or is not a string"
+    ]
+  }
+]
