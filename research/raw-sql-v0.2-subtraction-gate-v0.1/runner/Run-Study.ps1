@@ -24,7 +24,7 @@ function SourceManifest([string] $Path) {
   @(Get-ChildItem -LiteralPath $Path -File -Recurse | Where-Object {
     $_.FullName -notmatch '[\\/]node_modules[\\/]' -and $_.FullName -notmatch '[\\/]\.git[\\/]'
   } | ForEach-Object {
-    [ordered]@{ path=$_.FullName.Substring($Path.Length).TrimStart('\\','/').Replace('\\','/'); sha256=Hash $_.FullName }
+    [ordered]@{ path=$_.FullName.Substring($Path.Length).TrimStart([char[]]@('\','/')).Replace('\\','/'); sha256=Hash $_.FullName }
   } | Sort-Object path)
 }
 function Initialize-Repo([string] $Path, [string] $Task) {
