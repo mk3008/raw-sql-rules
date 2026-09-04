@@ -39,10 +39,8 @@ cat > "$tmp_block" <<EOF
 $START
 ## Raw SQL
 
-Before changing or reviewing a Raw SQL data-access path, read \
-\`$RULES_PATH\`.
-Follow it as the repository contract for Raw SQL work.
-Before merge, run a fresh review of Raw SQL data-access changes against the requirements, canonical DDL, and these Rules.
+For Raw SQL data-access work, read \`$RULES_PATH\` and follow it
+as the repository contract.
 $END
 EOF
 

@@ -85,9 +85,8 @@ try {
         $Start,
         '## Raw SQL',
         '',
-        "Before changing or reviewing a Raw SQL data-access path, read ``$RulesPath``.",
-        'Follow it as the repository contract for Raw SQL work.',
-        'Before merge, run a fresh review of Raw SQL data-access changes against the requirements, canonical DDL, and these Rules.',
+        "For Raw SQL data-access work, read ``$RulesPath`` and follow it",
+        'as the repository contract.',
         $End
     ) -join $lineEnding
 
