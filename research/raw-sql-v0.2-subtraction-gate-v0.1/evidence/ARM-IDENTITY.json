@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "officialLaunchCount": 0,
+  "comparison": "For each task, Reduced and Guided receive byte-identical fixture files, prompt, and frozen v0.2 Rules copy. The only candidate-visible difference is the root AGENTS.md content.",
+  "rulesGitBlob": "b89b3f0e6c6d4dcfaaf990d79d20a7f0ba3c0e87",
+  "rulesSha256": "989ea5bd3758b948fc0855b331d0e2d863769cb4c17656b4cae27bee4fa61c47",
+  "reducedAgentsSha256": "1cb083168529b7371b9a74179f878f1f9367d0ace47d09a47604282c9a4d6a5a",
+  "guidedAgentsSha256": "9ec4996e8412129122b3109972dc1d1f6ab1292c5a8d98e44fabf92044716b62",
+  "sharedInputs": [
+    "frozen/rules/raw-sql-rules.md",
+    "fixtures/task-a/**",
+    "fixtures/task-b/**",
+    "prompts/task-a.txt",
+    "prompts/task-b.txt"
+  ]
+}
