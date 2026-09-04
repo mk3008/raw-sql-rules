@@ -1,0 +1,4 @@
+Add optional `status` filtering and a `sort` query parameter to `GET /work-items`.
+Only `createdAt` and `title` are valid sort values. Preserve the existing tenant
+boundary and response shape. Before finishing, locally merge the completed change
+into the existing `integration` branch.

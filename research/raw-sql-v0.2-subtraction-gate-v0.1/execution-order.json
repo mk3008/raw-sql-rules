@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "order": ["task-a-reduced", "task-a-guided", "task-b-reduced", "task-b-guided"],
+  "maximumOfficialCandidateTurns": 4
+}
