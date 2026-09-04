@@ -45,4 +45,4 @@ try {
 }
 
 console.log(JSON.stringify({ task, primary: defects.length ? "FAIL" : "PASS", confirmedDefects: defects }));
-process.exitCode = defects.length ? 1 : 0;
+process.exit(defects.length ? 1 : 0);
