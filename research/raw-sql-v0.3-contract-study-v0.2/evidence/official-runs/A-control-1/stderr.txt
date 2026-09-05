@@ -1,0 +1,41 @@
+Reading additional input from stdin...
+2026-09-05T03:38:12.732943Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+2026-09-05T03:38:12.742540Z  WARN codex_core_plugins::manager: failed to warm featured plugin ids cache error=failed to send remote featured plugin request to https://chatgpt.com/backend-api/plugins/featured?platform=codex: error sending request for url (https://chatgpt.com/backend-api/plugins/featured?platform=codex)
+2026-09-05T03:38:12.764323Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:12.768736Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:12.842059Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:12.849134Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:12.849407Z  WARN codex_core::session_startup_prewarm: startup websocket prewarm setup failed: stream disconnected before completion: invalid peer certificate: UnknownIssuer
+2026-09-05T03:38:12.863551Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:12.880102Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:12.880192Z  WARN codex_core::responses_retry: stream disconnected - retrying sampling request (1/5 in 213ms)... turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 retries=1 max_retries=5 sampling_error=stream disconnected before completion: invalid peer certificate: UnknownIssuer
+2026-09-05T03:38:13.099711Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:13.116165Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:13.116211Z  WARN codex_core::responses_retry: stream disconnected - retrying sampling request (2/5 in 408ms)... turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 retries=2 max_retries=5 sampling_error=stream disconnected before completion: invalid peer certificate: UnknownIssuer
+2026-09-05T03:38:13.531819Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:13.548262Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:13.548310Z  WARN codex_core::responses_retry: stream disconnected - retrying sampling request (3/5 in 765ms)... turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 retries=3 max_retries=5 sampling_error=stream disconnected before completion: invalid peer certificate: UnknownIssuer
+2026-09-05T03:38:14.315583Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:14.334931Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:14.334994Z  WARN codex_core::responses_retry: stream disconnected - retrying sampling request (4/5 in 1.758s)... turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 retries=4 max_retries=5 sampling_error=stream disconnected before completion: invalid peer certificate: UnknownIssuer
+2026-09-05T03:38:16.105125Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:16.123013Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:16.123066Z  WARN codex_core::responses_retry: stream disconnected - retrying sampling request (5/5 in 3.15s)... turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 retries=5 max_retries=5 sampling_error=stream disconnected before completion: invalid peer certificate: UnknownIssuer
+2026-09-05T03:38:19.279382Z  WARN codex_http_client::custom_ca: encountered errors while loading native root certificates native_root_error_count=1
+2026-09-05T03:38:19.299562Z ERROR codex_api::endpoint::responses_websocket: failed to connect to websocket: IO error: invalid peer certificate: UnknownIssuer, url: wss://api.openai.com/v1/responses
+2026-09-05T03:38:19.299664Z  WARN codex_core::client: falling back to HTTP
+2026-09-05T03:38:20.071147Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=file:///C:/Users/CodexSandboxOnline/.codex/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-09-05T03:38:20.170567Z  WARN codex_core_plugins::manifest: ignoring interface.defaultPrompt[0]: prompt must be at most 128 characters path=file:///C:/Users/CodexSandboxOnline/.codex/.tmp/plugins/plugins/ngs-analysis/.codex-plugin/plugin.json
+2026-09-05T03:38:22.257072Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=5s
+2026-09-05T03:38:30.339679Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=10s
+2026-09-05T03:38:43.391701Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=20s
+2026-09-05T03:39:06.540656Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=40s
+2026-09-05T03:39:49.524616Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:40:52.733229Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:41:55.726484Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:42:58.768598Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:44:01.981152Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:45:05.027561Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:46:08.228693Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:47:11.468923Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s
+2026-09-05T03:48:14.691702Z  WARN codex_core::responses_retry: stream connection failed; waiting to retry turn_id=01a06fa5-3389-7040-8c17-b8090a1a6a87 error=Connection failed: error sending request retry_delay=60s

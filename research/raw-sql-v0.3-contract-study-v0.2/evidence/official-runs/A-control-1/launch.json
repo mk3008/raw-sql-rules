@@ -1,0 +1,22 @@
+{
+  "slot": "A-control-1",
+  "scenario": "A",
+  "arm": "control",
+  "startedAt": "2026-09-05T03:38:12.373Z",
+  "endedAt": "2026-09-05T03:48:19.245Z",
+  "result": {
+    "code": 4294967295,
+    "signal": null
+  },
+  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-NGRigt",
+  "runtime": {
+    "cwd": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-NGRigt",
+    "expectedRoot": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-NGRigt",
+    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-NGRigt",
+    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-NGRigt\\.git",
+    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-NGRigt\\.git",
+    "head": "9fdc4bbb3224f72708d71ee30688b6309b8101b4",
+    "tree": "827f8195b74fc5f50fce95d5514f30afddeddc94",
+    "pass": true
+  }
+}
