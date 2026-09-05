@@ -137,6 +137,8 @@ try {
         Invoke-Case $kind 'missing-end' "$start`nbody`n" 'old Rules' 'ok' $false
         Invoke-Case $kind 'missing-start' "body`n$end`n" 'old Rules' 'ok' $false
         Invoke-Case $kind 'ambiguous' "$start`n$start`nbody`n$end`n" 'old Rules' 'ok' $false
+        Invoke-Case $kind 'embedded-marker' "before $start`nbody`n" 'old Rules' 'ok' $false
+        Invoke-Case $kind 'end-before-start' "$end`nbody`n$start`n" 'old Rules' 'ok' $false
         Invoke-Case $kind 'download-failure' "human`n" 'old Rules' 'fail' $false
 
         $samePathDir = Join-Path $base "$kind-same-path"
@@ -152,6 +154,11 @@ try {
         $script:passed++
 
         if ($kind -eq 'powershell') {
+            $casePathResult = Invoke-Target 'powershell' $samePathDir 'ok' '.\agents.md' 'AGENTS.md'
+            Assert-True ($casePathResult.Code -ne 0) 'powershell case-only target paths unexpectedly succeeded'
+            Assert-True ((Get-Bytes (Join-Path $samePathDir 'AGENTS.md')) -ceq $before) 'powershell case-only target paths changed AGENTS'
+            $script:passed++
+
             $rollbackDir = Join-Path $base 'powershell-rollback'
             [IO.Directory]::CreateDirectory($rollbackDir) | Out-Null
             Copy-Item -LiteralPath (Join-Path $root 'install.ps1') -Destination (Join-Path $rollbackDir 'install.ps1')
