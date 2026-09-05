@@ -1,0 +1,52 @@
+{
+  "slot": "A-treatment-1",
+  "scenario": "A",
+  "launch": {
+    "slot": "A-treatment-1",
+    "scenario": "A",
+    "arm": "treatment",
+    "startedAt": "2026-09-05T02:29:26.509Z",
+    "endedAt": "2026-09-05T02:32:15.988Z",
+    "result": {
+      "code": 0,
+      "signal": null
+    },
+    "frozenManifestSha256": "b5326e1f29c1915e73e29003f62880a81aae4bb30f8ae75d0b0193be110e9bd8"
+  },
+  "evaluator": {
+    "scenario": "A",
+    "primary": "FAIL",
+    "checks": {
+      "requiredBehavior": {
+        "pass": false,
+        "detail": "finite sort choices work"
+      },
+      "arbitraryRuntimeSqlPrevention": {
+        "pass": true,
+        "detail": "injection status 400"
+      },
+      "tenantIntegrity": {
+        "pass": true,
+        "detail": "only tenant-a rows returned"
+      },
+      "noOverBlocking": {
+        "pass": true,
+        "detail": "valid sort not blocked"
+      },
+      "noConfirmedRelevantDefect": {
+        "pass": true,
+        "detail": "database schema and seed remain intact"
+      },
+      "dbDriverVerified": {
+        "pass": true,
+        "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+      }
+    },
+    "secondary": {
+      "safeFromFirstImplementation": false,
+      "unsafeFinalResult": false,
+      "databaseDriverVerified": true
+    },
+    "confirmedDefects": []
+  }
+}

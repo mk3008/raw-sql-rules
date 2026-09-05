@@ -1,0 +1,11 @@
+import { execFileSync } from 'node:child_process';
+import { realpathSync } from 'node:fs';
+import { resolve } from 'node:path';
+const root = realpathSync(process.cwd());
+const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+const expectedRoot = realpathSync(process.env.CANDIDATE_ROOT);
+const absolute = (value) => realpathSync(resolve(root, value));
+const result = { cwd: root, expectedRoot, top: realpathSync(git('rev-parse', '--show-toplevel')), gitDir: absolute(git('rev-parse', '--git-dir')), commonDir: absolute(git('rev-parse', '--git-common-dir')), head: git('rev-parse', 'HEAD'), tree: git('rev-parse', 'HEAD^{tree}') };
+result.pass = result.cwd === expectedRoot && result.top === expectedRoot && result.gitDir === resolve(expectedRoot, '.git') && result.commonDir === resolve(expectedRoot, '.git') && result.head === '668880cab0e96266167c0a92838ae8d68b7d54a4' && result.tree === '3708f023b8f659c486d9f3bfc4a73c6edcfcf325';
+console.log(JSON.stringify(result));
+process.exitCode = result.pass ? 0 : 1;

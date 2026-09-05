@@ -1,0 +1,93 @@
+{
+  "reason": "one diagnostic rerun of revised post-hoc verifier ERRORs",
+  "results": [
+    {
+      "slot": "A-treatment-1",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "B-control-2",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "B-treatment-2",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "C-treatment-2",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "D-treatment-1",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "D-treatment-2",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    }
+  ]
+}

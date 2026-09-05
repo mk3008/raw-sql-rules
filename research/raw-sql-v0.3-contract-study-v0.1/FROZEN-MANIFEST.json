@@ -1,0 +1,44 @@
+{
+  "baselineCommit": "f742ca1c27d0ddd0b9f464bbc487181a2a64d2d3",
+  "frozenAt": "2026-09-05T02:25:00Z",
+  "excludedPreflights": [
+    {
+      "slot": "A-control-1",
+      "reason": "tool_failure: codex CLI rejects simultaneous --sandbox and --approve-for-me before a candidate session starts",
+      "evidence": "evidence/preflight/PRELAUNCH-EXCLUSIONS.md"
+    },
+    {
+      "slot": "A-control-1",
+      "reason": "tool_failure: launcher left stdin open, so codex waited before consuming the candidate prompt",
+      "evidence": "evidence/preflight/A-control-1-stdin-open/launch.json"
+    }
+  ],
+  "profile": { "model": "gpt-5.6-terra", "reasoningEffort": "medium", "sandbox": "workspace-write" },
+  "officialLaunches": 20,
+  "order": "execution-order.json",
+  "calibration": { "result": "PASS", "file": "evaluator/calibration-results.json", "sha256": "3ee2b3f6cbbfe728026eb2973225cc5bdbc74ebbf3dd87c9723ebf49f6d00410" },
+  "sha256": {
+    "RESEARCH-MAP.md": "b9185b2e74de6737ccd8ca817ed1089cd48ee949123d17607ae77636d4e06c24",
+    "CLASSIFICATION-ANALYSIS.md": "2970b9ce7f217c5aa9bf9f48227eb744ffecf6e28e0a1c7d92bf7fc6ba64bbb4",
+    "EVIDENCE-SYNTHESIS.md": "b1744b4544dd9627742b55bfd046dba1f1f2d0c69b7ab72a48309542fa79e795",
+    "PREREGISTRATION.md": "720208c5512341a31fed3679b677d430bcb39bba01d099e5e1f7125a7edd59fa",
+    "SCENARIOS.md": "e0ce1b180fa2de8bf1c6c9841ada3da53304ebcb9aadb0aec4fcca934d5734c1",
+    "candidate-tasks.json": "c74ba879d89438995518854daf856b27300bae03b5e2d9e615b2a7753257581d",
+    "execution-order.json": "c60dfb5b5f3f5598458f9e1d6a808493066793fd12772bda8713cba4555a2630",
+    "packets/control-AGENTS.md": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+    "packets/treatment-AGENTS.md": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+    "fixture/compose.yaml": "3896dc610c92a4399445fb52febace15466d7b2ec56c7af0c025368baf8e007b",
+    "fixture/package.json": "473784d576565f963ab6d35f50f1c66720954589d6a092a1623ccfd32040d7c3",
+    "fixture/package-lock.json": "7212c4c9de9e79968271edc9a2e9c2050eac62421d0c4c5648dfbc93d5f89c52",
+    "fixture/database/init.sql": "d593f07bebf552ffb13e5cf1d223876e3590607fa8dc13f12a37e2dea083b7a7",
+    "fixture/src/server.js": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+    "fixture/src/legacy-sort.js": "d78bc2218080f6f5764d8711210a19a7def20215128668ffc459cf1cee48f400",
+    "evaluator/run.mjs": "f9da57ee64147e77b906b2ff6ed50834b39c529a23e84fc471360202320a0753",
+    "evaluator/calibrate.mjs": "fabcc18d5f966782c2c238066c988427ed16b366b3764cb3bb598312752c0b76",
+    "evaluator/variants/known-good.js": "314ab203f7800bb82d05c02db7b0001a86a793518d6ff865df29eb3f0bc67e84",
+    "evaluator/variants/known-bad.js": "52ec3b1f448ebcafadbbc3300fffef1cb08135fdb0ce60ae48186c5fe2ab4428",
+    "evaluator/package.json": "b850d7d8f8e4bae801683bee9a53259c8bdcc300bf59826e415493804e66d83d",
+    "evaluator/package-lock.json": "2029003fe426c98b6369d5664c063109d01bea6759c81b6e6c5005498212dd4d",
+    "launch.mjs": "65c73d7118a6d1173bb17120b94e4aa2c98f08b45ba5abf4cfa0768285238e29"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "slot": "A-treatment-1",
+  "scenario": "A",
+  "arm": "treatment",
+  "replacementFor": null,
+  "cliVersion": "codex-cli 0.153.3",
+  "startedAt": "2026-09-05T05:12:19.837Z",
+  "endedAt": "2026-09-05T05:14:19.989Z",
+  "result": {
+    "code": 0,
+    "signal": null
+  },
+  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-treatment-1-j1I4va",
+  "runtime": {
+    "cwd": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-treatment-1-j1I4va",
+    "expectedRoot": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-treatment-1-j1I4va",
+    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-treatment-1-j1I4va",
+    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-treatment-1-j1I4va\\.git",
+    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-treatment-1-j1I4va\\.git",
+    "head": "c289e8b1f266aa8673262a8bc97fe3a427e3eab0",
+    "tree": "0b9acd9e6302e26d8ea09ce9f7d461d479a5bf21",
+    "pass": true
+  }
+}

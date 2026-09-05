@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "goodPreflight": true,
+  "parentReferenceRejectedBeforeSpawn": true,
+  "goodExitCode": 0,
+  "parentReferenceExitCode": 1,
+  "approvedReplacementPreflight": true,
+  "duplicateNormalRejectedBeforeSpawn": true,
+  "unapprovedReplacementRejectedBeforeSpawn": true,
+  "originalEvidenceUnchanged": true,
+  "sentinelCreated": false,
+  "testedAt": "2026-09-05T05:11:48.190Z"
+}

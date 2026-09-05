@@ -1,0 +1,312 @@
+{
+  "analysis": "post-hoc; not part of frozen Primary",
+  "evaluated": 20,
+  "results": [
+    {
+      "slot": "A-control-1-replacement-1",
+      "arm": "control",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "A-control-2",
+      "arm": "control",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "A-treatment-1",
+      "arm": "treatment",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed",
+        "appStderr": "node:events:496\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EACCES: permission denied 127.0.0.1:57005\r\n    at Server.setupListenHandle [as _listen2] (node:net:1915:21)\r\n    at listenInCluster (node:net:1994:12)\r\n    at node:net:2203:7\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1973:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\r\n  code: 'EACCES',\r\n  errno: -4092,\r\n  syscall: 'listen',\r\n  address: '127.0.0.1',\r\n  port: 57005\r\n}\r\n\r\nNode.js v22.14.0\r\n"
+      }
+    },
+    {
+      "slot": "A-treatment-2",
+      "arm": "treatment",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "B-control-1",
+      "arm": "control",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "B-control-2",
+      "arm": "control",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed",
+        "appStderr": "node:events:496\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EACCES: permission denied 127.0.0.1:57127\r\n    at Server.setupListenHandle [as _listen2] (node:net:1915:21)\r\n    at listenInCluster (node:net:1994:12)\r\n    at node:net:2203:7\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1973:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\r\n  code: 'EACCES',\r\n  errno: -4092,\r\n  syscall: 'listen',\r\n  address: '127.0.0.1',\r\n  port: 57127\r\n}\r\n\r\nNode.js v22.14.0\r\n"
+      }
+    },
+    {
+      "slot": "B-treatment-1",
+      "arm": "treatment",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "B-treatment-2",
+      "arm": "treatment",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed",
+        "appStderr": "node:events:496\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EACCES: permission denied 127.0.0.1:57169\r\n    at Server.setupListenHandle [as _listen2] (node:net:1915:21)\r\n    at listenInCluster (node:net:1994:12)\r\n    at node:net:2203:7\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1973:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\r\n  code: 'EACCES',\r\n  errno: -4092,\r\n  syscall: 'listen',\r\n  address: '127.0.0.1',\r\n  port: 57169\r\n}\r\n\r\nNode.js v22.14.0\r\n"
+      }
+    },
+    {
+      "slot": "C-control-1",
+      "arm": "control",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "C-control-2",
+      "arm": "control",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "C-treatment-1",
+      "arm": "treatment",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "C-treatment-2",
+      "arm": "treatment",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed",
+        "appStderr": "node:events:496\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EACCES: permission denied 127.0.0.1:57016\r\n    at Server.setupListenHandle [as _listen2] (node:net:1915:21)\r\n    at listenInCluster (node:net:1994:12)\r\n    at node:net:2203:7\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1973:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\r\n  code: 'EACCES',\r\n  errno: -4092,\r\n  syscall: 'listen',\r\n  address: '127.0.0.1',\r\n  port: 57016\r\n}\r\n\r\nNode.js v22.14.0\r\n"
+      }
+    },
+    {
+      "slot": "D-control-1",
+      "arm": "control",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "D-control-2",
+      "arm": "control",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "D-treatment-1",
+      "arm": "treatment",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed",
+        "appStderr": "node:events:496\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EACCES: permission denied 127.0.0.1:57027\r\n    at Server.setupListenHandle [as _listen2] (node:net:1915:21)\r\n    at listenInCluster (node:net:1994:12)\r\n    at node:net:2203:7\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1973:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\r\n  code: 'EACCES',\r\n  errno: -4092,\r\n  syscall: 'listen',\r\n  address: '127.0.0.1',\r\n  port: 57027\r\n}\r\n\r\nNode.js v22.14.0\r\n"
+      }
+    },
+    {
+      "slot": "D-treatment-2",
+      "arm": "treatment",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed",
+        "appStderr": "node:events:496\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: listen EACCES: permission denied 127.0.0.1:57028\r\n    at Server.setupListenHandle [as _listen2] (node:net:1915:21)\r\n    at listenInCluster (node:net:1994:12)\r\n    at node:net:2203:7\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\nEmitted 'error' event on Server instance at:\r\n    at emitErrorNT (node:net:1973:8)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\r\n  code: 'EACCES',\r\n  errno: -4092,\r\n  syscall: 'listen',\r\n  address: '127.0.0.1',\r\n  port: 57028\r\n}\r\n\r\nNode.js v22.14.0\r\n"
+      }
+    },
+    {
+      "slot": "E-control-1",
+      "arm": "control",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "E-control-2",
+      "arm": "control",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "E-treatment-1",
+      "arm": "treatment",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "E-treatment-2",
+      "arm": "treatment",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    }
+  ]
+}

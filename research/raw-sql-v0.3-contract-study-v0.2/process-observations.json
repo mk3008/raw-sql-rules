@@ -1,0 +1,811 @@
+{
+  "method": "event IDs extracted from preserved events.jsonl; evaluator work excluded",
+  "runs": [
+    {
+      "slot": "A-control-1-replacement-1",
+      "fileChangeEventIds": [
+        "item_6",
+        "item_8"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_7",
+        "item_10",
+        "item_11",
+        "item_12",
+        "item_13",
+        "item_14",
+        "item_15",
+        "item_17",
+        "item_18"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_4",
+        "item_7",
+        "item_10",
+        "item_12",
+        "item_13"
+      ],
+      "failedCommandEventIds": [
+        "item_10"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_5",
+        "item_9",
+        "item_16",
+        "item_19"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "A-control-2",
+      "fileChangeEventIds": [
+        "item_7",
+        "item_8"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_9",
+        "item_12",
+        "item_11",
+        "item_13"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_9",
+        "item_12",
+        "item_13"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_11"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_6",
+        "item_10",
+        "item_14"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "A-treatment-1",
+      "fileChangeEventIds": [
+        "item_7",
+        "item_9",
+        "item_12",
+        "item_13"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_10",
+        "item_14"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_10"
+      ],
+      "failedCommandEventIds": [
+        "item_6",
+        "item_10"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_8",
+        "item_11",
+        "item_15"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "A-treatment-2",
+      "fileChangeEventIds": [
+        "item_8"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_11",
+        "item_12",
+        "item_13",
+        "item_15",
+        "item_16",
+        "item_18",
+        "item_17",
+        "item_20",
+        "item_21",
+        "item_23",
+        "item_22",
+        "item_25"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_11",
+        "item_12",
+        "item_13",
+        "item_15",
+        "item_16",
+        "item_18",
+        "item_20",
+        "item_21",
+        "item_23",
+        "item_22",
+        "item_25"
+      ],
+      "failedCommandEventIds": [
+        "item_12",
+        "item_17",
+        "item_22"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10",
+        "item_14",
+        "item_19",
+        "item_24",
+        "item_26"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "B-control-1",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_12",
+        "item_11",
+        "item_14",
+        "item_16",
+        "item_17"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_12",
+        "item_14",
+        "item_16"
+      ],
+      "failedCommandEventIds": [
+        "item_11",
+        "item_14"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10",
+        "item_13",
+        "item_15",
+        "item_18"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "B-control-2",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_11",
+        "item_13",
+        "item_12",
+        "item_15"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_11",
+        "item_13",
+        "item_12",
+        "item_15"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_12"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10",
+        "item_14",
+        "item_16"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "B-treatment-1",
+      "fileChangeEventIds": [
+        "item_7"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_3",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_11",
+        "item_10",
+        "item_13"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_3",
+        "item_6",
+        "item_9",
+        "item_11",
+        "item_13"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_10"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_2",
+        "item_4",
+        "item_8",
+        "item_12",
+        "item_14"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "B-treatment-2",
+      "fileChangeEventIds": [
+        "item_7"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_6",
+        "item_8",
+        "item_9",
+        "item_11",
+        "item_12",
+        "item_13",
+        "item_14",
+        "item_15",
+        "item_16",
+        "item_18",
+        "item_19",
+        "item_20"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_4",
+        "item_8",
+        "item_9",
+        "item_12",
+        "item_13",
+        "item_14",
+        "item_15",
+        "item_16",
+        "item_18"
+      ],
+      "failedCommandEventIds": [
+        "item_12",
+        "item_13"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_5",
+        "item_10",
+        "item_17",
+        "item_21"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "C-control-1",
+      "fileChangeEventIds": [
+        "item_7"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_13"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_13"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_11"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_8",
+        "item_12",
+        "item_14"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "C-control-2",
+      "fileChangeEventIds": [
+        "item_8"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_11",
+        "item_13",
+        "item_14",
+        "item_15",
+        "item_16",
+        "item_18",
+        "item_19",
+        "item_20",
+        "item_21",
+        "item_22"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_11",
+        "item_13",
+        "item_14",
+        "item_15",
+        "item_16",
+        "item_18",
+        "item_21"
+      ],
+      "failedCommandEventIds": [
+        "item_11",
+        "item_19"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10",
+        "item_12",
+        "item_17",
+        "item_23"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "C-treatment-1",
+      "fileChangeEventIds": [
+        "item_7"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_13",
+        "item_14",
+        "item_15"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_13",
+        "item_14",
+        "item_15"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_11",
+        "item_13"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_8",
+        "item_12",
+        "item_16"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "C-treatment-2",
+      "fileChangeEventIds": [
+        "item_8"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_6",
+        "item_7",
+        "item_10",
+        "item_11",
+        "item_14",
+        "item_13",
+        "item_16"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_6",
+        "item_7",
+        "item_10",
+        "item_11",
+        "item_14",
+        "item_16"
+      ],
+      "failedCommandEventIds": [
+        "item_11",
+        "item_13"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_9",
+        "item_12",
+        "item_15",
+        "item_17"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "D-control-1",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_11"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_9"
+      ],
+      "failedCommandEventIds": [
+        "item_8"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10",
+        "item_12"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "D-control-2",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_12",
+        "item_11"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_12"
+      ],
+      "failedCommandEventIds": [
+        "item_8",
+        "item_11"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10",
+        "item_13"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "D-treatment-1",
+      "fileChangeEventIds": [
+        "item_6",
+        "item_15"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_13",
+        "item_14",
+        "item_16"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_13",
+        "item_14"
+      ],
+      "failedCommandEventIds": [
+        "item_8",
+        "item_10"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_12",
+        "item_17"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "D-treatment-2",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_9"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_9"
+      ],
+      "failedCommandEventIds": [],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_10"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "E-control-1",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_7",
+        "item_9",
+        "item_10",
+        "item_12",
+        "item_13"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_4",
+        "item_7",
+        "item_9",
+        "item_10",
+        "item_12"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_10"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_5",
+        "item_8",
+        "item_11",
+        "item_14"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "E-control-2",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_8",
+        "item_10",
+        "item_9",
+        "item_11"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_8",
+        "item_10"
+      ],
+      "failedCommandEventIds": [
+        "item_9"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_7",
+        "item_12"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "E-treatment-1",
+      "fileChangeEventIds": [
+        "item_6",
+        "item_7"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_12",
+        "item_14",
+        "item_15",
+        "item_16",
+        "item_17"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_9",
+        "item_10",
+        "item_11",
+        "item_12",
+        "item_14",
+        "item_15",
+        "item_16"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_12",
+        "item_15"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_8",
+        "item_13",
+        "item_18"
+      ],
+      "turnCompleted": true
+    },
+    {
+      "slot": "E-treatment-2",
+      "fileChangeEventIds": [
+        "item_6"
+      ],
+      "commandEventIds": [
+        "item_1",
+        "item_2",
+        "item_4",
+        "item_5",
+        "item_7",
+        "item_9",
+        "item_11",
+        "item_10",
+        "item_12",
+        "item_14",
+        "item_13",
+        "item_15"
+      ],
+      "dbOrHttpCommandEventIds": [
+        "item_2",
+        "item_5",
+        "item_7",
+        "item_9",
+        "item_11",
+        "item_12",
+        "item_14",
+        "item_13",
+        "item_15"
+      ],
+      "failedCommandEventIds": [
+        "item_9",
+        "item_10",
+        "item_13"
+      ],
+      "agentMessageEventIds": [
+        "item_0",
+        "item_3",
+        "item_8",
+        "item_16"
+      ],
+      "turnCompleted": true
+    }
+  ]
+}

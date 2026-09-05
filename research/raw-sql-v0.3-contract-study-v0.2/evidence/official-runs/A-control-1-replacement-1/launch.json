@@ -1,0 +1,23 @@
+{
+  "slot": "A-control-1-replacement-1",
+  "scenario": "A",
+  "arm": "control",
+  "replacementFor": "A-control-1",
+  "startedAt": "2026-09-05T05:05:56.875Z",
+  "endedAt": "2026-09-05T05:08:05.377Z",
+  "result": {
+    "code": 0,
+    "signal": null
+  },
+  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-BRVXhn",
+  "runtime": {
+    "cwd": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-BRVXhn",
+    "expectedRoot": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-BRVXhn",
+    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-BRVXhn",
+    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-BRVXhn\\.git",
+    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-BRVXhn\\.git",
+    "head": "b58b155f55ce4c5ff268706c617c466e8176db6d",
+    "tree": "827f8195b74fc5f50fce95d5514f30afddeddc94",
+    "pass": true
+  }
+}

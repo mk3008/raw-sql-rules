@@ -1,0 +1,298 @@
+{
+  "analysis": "post-hoc; not part of frozen Primary",
+  "evaluated": 20,
+  "results": [
+    {
+      "slot": "A-control-1-replacement-1",
+      "arm": "control",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed"
+      }
+    },
+    {
+      "slot": "A-control-2",
+      "arm": "control",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "A-treatment-1",
+      "arm": "treatment",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed"
+      }
+    },
+    {
+      "slot": "A-treatment-2",
+      "arm": "treatment",
+      "scenario": "A",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "B-control-1",
+      "arm": "control",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "B-control-2",
+      "arm": "control",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "B-treatment-1",
+      "arm": "treatment",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "B-treatment-2",
+      "arm": "treatment",
+      "scenario": "B",
+      "result": {
+        "scenario": "B",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndOmission": true,
+          "tenantB": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "C-control-1",
+      "arm": "control",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "C-control-2",
+      "arm": "control",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "C-treatment-1",
+      "arm": "treatment",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "C-treatment-2",
+      "arm": "treatment",
+      "scenario": "C",
+      "result": {
+        "scenario": "C",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "D-control-1",
+      "arm": "control",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "D-control-2",
+      "arm": "control",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed"
+      }
+    },
+    {
+      "slot": "D-treatment-1",
+      "arm": "treatment",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "D-treatment-2",
+      "arm": "treatment",
+      "scenario": "D",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "E-control-1",
+      "arm": "control",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "E-control-2",
+      "arm": "control",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null
+      }
+    },
+    {
+      "slot": "E-treatment-1",
+      "arm": "treatment",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed"
+      }
+    },
+    {
+      "slot": "E-treatment-2",
+      "arm": "treatment",
+      "scenario": "E",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "ERROR",
+        "checks": {},
+        "error": "Error: health failed"
+      }
+    }
+  ]
+}

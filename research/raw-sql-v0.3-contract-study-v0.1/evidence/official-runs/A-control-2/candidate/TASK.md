@@ -1,0 +1,1 @@
+Implement GET /scenario-a/items. It accepts tenantId, sort, and direction. For a valid tenant, support exactly the finite sort choices name, price, and created_at with asc or desc direction. Return that tenant's items. Reject unknown and malformed choices. Do not change the database schema or remove valid sort functionality.
