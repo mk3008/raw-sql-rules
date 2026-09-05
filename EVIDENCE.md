@@ -12,6 +12,12 @@ The current product has three non-customizable Contracts and four
 project-customizable Default Requirements. This is a human product structure,
 not a flat list of seven equally mandatory agent instructions.
 
+The exact draft text was exercised in four isolated acceptance cases (C# /
+Npgsql / PostgreSQL and Node.js / node-postgres / PostgreSQL, each for a new
+feature and a maintenance change). First outcomes, bounded repairs, and limits
+are preserved in `research/raw-sql-v0.3-acceptance-v0.1/RESULT.md`. This is a
+distribution-text acceptance, not a causal Safety Contract effect study.
+
 ## Evidence ladder
 
 | Evidence | Question and status | What it supports | What it does not support |
