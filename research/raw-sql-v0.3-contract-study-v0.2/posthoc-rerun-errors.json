@@ -1,0 +1,76 @@
+{
+  "reason": "one diagnostic rerun of initial post-hoc verifier ERRORs",
+  "results": [
+    {
+      "slot": "A-control-1-replacement-1",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "A-treatment-1",
+      "result": {
+        "scenario": "A",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "finiteAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "D-control-2",
+      "result": {
+        "scenario": "D",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "projection": true,
+          "tenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "E-treatment-1",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    },
+    {
+      "slot": "E-treatment-2",
+      "result": {
+        "scenario": "E",
+        "postHoc": "not-preregistered",
+        "result": "PASS",
+        "checks": {
+          "defaultsBoundsAndTenants": true,
+          "invalid": true
+        },
+        "error": null,
+        "appStderr": null
+      }
+    }
+  ]
+}

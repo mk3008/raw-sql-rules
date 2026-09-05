@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "cases": [
+    {
+      "scenario": "B",
+      "normal": {
+        "postHoc": "PASS"
+      },
+      "bad": {
+        "frozenPrimary": "PASS",
+        "postHoc": "FAIL",
+        "checks": {
+          "finiteAndOmission": false,
+          "tenantB": false,
+          "invalid": false
+        }
+      },
+      "matches": true
+    },
+    {
+      "scenario": "D",
+      "normal": {
+        "postHoc": "PASS",
+        "initialPostHoc": "ERROR: health failed",
+        "rerunPostHoc": "PASS"
+      },
+      "bad": {
+        "frozenPrimary": "PASS",
+        "postHoc": "FAIL",
+        "checks": {
+          "projection": false,
+          "tenants": false,
+          "invalid": false
+        }
+      },
+      "matches": true
+    }
+  ],
+  "note": "D normal calibration required one diagnostic rerun after a transient post-hoc health failure; no candidate source was changed."
+}
