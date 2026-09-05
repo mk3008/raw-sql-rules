@@ -1,0 +1,3 @@
+The first implementation's HTTP response envelope was repaired separately. Its named-parameter lowering still uses a regex that treats `:name` inside SQL strings and comments as a binding. This fails the frozen D2 lexical-distinction condition.
+
+Make the smallest repair only for that lowering defect. Preserve the direct-array endpoint response, endpoint behavior, SQL safety, dedicated authoritative SQL, schema, seed, Rules, AGENTS, and task. Add a focused reproducible check for parameter addition/removal/reordering/repetition, casts, strings, line/block comments, hostile bound values, and missing-name failure. Verify the changed endpoint and lowering through actual PostgreSQL/node-postgres. Do not add a general package.

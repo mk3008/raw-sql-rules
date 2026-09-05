@@ -7,7 +7,7 @@ runner copies only the named fixture, writes the exact frozen Rules file to
 | ID | Fixture | Task | Functional oracle |
 | --- | --- | --- | --- |
 | CS-NEW | `examples/csharp-vsa-postgres` | Add `GET /work-items/owner-summary?ownerId=<uuid>&from=<ISO-8601>` returning the caller owner's count grouped by status since `from`; reject malformed inputs with 400. | A known seeded owner returns its expected grouped counts; another owner does not receive its rows; malformed UUID and injection-shaped input return 400. |
-| CS-MAINT | `examples/csharp-vsa-postgres` | Maintain `GET /work-items/completed` by adding an optional `completedTo` upper bound while preserving its existing behavior when absent. | Existing no-upper-bound response is unchanged; a bounded request excludes later rows; malformed/duplicate bounds return 400; tenant/owner isolation is preserved. |
+| CS-MAINT | `examples/csharp-vsa-postgres` | Maintain `GET /work-items` by adding an optional `titlePrefix` filter while preserving its existing owner/status/date/priority/sort behavior when the new filter is absent. | The existing unfiltered response is unchanged; `titlePrefix=Completed` returns only `Completed baseline`; a prefix that has no match returns no rows; malformed/duplicate query handling and existing owner isolation are preserved. |
 | NODE-NEW | `research/raw-sql-v0.3-contract-study-v0.2/fixture` | Add `GET /acceptance/items?tenantId=<tenant>&status=<optional>&limit=<optional>` for the fixture `items` table, ordered by `created_at`; reject unsupported, duplicate, and injection-shaped inputs. | tenant-a active limit 2 is alpha then gamma; omitted status returns only that tenant; tenant-b cannot receive tenant-a rows; invalid inputs return 4xx. |
 | NODE-MAINT | `research/raw-sql-v0.3-contract-study-v0.2/evidence/official-runs/E-treatment-2/final-source` | Maintain `/scenario-e/items` by adding an optional `minPrice` filter while preserving existing status/limit behavior, and migrate the statement to v0.3 D2. | Existing active limit 2 response is unchanged; `minPrice=10` filters correctly; duplicate/invalid/injection-shaped minPrice returns 4xx; tenant isolation remains. |
 
@@ -15,6 +15,16 @@ The exact seeded UUIDs, timestamps, and expected JSON are read from the frozen
 fixture DDL/seed by the independent evaluator before each run and recorded in
 that run's `fixture-manifest.json`. The evaluator must not be shown to a
 candidate.
+
+## Pre-launch amendment 1
+
+Before any C# candidate was launched, implementation inspection found that
+`GET /work-items/completed` already accepts `completedTo`; the originally
+listed CS-MAINT task therefore could not measure a maintenance change. This
+amendment replaces only that unlaunched task and oracle with an unimplemented
+`titlePrefix` filter on the existing `GET /work-items` feature. The fixture,
+distribution-text hash, model profile, acceptance criteria, and all other
+cases remain unchanged.
 
 For each case, the evaluator verifies source and behavior as follows:
 

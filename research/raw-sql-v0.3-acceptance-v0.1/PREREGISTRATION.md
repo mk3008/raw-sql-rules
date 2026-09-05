@@ -34,6 +34,13 @@ D2 named definitions, named caller binding, and any mechanical lowering
 derivation; D3 current DDL path/hash; and D4 path, execution command, and
 result.
 
+`CASES.md` records a single pre-launch amendment for CS-MAINT: its original
+`completedTo` request was already implemented in the fixture. No C# candidate
+had started, so the unlaunched task was replaced with the documented
+`titlePrefix` maintenance change before the C# freeze was used. This does not
+alter the distribution text, criteria, fixture identity, or any launched Node
+case.
+
 Safety Contract acceptance requires source inspection showing that runtime
 values are bound rather than concatenated into SQL syntax, plus an
 injection-shaped runtime value whose observed result does not alter SQL

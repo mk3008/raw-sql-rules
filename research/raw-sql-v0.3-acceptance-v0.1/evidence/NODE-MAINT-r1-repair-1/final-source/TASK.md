@@ -1,0 +1,3 @@
+Maintain GET /scenario-e/items by adding optional minPrice. It must be a positive integer decimal. Preserve all current tenantId/status/limit behavior, ordering, JSON arrays, and invalid-input behavior. minPrice filters prices greater than or equal to it; for tenant-a&minPrice=10 return alpha then gamma. Reject unknown, duplicate, malformed, and injection-shaped minPrice with a JSON 4xx response. Do not change schema or seed data.
+
+Read AGENTS.md before editing. Apply every Default Requirement, including migrating the existing positional application SQL to v0.3 named definitions and named bindings. Implement only local feature code; no general package/framework. Verify through PostgreSQL/node-postgres.
