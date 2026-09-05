@@ -36,3 +36,10 @@ was stopped without a model response and is not study data. In contrast, Windows
 Schannel `curl` successfully completed an HTTPS request to `https://api.openai.com/v1`.
 This distinguishes general TCP/Schannel reachability from the Codex native TLS trust
 path that the candidate launcher actually uses.
+
+`codex doctor` further reported that the ephemeral CLI runtime has no ChatGPT
+credentials and that its required provider HTTPS reachability fails certificate
+validation. This is an environment/authentication condition outside the frozen
+repository, fixture, evaluator, and runner. Repairing it would require changing the
+host's Codex authentication or TLS trust configuration, which is intentionally not
+performed by this study.
