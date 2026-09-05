@@ -20,18 +20,29 @@ implementation, or other candidate result is candidate-visible.
 
 | ID | Stack | Change type | Required evidence |
 | --- | --- | --- | --- |
-| CS-NEW | C# / Npgsql / PostgreSQL | new feature | feature works against PostgreSQL; dedicated SQL source; native named SQL and name binding; current DDL; real DB result |
+| CS-NEW | C# / Npgsql / PostgreSQL | new feature | feature works against PostgreSQL; dedicated SQL source; named SQL and name binding (native or mechanically lowered); current DDL; real DB result |
 | CS-MAINT | C# / Npgsql / PostgreSQL | maintenance change | same criteria after changing an existing feature |
 | NODE-NEW | Node.js / node-postgres / PostgreSQL | new feature | feature works against PostgreSQL; dedicated named-parameter SQL source and mechanically derived driver values; current DDL; real DB result |
 | NODE-MAINT | Node.js / node-postgres / PostgreSQL | maintenance change | same criteria after changing an existing feature |
 
-For every case, record separately: requested functional result, Safety Contract
-conformance, Defaults 1–4, existence of a D4 path, actual target DB/driver
-execution, environment failures, and source/command evidence. D2 checks both
-the SQL source and caller binding. It rejects comments, CTE aliases, or manual
-positional arrays as named binding. The Node checks cover parameter addition,
-removal, order changes, repeated names, cast/comment/string distinction, bound
-hostile values, and missing-name failure.
+Before launch, `CASES.md` freezes each task, fixture identity, command oracle,
+and expected result. For every case, record separately: requested functional
+result, Safety Contract conformance, Defaults 1–4, existence of a D4 path,
+actual target DB/driver execution, environment failures, and source/command
+evidence. The required evidence fields are: D1 source-file path and statement;
+D2 named definitions, named caller binding, and any mechanical lowering
+derivation; D3 current DDL path/hash; and D4 path, execution command, and
+result.
+
+Safety Contract acceptance requires source inspection showing that runtime
+values are bound rather than concatenated into SQL syntax, plus an
+injection-shaped runtime value whose observed result does not alter SQL
+structure. D2 checks both the SQL source and caller binding. It rejects
+comments, CTE aliases, or manual positional arrays as named binding. Both stack
+families cover parameter addition, removal, order changes, repeated names,
+cast/comment/string distinction, bound hostile values, and missing-name
+failure; a native-named driver may demonstrate the same cases without a
+lowering step.
 
 The first outcome is preserved. A repair may address only its recorded cause;
 its evidence is separate. The distribution text must not change after this
