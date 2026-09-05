@@ -26,3 +26,13 @@ Resuming with a repaired service route, and whether the interrupted slot may be 
 by a newly created fresh run, requires a protocol decision from ChatGPT. The frozen task,
 fixture, evaluator, packets, model profile, execution order, and decision criteria remain
 unchanged.
+
+## Revalidation
+
+On `2026-09-05T03:51Z`, a non-official direct Codex CLI probe using the same
+`gpt-5.6-terra` / medium profile reproduced the `invalid peer certificate:
+UnknownIssuer` error on WebSocket and the subsequent HTTPS retry failures. The probe
+was stopped without a model response and is not study data. In contrast, Windows
+Schannel `curl` successfully completed an HTTPS request to `https://api.openai.com/v1`.
+This distinguishes general TCP/Schannel reachability from the Codex native TLS trust
+path that the candidate launcher actually uses.
