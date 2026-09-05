@@ -1,0 +1,11 @@
+{
+  "name": "raw-sql-v03-contract-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "pg": "8.13.1"
+  }
+}
