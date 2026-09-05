@@ -10,8 +10,12 @@
   "officialLaunches": 20,
   "files": {
     "COHERENCE-AUDIT.md": "8922ba3a479d027c308d3884aa7cc240872a651195f4c46e357ec18847212654",
+    "INFRA-AMENDMENT.md": "91b0abcab7bed0cb2e7d61cc9076798a054c70ca5a5a1e44672e890a17e4898a",
+    "OFFICIAL-RUN-INTERRUPTION.md": "a7ca84db6a0821af5dd11a58519958eaa4c6fde73bd8f15fc8757f6d2fac49c6",
     "PREREGISTRATION.md": "a40e65abf99c3b4f3ebee7f116142c9036352f13599b780d7aea2ae51d2ca4af",
     "RESTART-RECORD.md": "439f6fc0ce71f89b8d8c0324c2e0d607971a61095e889188ea27e843bd472b02",
+    "RUNTIME-RECOVERY-AUDIT.md": "b694baaa4686deb4ad3a57749783b3376debecbda29ad7ce2a08141486cba3f3",
+    "SLOT-LIFECYCLE-AUDIT.md": "b5c3b72789a6eafef65b3befc1e6ea9d9e23c0b61843094889cf5918fd43bf02",
     "TASK-SPECS.json": "8b6b27fbfec49a51d12540aefe8e5d70ebea35ad85b490ee04b7d56044ce88e6",
     "evaluate-official.mjs": "0d82ec44bbeeaab03e9ccfc60a4304f270366d4ba0e16c67184f36fa4bad104b",
     "evaluator/calibrate.mjs": "fabcc18d5f966782c2c238066c988427ed16b366b3764cb3bb598312752c0b76",
@@ -34,7 +38,8 @@
     "launch.mjs": "b9e4058931e83351179548ffb2377f3579d334339dd65171235774b68efef73d",
     "packets/control-AGENTS.md": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
     "packets/treatment-AGENTS.md": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
-    "test-isolation-regression.mjs": "ebc1d71e102d500b72a3ec6e1604e765b7a2a7645d0c054cac336dabf4ef5782"
+    "test-isolation-regression.mjs": "ebc1d71e102d500b72a3ec6e1604e765b7a2a7645d0c054cac336dabf4ef5782",
+    "transport-preflight.mjs": "4fea8393419f8f6ff3ce15a83e72a4f1f4c7a2d6886c63bdfbe8e948a73d2704"
   },
   "materialHashes": {
     "A": {

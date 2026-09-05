@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "timedOut": false,
+  "result": {
+    "code": 0,
+    "signal": null
+  },
+  "executableResolution": {
+    "command": "codex",
+    "version": "codex-cli 0.153.3",
+    "versionExitCode": 0
+  },
+  "profile": {
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "approval": "--approve-for-me",
+    "ephemeral": true
+  },
+  "candidate": "rawsql-v03r2-runner-transport-3BAL6D",
+  "modelMessage": "RUNNER_TRANSPORT_OK",
+  "turnCompleted": true,
+  "environment": {
+    "candidateRootInjected": true,
+    "codexHomeExplicitlySet": false,
+    "proxyVariablesExplicitlySet": false,
+    "caVariablesExplicitlySet": false
+  }
+}
