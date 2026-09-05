@@ -8,7 +8,7 @@
 | Post-hoc verifier | Initial version: 15 PASS / 5 health errors, all rerun PASS. Independent-review revision: 14 PASS / 6 health errors, all rerun PASS. | Not preregistered and not a replacement Primary. |
 | False-pass calibration | B and D bad variants: frozen evaluator PASS, post-hoc FAIL | Establishes evaluator coverage holes, not a candidate defect. |
 | Candidate process observation | Saved events/final snapshots are available, with incomplete timing/history in some runs | Descriptive only; no causal arm conclusion. |
-| Default Requirement review | Final sources commonly show direct SQL, meaningful SQL aliases/parameters, fixture DDL, and candidate DB checks where events prove them | Separate author-default axis, not Contract-3 effect evidence. |
+| Default Requirement review | All 20 final artifacts retain application SQL in `src/server.js` (D1 not attained); D2 is mixed (10 named-review comments, 10 positional-only); D3 and D4's path are attained | Separate post-hoc author-default axis; packet conformance and feasibility are distinct. |
 
 ## Post-hoc result
 
@@ -22,15 +22,17 @@ Its initial 15 PASS / 5 `health failed` result is an environment observation,
 not five candidate failures. Independent review then strengthened `tenant_id`
 identity and E duplicate checks; the revised run had 14 PASS / 6 health errors.
 Each error source passed one diagnostic rerun. The rerun records support
-separating these from candidate outcomes; retained stderr did not identify a
-root cause.
+separating these from candidate outcomes. Revised retained stderr records
+`listen EACCES` on loopback ports; this is the observed failed mechanism, not
+a determination of its OS-side cause.
 B and D calibration intentionally demonstrated the review-reported holes:
 the frozen evaluator accepts B tenant-b HTTP 500/non-array and D detailed
 wrong-tenant/incomplete projection, whereas this verifier rejects them.
 
 Accordingly, the post-hoc data support only that the 20 preserved final
 sources passed the added checks after resolving verifier-environment errors.
-They do not alter the preregistered 20 PASS count or establish an arm effect.
+They are not a comprehensive guarantee of all `TASK-SPECS` requirements, do
+not alter the preregistered 20 PASS count, and do not establish an arm effect.
 
 ## Process observations and Secondary
 
@@ -54,20 +56,29 @@ absent. The conservative per-run classification is therefore:
 | A-control-1 | no implementation/process result; infrastructure exclusion |
 
 This avoids turning candidate self-report into fact or counting evaluator DB
-work as candidate verification. The saved event streams show candidates reading
-their task and fixture, changing `src/server.js`, and often running syntax or
-HTTP checks; they do not provide a uniformly complete self-repair timeline.
-No arm-level self-repair conclusion is justified.
+work as candidate verification. `PROCESS-OBSERVATIONS.md` records all 20
+rows, including event IDs and final snapshots. The saved event streams show
+candidates reading their task and fixture, changing `src/server.js`, and often
+running syntax or HTTP checks; they do not provide a uniformly complete
+self-repair timeline. No arm-level self-repair conclusion is justified.
 
 ## Author Default Requirements (descriptive, non-Primary)
 
-The common packet reproduces the author's Default Requirements in both arms.
-Final sources can be inspected for a dedicated direct SQL surface, meaningful
-review names/aliases, fixture current DDL, and a DB/driver verification path.
-This is descriptive evidence of attainment in these small Node/PostgreSQL
-fixtures, consistent with the earlier feasibility study. It is not evidence
-that every project must use those choices, that customization fails, or that
-Contract 3 caused the attainment.
+`DEFAULT-ATTAINMENT.md` distinguishes three layers: earlier technical
+feasibility, the abbreviated common-packet summary, and actual conformance of
+the frozen final artifacts to the current Defaults. The packet omitted the
+Default-1 dedicated-source-*file* condition. All 20 final artifacts instead
+retain executable SQL in `src/server.js`, so Default 1 is `NOT_MET`. Default
+2 is mixed: 10 artifacts identify each positional placeholder with a directly
+adjacent meaningful-name SQL comment (treated as `MET` at the review surface),
+and 10 leave positional placeholders alone (`NOT_MET`). The directly
+inspectable fixture schema (Default 3) and target DB/driver verification path
+(Default 4) are `MET`.
+Whether a candidate actually executed that path is separately recorded and is
+not part of Default 4 attainment. This does not turn the omitted prompt detail
+into a candidate instruction-following failure, nor does it weaken the
+current Defaults. It is not evidence that every project must use these choices,
+that customization fails, or that Contract 3 caused the attainment.
 
 ## Research Map answers
 
@@ -76,9 +87,9 @@ Contract 3 caused the attainment.
 | Q1 | Contract 1 remains a selected-representation Contract; feasibility supports practical use. | Cross-stack generality untested. |
 | Q2 | Contract 2 remains an application-ownership Contract/boundary. | Whether presentation should be Scope is a product choice. |
 | Q3 | Contract 3 prohibits arbitrary runtime SQL syntax while allowing reviewed finite variation. | Exact wording effects beyond fixtures untested. |
-| Q4 | Defaults are feasible in bounded PostgreSQL stacks. | Universality and desirability are untested. |
+| Q4 | Earlier feasibility supports Defaults in bounded PostgreSQL stacks; these final artifacts attain D3/D4 path, not D1, and have mixed D2 attainment under the stated review-comment interpretation. | Universality and desirability are untested. |
 | Q5–Q6 | Frozen Primary found no detected arm difference (20 PASS). | Insensitive small sample; no equivalence/effect claim. |
-| Q7 | No valid candidate self-repair measure is available. | `UNKNOWN`; variant-derived Secondary is invalid. |
+| Q7 | Per-run events show some candidate verification and environment recovery, but only one bounded later-source-change observation and no causal arm inference. | Initial implementation and most self-repair remain `UNKNOWN`; variant-derived Secondary is invalid. |
 | Q8 | Both arms retained tested safe functionality in Primary and post-hoc checks. | Broader usability/performance untested. |
 | Q9 | Textual meaning is coherent; evaluator gaps were measurement defects, not Contract defects. | Product wording remains a human decision. |
 | Q10 | Contract 3 remains the only isolated runtime-syntax safety boundary. | No evidence requires another isolated study. |
@@ -93,7 +104,7 @@ Contract 3 caused the attainment.
 | Contract 1 | KEEP | Feasibility and representation boundary evidence. |
 | Contract 2 | KEEP; consider MOVE only as product presentation choice | Ownership boundary is durable; data do not decide placement. |
 | Contract 3 | KEEP | Core safety meaning is clear; no measured reason to revise. |
-| Default 1–4 | KEEP as Defaults | Bounded feasibility supports author defaults, not universal mandates. |
+| Default 1–4 | KEEP as Defaults | Bounded feasibility and product intent, not false attribution of D1 or uniformly positive D2 attainment to these 20 artifacts. |
 | Legacy operational/HOW bundle | REMOVE/NARROW candidate | Earlier subtraction gate found no practical separation; not an isolated sentence-level claim. |
 
 Scenario D measured finite report selection and stored-text rejection, not a
