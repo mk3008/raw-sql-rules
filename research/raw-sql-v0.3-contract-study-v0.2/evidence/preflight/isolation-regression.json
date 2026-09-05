@@ -4,6 +4,10 @@
   "parentReferenceRejectedBeforeSpawn": true,
   "goodExitCode": 0,
   "parentReferenceExitCode": 1,
+  "approvedReplacementPreflight": true,
+  "duplicateNormalRejectedBeforeSpawn": true,
+  "unapprovedReplacementRejectedBeforeSpawn": true,
+  "originalEvidenceUnchanged": true,
   "sentinelCreated": false,
-  "testedAt": "2026-09-05T03:35:02.268Z"
+  "testedAt": "2026-09-05T05:05:22.479Z"
 }

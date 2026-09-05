@@ -36,7 +36,10 @@ const manifest = {
   baselineCommit: 'f742ca1c27d0ddd0b9f464bbc487181a2a64d2d3',
   relationshipToV01: 'v0.1 closed INVALID_OR_INSENSITIVE; its 3 runs are excluded and never re-scored',
   profile: JSON.parse(await readFile(join(root, 'execution-order.json'), 'utf8')).profile,
-  officialLaunches: 20,
+  originalScheduledLaunches: 20,
+  approvedReplacementLaunches: 1,
+  totalLaunchesIncludingReplacement: 21,
+  effectDataEvaluations: 20,
   files: hashes,
   materialHashes: materials,
   calibration: { required: 'PASS before official launch', results: 'evaluator/calibration-results.json' }
