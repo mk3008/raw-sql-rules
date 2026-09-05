@@ -1,0 +1,12 @@
+{
+  "slot": "A-control-1",
+  "scenario": "A",
+  "arm": "control",
+  "startedAt": "2026-09-05T02:19:12.761Z",
+  "endedAt": "2026-09-05T02:24:36.633Z",
+  "result": {
+    "code": 4294967295,
+    "signal": null
+  },
+  "frozenManifestSha256": "dcf2571dc02a5991ec7d5aa11b79208e060cc3d7a0213230ba34224462596a78"
+}

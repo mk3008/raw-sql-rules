@@ -1,0 +1,105 @@
+{
+  "studyId": "raw-sql-v0.3-contract-study-v0.2",
+  "baselineCommit": "f742ca1c27d0ddd0b9f464bbc487181a2a64d2d3",
+  "relationshipToV01": "v0.1 closed INVALID_OR_INSENSITIVE; its 3 runs are excluded and never re-scored",
+  "profile": {
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "sandbox": "workspace-write"
+  },
+  "officialLaunches": 20,
+  "files": {
+    "COHERENCE-AUDIT.md": "8922ba3a479d027c308d3884aa7cc240872a651195f4c46e357ec18847212654",
+    "PREREGISTRATION.md": "a40e65abf99c3b4f3ebee7f116142c9036352f13599b780d7aea2ae51d2ca4af",
+    "RESTART-RECORD.md": "439f6fc0ce71f89b8d8c0324c2e0d607971a61095e889188ea27e843bd472b02",
+    "TASK-SPECS.json": "8b6b27fbfec49a51d12540aefe8e5d70ebea35ad85b490ee04b7d56044ce88e6",
+    "evaluate-official.mjs": "0d82ec44bbeeaab03e9ccfc60a4304f270366d4ba0e16c67184f36fa4bad104b",
+    "evaluator/calibrate.mjs": "fabcc18d5f966782c2c238066c988427ed16b366b3764cb3bb598312752c0b76",
+    "evaluator/calibration-results.json": "3ee2b3f6cbbfe728026eb2973225cc5bdbc74ebbf3dd87c9723ebf49f6d00410",
+    "evaluator/package-lock.json": "2029003fe426c98b6369d5664c063109d01bea6759c81b6e6c5005498212dd4d",
+    "evaluator/package.json": "b850d7d8f8e4bae801683bee9a53259c8bdcc300bf59826e415493804e66d83d",
+    "evaluator/run.mjs": "f9da57ee64147e77b906b2ff6ed50834b39c529a23e84fc471360202320a0753",
+    "evaluator/variants/known-bad.js": "52ec3b1f448ebcafadbbc3300fffef1cb08135fdb0ce60ae48186c5fe2ab4428",
+    "evaluator/variants/known-good.js": "314ab203f7800bb82d05c02db7b0001a86a793518d6ff865df29eb3f0bc67e84",
+    "execution-order.json": "dcfd4552b894930edb566a54582816a6eed27c32befee866cb725c607bf55e19",
+    "fixture/README.md": "689572b71d4cd3126a1380b6fdae5649a0b28e3b6ec8207fa887cf6c66054ab7",
+    "fixture/compose.yaml": "3896dc610c92a4399445fb52febace15466d7b2ec56c7af0c025368baf8e007b",
+    "fixture/database/init.sql": "d593f07bebf552ffb13e5cf1d223876e3590607fa8dc13f12a37e2dea083b7a7",
+    "fixture/package-lock.json": "7212c4c9de9e79968271edc9a2e9c2050eac62421d0c4c5648dfbc93d5f89c52",
+    "fixture/package.json": "473784d576565f963ab6d35f50f1c66720954589d6a092a1623ccfd32040d7c3",
+    "fixture/src/legacy-sort.js": "d78bc2218080f6f5764d8711210a19a7def20215128668ffc459cf1cee48f400",
+    "fixture/src/server.js": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+    "freeze.mjs": "83e3d69bd27096430725b05c883d38dfc113fcee77d12aa7f8dc7a6916d69da8",
+    "isolation.mjs": "012ae056df277a34de5d6ac41066dd4715853ef8d5ab0de0c3f7785e9e155f52",
+    "launch.mjs": "b9e4058931e83351179548ffb2377f3579d334339dd65171235774b68efef73d",
+    "packets/control-AGENTS.md": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+    "packets/treatment-AGENTS.md": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+    "test-isolation-regression.mjs": "ebc1d71e102d500b72a3ec6e1604e765b7a2a7645d0c054cac336dabf4ef5782"
+  },
+  "materialHashes": {
+    "A": {
+      "control": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+        "taskSha256": "f3ec17993f08bd7991fe62905290e10b802a12a48c94ca902dda68df7bbd674a"
+      },
+      "treatment": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+        "taskSha256": "f3ec17993f08bd7991fe62905290e10b802a12a48c94ca902dda68df7bbd674a"
+      }
+    },
+    "B": {
+      "control": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+        "taskSha256": "df1ea4c274b0884dc668d65fd0fd6250afc7d7231d47c1f4d1a5cfb428120d5d"
+      },
+      "treatment": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+        "taskSha256": "df1ea4c274b0884dc668d65fd0fd6250afc7d7231d47c1f4d1a5cfb428120d5d"
+      }
+    },
+    "C": {
+      "control": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+        "taskSha256": "a226731505878402f9d67f9ff0478ffbee7727db19f8ea166e558ba97107880c"
+      },
+      "treatment": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+        "taskSha256": "a226731505878402f9d67f9ff0478ffbee7727db19f8ea166e558ba97107880c"
+      }
+    },
+    "D": {
+      "control": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+        "taskSha256": "8514b2aead7add9ab480035685e2b6295dd17de9046b5d87bd582ebd19c5e5dd"
+      },
+      "treatment": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+        "taskSha256": "8514b2aead7add9ab480035685e2b6295dd17de9046b5d87bd582ebd19c5e5dd"
+      }
+    },
+    "E": {
+      "control": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+        "taskSha256": "218ecdf99844c00a46905d58e8123b81680bfd833cc8e5f2f8c8bffa0c8c33de"
+      },
+      "treatment": {
+        "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+        "packetSha256": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
+        "taskSha256": "218ecdf99844c00a46905d58e8123b81680bfd833cc8e5f2f8c8bffa0c8c33de"
+      }
+    }
+  },
+  "calibration": {
+    "required": "PASS before official launch",
+    "results": "evaluator/calibration-results.json"
+  }
+}

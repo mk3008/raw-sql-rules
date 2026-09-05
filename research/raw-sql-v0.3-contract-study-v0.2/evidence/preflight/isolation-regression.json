@@ -1,0 +1,9 @@
+{
+  "result": "PASS",
+  "goodPreflight": true,
+  "parentReferenceRejectedBeforeSpawn": true,
+  "goodExitCode": 0,
+  "parentReferenceExitCode": 1,
+  "sentinelCreated": false,
+  "testedAt": "2026-09-05T03:35:02.268Z"
+}

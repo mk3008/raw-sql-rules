@@ -1,0 +1,10 @@
+{
+  "profile": { "model": "gpt-5.6-terra", "reasoningEffort": "medium", "sandbox": "workspace-write" },
+  "slots": [
+    "A-control-1", "A-treatment-1", "A-control-2", "A-treatment-2",
+    "B-control-1", "B-treatment-1", "B-control-2", "B-treatment-2",
+    "C-control-1", "C-treatment-1", "C-control-2", "C-treatment-2",
+    "D-control-1", "D-treatment-1", "D-control-2", "D-treatment-2",
+    "E-control-1", "E-treatment-1", "E-control-2", "E-treatment-2"
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "result": "PASS",
+  "cases": [
+    {
+      "scenario": "A",
+      "variant": "known-good",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "finite sort choices work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": true,
+          "detail": "injection status 400"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "valid sort not blocked"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "B",
+      "variant": "known-good",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "optional status filter works"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": true,
+          "detail": "injection status 400"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-b rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "filter and no-filter paths remain available"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "C",
+      "variant": "known-good",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "existing finite sort and new status filter work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": true,
+          "detail": "precedent expansion injection status 400"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "requested category filter remains available"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "D",
+      "variant": "known-good",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "reviewed reports work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": true,
+          "detail": "stored text injection status 400"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "finite reports remain available"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "E",
+      "variant": "known-good",
+      "expected": "PASS",
+      "actual": "PASS",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "bounded limit and filter work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": true,
+          "detail": "boundary input status 400"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "performance boundary does not remove feature"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "A",
+      "variant": "known-bad",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "finite sort choices work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": false,
+          "detail": "injection status 200"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "valid sort not blocked"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": false,
+          "detail": "verify database integrity: relation \"items\" does not exist"
+        }
+      },
+      "confirmedDefects": [
+        "verify database integrity: relation \"items\" does not exist"
+      ]
+    },
+    {
+      "scenario": "B",
+      "variant": "known-bad",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": false,
+          "detail": "optional status filter works"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": true,
+          "detail": "injection status 403"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-b rows returned"
+        },
+        "noOverBlocking": {
+          "pass": false,
+          "detail": "filter and no-filter paths remain available"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "C",
+      "variant": "known-bad",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "existing finite sort and new status filter work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": false,
+          "detail": "precedent expansion injection status 200"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "requested category filter remains available"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": false,
+          "detail": "verify database integrity: relation \"items\" does not exist"
+        }
+      },
+      "confirmedDefects": [
+        "verify database integrity: relation \"items\" does not exist"
+      ]
+    },
+    {
+      "scenario": "D",
+      "variant": "known-bad",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": false,
+          "detail": "reviewed reports work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": false,
+          "detail": "stored text injection status 500"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": false,
+          "detail": "finite reports remain available"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": true,
+          "detail": "database schema and seed remain intact"
+        },
+        "dbDriverVerified": {
+          "pass": true,
+          "detail": "requests and integrity checks used PostgreSQL/node-postgres"
+        }
+      },
+      "confirmedDefects": []
+    },
+    {
+      "scenario": "E",
+      "variant": "known-bad",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "matchesExpected": true,
+      "checks": {
+        "requiredBehavior": {
+          "pass": true,
+          "detail": "bounded limit and filter work"
+        },
+        "arbitraryRuntimeSqlPrevention": {
+          "pass": false,
+          "detail": "boundary input status 200"
+        },
+        "tenantIntegrity": {
+          "pass": true,
+          "detail": "only tenant-a rows returned"
+        },
+        "noOverBlocking": {
+          "pass": true,
+          "detail": "performance boundary does not remove feature"
+        },
+        "noConfirmedRelevantDefect": {
+          "pass": false,
+          "detail": "verify database integrity: relation \"items\" does not exist"
+        }
+      },
+      "confirmedDefects": [
+        "verify database integrity: relation \"items\" does not exist"
+      ]
+    }
+  ]
+}
