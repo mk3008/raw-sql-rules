@@ -40,8 +40,13 @@ the corresponding evaluated control observation.  See
 | D | 2/2 | 2/2 |
 | E | 2/2 | 2/2 |
 
-Each evaluated launch records `codex-cli 0.153.3`, a passing independent
-repository isolation check, and a frozen-evaluator result.  Evaluations used
+The 19 non-replacement evaluated launches record `codex-cli 0.153.3` in their
+`launch.json` files.  The replacement A launch is covered by the separate
+runner-equivalent transport/CLI recovery confirmation recorded in
+`RUNTIME-RECOVERY-AUDIT.md` and `CLI-VERSION-AMENDMENT.md`; it is not a
+per-launch `cliVersion` field retroactively inferred from another run.  Every
+evaluated launch has a passing independent repository isolation check and a
+frozen-evaluator result.  Evaluations used
 the same Docker-enabled evaluator environment; candidate-visible task,
 fixture, evaluator source, model, reasoning effort, and permissions remain
 the frozen ones.
