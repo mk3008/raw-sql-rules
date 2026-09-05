@@ -5,19 +5,17 @@ selected Raw SQL. It is not a framework, a query builder, or a tutorial for
 every implementation, review, and testing step. SQL, the selected driver, and
 the application remain the technical authorities.
 
-## Contracts and Default Requirements
+## Scope, Safety Contract, and Default Requirements
 
-The three **Contracts** define the identity of Raw SQL Rules. They are durable
-human/product boundaries and are not customizable while a project calls its
-configuration Raw SQL Rules:
-
-1. Raw SQL is the selected query representation.
-2. Application concerns remain application-owned.
-3. Runtime input does not supply arbitrary SQL syntax.
+The **Safety Contract** defines the non-customizable core of Raw SQL Rules:
+runtime input must not supply arbitrary SQL syntax. Scope states the selected
+Raw SQL representation and makes application concerns remain application-owned;
+it does not prescribe architecture or prohibit libraries. This reorganization is
+an editorial product decision, not evidence of a measured safety improvement.
 
 The four **Default Requirements** are supplied project defaults for source and
 parameter reviewability, schema context, and real-boundary verifiability. A
-project may customize or omit them without changing the Contracts. They are not
+project may customize or omit them without changing the Safety Contract. They are not
 weak suggestions, but neither are they experimentally established universal
 necessities.
 
@@ -44,20 +42,13 @@ does not prove that every individual historical sentence has zero isolated
 effect. The product does not retain operational instructions merely because
 they are sound engineering advice.
 
-## Why the Contracts exist
+## Why Scope and the Safety Contract exist
 
-### Raw SQL representation
+### Scope and Raw SQL representation
 
-The first Contract selects directly reviewable ordinary SQL, executed through
+Scope selects directly reviewable ordinary SQL, executed through
 the selected database driver, for covered paths. It does not require a runtime
 `.sql` asset or claim superiority over other data-access approaches.
-
-### Application ownership
-
-Connections, transactions, retries, mapping, migrations, tests, deployment,
-and business semantics remain application-owned. This prevents Raw SQL Rules
-from becoming an application framework or prescribing an application's
-architecture.
 
 ### Runtime-input safety
 
@@ -72,6 +63,8 @@ The Default Requirements supply useful project defaults without fixing their
 implementation:
 
 - A dedicated reviewable source makes executable application SQL discoverable.
+- Named definitions and named bindings avoid manually maintaining a position-to-
+  value correspondence between SQL and its caller.
 - Meaningful parameter names preserve intent at the human review surface.
 - A directly inspectable current schema provides present-state context without
   mentally replaying migrations.
@@ -80,7 +73,24 @@ implementation:
 
 These are human product and design choices about reviewability, maintenance,
 schema context, and verifiability. They are not claims that every project,
-language, driver, or DBMS needs the same arrangement.
+language, driver, or DBMS needs the same arrangement. Default 4 requires a
+usable real-boundary verification path; it does not assert that every change has
+already been run through that path.
+
+### Why Default 2 requires named definitions and bindings
+
+The author wants a reviewer to inspect the authoritative SQL and its caller
+without manually maintaining a position-to-value correspondence. Named markers
+and name-based binding keep parameter addition, removal, order changes, and
+repeated use attached to a meaningful identity. Comments next to `$1`, or CTE
+aliases over positional values, still leave a manual positional correspondence
+at the driver call and therefore do not meet v0.3 Default 2.
+
+Some drivers require positional or anonymous binding. A local lowering step is
+compatible when it mechanically derives the driver representation and value
+array from the authoritative names, without creating a second hand-maintained
+mapping. This is not a mandate for a marker syntax, DBMS, library, or package.
+Values remain bindings rather than SQL syntax.
 
 ## Research progression
 
@@ -101,8 +111,11 @@ standalone product decision draws on local evidence in this repository:
   is the relevant valid bounded benchmark record; invalid studies remain
   engineering evidence rather than causal product claims.
 
-External Ashiba material remains useful for historical origin and is not a
-claim that the current product is an Ashiba subsystem.
+The v0.3 named-parameter decision also uses Ashiba PR #116 as read-only
+technical reference: it demonstrates native named and mechanically lowered
+bindings with a real node-postgres/PostgreSQL probe. Its product decision was
+not to sponsor or rehome a standalone package. Raw SQL Rules neither revives nor
+depends on that package work.
 
 ## Limits
 

@@ -4,35 +4,34 @@
 
 Raw SQL Rules defines a durable boundary for directly reviewable SQL without
 becoming a framework or prescribing an application's architecture. Current
-contract: **v0.2**. The authoritative text is
+contract: **v0.3**. The authoritative text is
 [raw-sql-rules.md](raw-sql-rules.md).
 
 ## What is fixed
 
-The three Contracts are the non-customizable core of Raw SQL Rules. Changing
-one changes the core contract:
-
-1. Raw SQL is the selected query representation.
-2. Application concerns remain application-owned.
-3. Runtime input does not supply arbitrary SQL syntax.
+The Safety Contract is the non-customizable core: runtime input does not supply
+arbitrary SQL syntax. The application retains control of SQL syntax and
+structural choices, including reviewed finite structural variation.
 
 ## What is customizable
 
 The following are supplied project Default Requirements. They are meaningful
 defaults for reviewability, maintenance, and verification, but a project may
-customize or omit them without changing the three Contracts:
+customize or omit them without changing the Safety Contract:
 
 1. Executable application SQL has a dedicated reviewable source.
-2. Parameters are named by meaning at the human review surface.
+2. Authoritative SQL uses meaningful named parameters and callers bind by name.
 3. Current schema is directly inspectable.
 4. DB/driver-dependent behavior is verifiable at the real boundary.
 
 ## Scope
 
 Raw SQL Rules applies only to application paths where Raw SQL is the selected
-query representation. It makes no claim that Raw SQL is superior to an ORM or
-query builder, and it does not require a mixed application to use Raw SQL for
-all data access.
+query representation, directly visible as ordinary SQL and executed through the
+selected driver. It does not prescribe connections, pools, transactions,
+retries, logging, result mapping, migrations, testing, deployment, framework,
+or architecture. A path covered by these Rules may not be switched to another
+query representation merely to evade them.
 
 ## Add Raw SQL Rules
 
@@ -78,10 +77,11 @@ Optional paths and refs are controlled by `RAW_SQL_RULES_REF`,
 
 ## Why
 
-The v0.2 structure separates durable product boundaries from removable
-agent-operational/HOW guidance. See [RATIONALE.md](RATIONALE.md) for the
-product reasoning and [EVIDENCE.md](EVIDENCE.md) for the bounded research and
-its limits.
+The v0.3 structure separates Scope, a narrow Safety Contract, and author
+Default Requirements. Default 2 requires named definitions and named bindings:
+comments or CTE aliases around positional parameters alone are not sufficient.
+See [RATIONALE.md](RATIONALE.md) for the product reasoning and
+[EVIDENCE.md](EVIDENCE.md) for the bounded evidence and its limits.
 
 ## Learn more
 

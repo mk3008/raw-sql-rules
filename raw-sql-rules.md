@@ -1,27 +1,22 @@
-# Raw SQL Rules v0.2
+# Raw SQL Rules v0.3
 
 ## Scope
 
 These Rules apply to application paths where Raw SQL is the selected query
-representation.
-
-## Contracts
-
-Contracts are the non-customizable core of Raw SQL Rules.
-
-### 1. Raw SQL is the selected query representation
-
-For covered paths, application data access is expressed as directly reviewable
-ordinary SQL and executed through the selected database driver.
-
-### 2. Application concerns remain application-owned
+representation. For covered paths, application data access is expressed as
+directly reviewable ordinary SQL and executed through the selected database
+driver. This scope does not claim Raw SQL is superior to another representation,
+and it does not require every data-access path in a mixed application to use Raw
+SQL. A covered path must not be changed to another query representation merely
+to avoid these Rules.
 
 Connections and pools, transactions, retries, logging, result mapping,
 migrations, tests, deployment and execution integration, and business semantics
-remain application-owned. Application architecture and framework remain
-application choices.
+remain application-owned. These Rules do not prescribe application architecture,
+frameworks, or implementation of those concerns. They neither require a
+home-grown implementation nor prohibit use of existing libraries.
 
-### 3. Runtime input does not supply arbitrary SQL syntax
+## Safety Contract
 
 Runtime input must not supply arbitrary SQL syntax. The application retains
 control of SQL syntax and structural choices. Application-controlled, reviewed
@@ -29,8 +24,9 @@ structural variation remains permitted.
 
 ## Default Requirements
 
-Projects may customize or omit these requirements without changing the
-Contracts.
+These are the author's human requirements. A project may customize or omit them
+without changing the Safety Contract. When they are adopted, an implementation
+must satisfy them; a candidate or tool may not silently weaken or omit them.
 
 ### 1. Executable application SQL has a dedicated reviewable source
 
@@ -51,16 +47,22 @@ driver or control statements, non-application health or probe statements, or
 non-executable documentation and examples. These boundaries do not permit
 application query logic to be reclassified to avoid review.
 
-### 2. Parameters are named by meaning at the human review surface
+### 2. Parameters use named definitions and named bindings
 
-At the human SQL review surface, parameters are identified by meaningful names,
-such as `customerId`, `tenantId`, `status`, or `completedFrom`. Positional
-placeholders alone, such as `$1`, `$2`, `?`, or `:1`, do not satisfy this
-requirement.
+The authoritative application SQL uses meaningful named parameters, and the
+calling code binds values by those names. Positional or anonymous parameters,
+such as `$1`, `$2`, `?`, or `:1`, do not satisfy this requirement when comments,
+aliases, or manual value-array ordering are used to maintain the correspondence.
+For example, `$1 AS tenant_id` does not make a positional parameter named.
 
-Driver-specific positional or anonymous binding may exist below that review
-boundary. A derived driver representation is not a second authoritative source
-merely because the selected driver ultimately receives positional placeholders.
+A selected driver may require a positional or anonymous representation at its
+boundary. That representation is permitted only when the correspondence and
+value array are mechanically derived from the authoritative names, without a
+second manually maintained authoritative source or mapping table. Values are
+passed as bound values, never embedded into SQL syntax.
+
+These Rules do not require a particular named-marker notation, DBMS, driver,
+library, file extension, or lowering implementation.
 
 ### 3. Current schema is directly inspectable
 
@@ -76,4 +78,5 @@ directly.
 When correctness depends on database-engine or driver behavior, the project has
 a path to verify that behavior through the target database engine and selected
 driver. These Rules do not prescribe a test framework, test architecture, or
-execution environment.
+execution environment. Having that path does not mean every change has already
+been verified through it.
