@@ -1,0 +1,47 @@
+{
+  "slot": "C-control-2",
+  "scenario": "C",
+  "arm": "control",
+  "replacementFor": null,
+  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+  "preflight": {
+    "pass": true,
+    "root": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI\\.git",
+    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI\\.git",
+    "head": "7821b85afb95f53bb0a23a29aa10a00a4382a51a",
+    "tree": "3708f023b8f659c486d9f3bfc4a73c6edcfcf325",
+    "status": "",
+    "remotes": "",
+    "checks": {
+      "topLevelMatchesCandidate": true,
+      "gitDirMatchesCandidate": true,
+      "commonDirMatchesCandidate": true,
+      "pathsOutsideParentRepo": true,
+      "expectedHead": true,
+      "expectedTree": true,
+      "clean": true,
+      "noRemote": true,
+      "forbiddenGitEnvironmentAbsent": true
+    },
+    "environment": {
+      "GIT_DIR": null,
+      "GIT_WORK_TREE": null,
+      "GIT_COMMON_DIR": null,
+      "GIT_INDEX_FILE": null,
+      "GIT_OBJECT_DIRECTORY": null,
+      "GIT_ALTERNATE_OBJECT_DIRECTORIES": null,
+      "GIT_CEILING_DIRECTORIES": null,
+      "GIT_DISCOVERY_ACROSS_FILESYSTEM": null
+    }
+  },
+  "cliVersion": "codex-cli 0.153.3",
+  "materials": {
+    "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
+    "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
+    "taskSha256": "a226731505878402f9d67f9ff0478ffbee7727db19f8ea166e558ba97107880c",
+    "fixtureMatchesFreeze": true,
+    "trackedAllowlistMatches": true
+  }
+}

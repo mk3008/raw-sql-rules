@@ -1,0 +1,24 @@
+{
+  "slot": "C-control-2",
+  "scenario": "C",
+  "arm": "control",
+  "replacementFor": null,
+  "cliVersion": "codex-cli 0.153.3",
+  "startedAt": "2026-09-05T05:47:13.049Z",
+  "endedAt": "2026-09-05T05:50:18.532Z",
+  "result": {
+    "code": 0,
+    "signal": null
+  },
+  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+  "runtime": {
+    "cwd": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+    "expectedRoot": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI",
+    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI\\.git",
+    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-C-control-2-JbL9QI\\.git",
+    "head": "7821b85afb95f53bb0a23a29aa10a00a4382a51a",
+    "tree": "3708f023b8f659c486d9f3bfc4a73c6edcfcf325",
+    "pass": true
+  }
+}
