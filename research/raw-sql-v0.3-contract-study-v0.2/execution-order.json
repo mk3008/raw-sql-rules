@@ -1,5 +1,5 @@
 {
-  "profile": { "model": "gpt-5.6-terra", "reasoningEffort": "medium", "sandbox": "workspace-write" },
+  "profile": { "model": "gpt-5.6-terra", "reasoningEffort": "medium", "sandbox": "workspace-write", "cliVersion": "codex-cli 0.153.3" },
   "slots": [
     "A-control-1", "A-treatment-1", "A-control-2", "A-treatment-2",
     "B-control-1", "B-treatment-1", "B-control-2", "B-treatment-2",

@@ -5,13 +5,15 @@
   "profile": {
     "model": "gpt-5.6-terra",
     "reasoningEffort": "medium",
-    "sandbox": "workspace-write"
+    "sandbox": "workspace-write",
+    "cliVersion": "codex-cli 0.153.3"
   },
   "originalScheduledLaunches": 20,
   "approvedReplacementLaunches": 1,
   "totalLaunchesIncludingReplacement": 21,
   "effectDataEvaluations": 20,
   "files": {
+    "CLI-VERSION-AMENDMENT.md": "685906ac2edcc7ec67fda00bd85158365488b79b1d2c3c973f72bf181890533c",
     "COHERENCE-AUDIT.md": "8922ba3a479d027c308d3884aa7cc240872a651195f4c46e357ec18847212654",
     "EVALUATOR-EXECUTION-AMENDMENT.md": "1e220a32b86cb84641db71675e89940f6cce4ca88078ac18f2890cd87f933210",
     "INFRA-AMENDMENT.md": "91b0abcab7bed0cb2e7d61cc9076798a054c70ca5a5a1e44672e890a17e4898a",
@@ -31,7 +33,7 @@
     "evaluator/run.mjs": "f9da57ee64147e77b906b2ff6ed50834b39c529a23e84fc471360202320a0753",
     "evaluator/variants/known-bad.js": "52ec3b1f448ebcafadbbc3300fffef1cb08135fdb0ce60ae48186c5fe2ab4428",
     "evaluator/variants/known-good.js": "314ab203f7800bb82d05c02db7b0001a86a793518d6ff865df29eb3f0bc67e84",
-    "execution-order.json": "bd7975ff1911a81e2f823332c2e3f37ca147c40702463de1aca6a0b3868bdb78",
+    "execution-order.json": "d2d6fa65fcfd1c81d96a4dc559b70c22630e0e7814457064310596bad03a7e0b",
     "fixture/README.md": "689572b71d4cd3126a1380b6fdae5649a0b28e3b6ec8207fa887cf6c66054ab7",
     "fixture/compose.yaml": "3896dc610c92a4399445fb52febace15466d7b2ec56c7af0c025368baf8e007b",
     "fixture/database/init.sql": "d593f07bebf552ffb13e5cf1d223876e3590607fa8dc13f12a37e2dea083b7a7",
@@ -41,7 +43,7 @@
     "fixture/src/server.js": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
     "freeze.mjs": "318ad053920878887d7ec37bbf67c941b3d349ae0a20f36eade56e8ef5397241",
     "isolation.mjs": "012ae056df277a34de5d6ac41066dd4715853ef8d5ab0de0c3f7785e9e155f52",
-    "launch.mjs": "c20ba774c7bd2bed36a87c63149ac500c2cc2a997ec4c4bff401071f8c2b4981",
+    "launch.mjs": "0a31fc26e950f4f7d27404bbbcf0e8eeb4daa60935c6c8327f4bb1f56375cb1f",
     "packets/control-AGENTS.md": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",
     "packets/treatment-AGENTS.md": "3653c14235a593f91d16d9938ab33332b8a408d7946fe7fc520fbdc265e5ef09",
     "test-isolation-regression.mjs": "0647cd680afd164494759204e643f3dba64fd7d13a3e2ad50c1c2e099eb03f56",

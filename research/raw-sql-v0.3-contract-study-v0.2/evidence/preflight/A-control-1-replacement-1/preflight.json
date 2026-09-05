@@ -3,14 +3,14 @@
   "scenario": "A",
   "arm": "control",
   "replacementFor": "A-control-1",
-  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-5ZQEvP",
+  "candidate": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-cnxzxb",
   "preflight": {
     "pass": true,
-    "root": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-5ZQEvP",
-    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-5ZQEvP",
-    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-5ZQEvP\\.git",
-    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-5ZQEvP\\.git",
-    "head": "c6a995643a0c064e89a846f3f35d6d055e3da91b",
+    "root": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-cnxzxb",
+    "top": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-cnxzxb",
+    "gitDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-cnxzxb\\.git",
+    "commonDir": "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03r2-A-control-1-replacement-1-cnxzxb\\.git",
+    "head": "f143d165ffa06a7bb02c54cc1a7ef8a7fd70e825",
     "tree": "827f8195b74fc5f50fce95d5514f30afddeddc94",
     "status": "",
     "remotes": "",
@@ -36,6 +36,7 @@
       "GIT_DISCOVERY_ACROSS_FILESYSTEM": null
     }
   },
+  "cliVersion": "codex-cli 0.153.3",
   "materials": {
     "fixtureServerSha256": "e4e1d0ec6576d9cda7cd6f006cc5fcf85ae5839f74580e8bad877e6fc87d2198",
     "packetSha256": "4ca5f360195e64d3a6989dc5b627541eda102ff9816110e18bcb181d4921a7d9",

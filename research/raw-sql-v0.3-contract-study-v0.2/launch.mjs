@@ -50,6 +50,8 @@ try {
   await writeFile(join(candidate, '.git', 'info', 'exclude'), 'verify-isolation.mjs\n');
   const pre = await preflight(candidate, initialHead, initialTree, protectedRepositoryRoot);
   if (!pre.pass) throw new Error(`isolation preflight rejected ${JSON.stringify(pre.checks)}`);
+  const cli = await command('codex', ['--version'], { cwd: candidate, env });
+  if (cli.code !== 0 || cli.stdout !== frozen.profile.cliVersion) throw new Error(`Codex CLI version mismatch: expected ${frozen.profile.cliVersion}, received ${cli.stdout || cli.stderr}`);
   const fixtureHashes = Object.fromEntries(await Promise.all(Object.entries(frozen.files)
     .filter(([path]) => path.startsWith('fixture/'))
     .map(async ([path, expected]) => [path, { expected, actual: hash(await readFile(join(candidate, path.slice('fixture/'.length)))) }])));
@@ -60,7 +62,7 @@ try {
   if (!fixtureMatchesFreeze || !trackedAllowlistMatches) throw new Error('candidate tracked source does not match frozen fixture allowlist');
   const materials = { fixtureServerSha256: fixtureHashes['fixture/src/server.js'].actual, packetSha256: hash(packet), taskSha256: hash(task), fixtureMatchesFreeze, trackedAllowlistMatches };
   if (JSON.stringify({ fixtureServerSha256: materials.fixtureServerSha256, packetSha256: materials.packetSha256, taskSha256: materials.taskSha256 }) !== JSON.stringify(frozen.materialHashes[scenario][arm])) throw new Error('frozen material hash mismatch before candidate launch');
-  await writeJson(join(evidence, 'preflight.json'), { slot, scenario, arm, replacementFor: slot === approvedReplacement ? 'A-control-1' : null, candidate, preflight: pre, materials });
+  await writeJson(join(evidence, 'preflight.json'), { slot, scenario, arm, replacementFor: slot === approvedReplacement ? 'A-control-1' : null, candidate, preflight: pre, cliVersion: cli.stdout, materials });
   if (preflightOnly) {
     process.stdout.write(`${JSON.stringify({ slot, candidate: basename(candidate), preflight: 'PASS' })}\n`);
     process.exitCode = 0;
@@ -79,7 +81,7 @@ try {
   if (!runtime.pass) throw new Error('candidate runtime isolation verification failed after launch');
   await writeFile(join(evidence, 'events.jsonl'), events);
   await writeFile(join(evidence, 'stderr.txt'), stderr);
-  await writeJson(join(evidence, 'launch.json'), { slot, scenario, arm, replacementFor: slot === approvedReplacement ? 'A-control-1' : null, startedAt, endedAt: new Date().toISOString(), result, candidate, runtime });
+  await writeJson(join(evidence, 'launch.json'), { slot, scenario, arm, replacementFor: slot === approvedReplacement ? 'A-control-1' : null, cliVersion: cli.stdout, startedAt, endedAt: new Date().toISOString(), result, candidate, runtime });
   await cp(candidate, join(evidence, 'final-source'), { recursive: true, filter: (source) => !/[\\/](node_modules|\.git)([\\/]|$)/.test(source) });
   process.stdout.write(`${JSON.stringify({ slot, candidate: basename(candidate), ...result })}\n`);
   process.exitCode = result.code === 0 ? 0 : 1;
