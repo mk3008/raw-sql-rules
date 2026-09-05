@@ -5,7 +5,7 @@
 | Layer | Result | Interpretation boundary |
 | --- | --- | --- |
 | Frozen Primary | 20/20 PASS; 21 launches, one infrastructure exclusion | Small fixed study; no detected arm difference. |
-| Post-hoc verifier | 15 initial PASS; five `health failed` verifier-environment errors; one diagnostic rerun of each error PASS | Not preregistered and not a replacement Primary. |
+| Post-hoc verifier | Initial version: 15 PASS / 5 health errors, all rerun PASS. Independent-review revision: 14 PASS / 6 health errors, all rerun PASS. | Not preregistered and not a replacement Primary. |
 | False-pass calibration | B and D bad variants: frozen evaluator PASS, post-hoc FAIL | Establishes evaluator coverage holes, not a candidate defect. |
 | Candidate process observation | Saved events/final snapshots are available, with incomplete timing/history in some runs | Descriptive only; no causal arm conclusion. |
 | Default Requirement review | Final sources commonly show direct SQL, meaningful SQL aliases/parameters, fixture DDL, and candidate DB checks where events prove them | Separate author-default axis, not Contract-3 effect evidence. |
@@ -19,8 +19,11 @@ success-array shape, duplicate rejection, and D's full projection. It does not
 add business behavior or a general quality criterion.
 
 Its initial 15 PASS / 5 `health failed` result is an environment observation,
-not five candidate failures. The five sources passed one diagnostic rerun; the
-rerun record and app stderr support separating this from a candidate outcome.
+not five candidate failures. Independent review then strengthened `tenant_id`
+identity and E duplicate checks; the revised run had 14 PASS / 6 health errors.
+Each error source passed one diagnostic rerun. The rerun records support
+separating these from candidate outcomes; retained stderr did not identify a
+root cause.
 B and D calibration intentionally demonstrated the review-reported holes:
 the frozen evaluator accepts B tenant-b HTTP 500/non-array and D detailed
 wrong-tenant/incomplete projection, whereas this verifier rejects them.
