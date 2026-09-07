@@ -14,8 +14,8 @@ it does not prescribe architecture or prohibit libraries. This reorganization is
 an editorial product decision, not evidence of a measured safety improvement.
 
 The four **Default Requirements** are supplied project defaults for source and
-parameter reviewability, schema context, and real-boundary verifiability. A
-project may customize or omit them without changing the Safety Contract. They are not
+parameter reviewability, schema context, and DB/driver verifiability. A project
+may customize or omit them without changing the Safety Contract. They are not
 weak suggestions, but neither are they experimentally established universal
 necessities.
 
@@ -62,20 +62,38 @@ safety boundary rather than an implementation recipe.
 The Default Requirements supply useful project defaults without fixing their
 implementation:
 
-- A dedicated reviewable source makes executable application SQL discoverable.
+- One authoritative reviewable definition gives each executable application SQL
+  statement clear ownership and a directly traceable source from its execution
+  sites without requiring a specific file layout.
 - Named definitions and named bindings avoid manually maintaining a position-to-
   value correspondence between SQL and its caller.
 - Meaningful parameter names preserve intent at the human review surface.
 - A directly inspectable current schema provides present-state context without
   mentally replaying migrations.
 - A path through the target database engine and selected driver can establish
-  behavior that depends on that real boundary.
+  behavior that depends on that DB/driver boundary. An isolated or disposable
+  test database is sufficient; production access or production data is not
+  required.
 
 These are human product and design choices about reviewability, maintenance,
 schema context, and verifiability. They are not claims that every project,
 language, driver, or DBMS needs the same arrangement. Default 4 requires a
-usable real-boundary verification path; it does not assert that every change has
-already been run through that path.
+usable target-DB-and-driver verification path; it does not assert that every
+change has already been run through that path.
+
+### Why Default 1 is placement-neutral
+
+Dedicated SQL sources remain useful where file inventory, long SQL, SQL-only
+review, or cross-operation reuse matters. They are not necessary to preserve the
+property Raw SQL Rules actually needs: one authoritative ordinary-SQL definition
+that a reviewer can locate from execution sites. Operation-colocated definitions
+can preserve the same ownership and reviewability without an extra source hop.
+
+The bounded assessment in
+[the v0.3 Default 1 placement decision](research/default-1-v0.3-decision.md)
+therefore relaxes dedicated-file placement without establishing that colocation
+is universally better. It did not measure human or AI review quality, general
+repository-wide discoverability, or a universal layout ranking.
 
 ### Why Default 2 requires named definitions and bindings
 
@@ -107,6 +125,9 @@ standalone product decision draws on local evidence in this repository:
 - [v0.2 subtraction gate](research/raw-sql-v0.2-subtraction-gate-v0.1/RESULT.md)
   tested the removable legacy operational/HOW bundle on top of identical v0.2
   material.
+- [v0.3 Default 1 placement decision](research/default-1-v0.3-decision.md)
+  found dedicated placement useful but not necessary for the protected
+  authoritative-source property, within its stated evidence limits.
 - [The v0.6 harness report](benchmark/rawsql-harness-sensitivity-ts-v0.6/FINAL-REPORT.md)
   is the relevant valid bounded benchmark record; invalid studies remain
   engineering evidence rather than causal product claims.
