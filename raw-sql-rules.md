@@ -20,9 +20,8 @@ structural variation remains permitted.
 
 ## Default Requirements
 
-These are the author's human requirements. A project may customize or omit them
-without changing the Safety Contract. When they are adopted, an implementation
-must satisfy them; a candidate or tool may not silently weaken or omit them.
+Projects may customize or omit these requirements without changing the Safety
+Contract.
 
 ### 1. Executable application SQL has one authoritative reviewable source
 
