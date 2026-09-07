@@ -73,10 +73,11 @@ inspectable current-schema representation may satisfy this requirement. Migratio
 history alone does not satisfy it when current state cannot be determined
 directly.
 
-### 4. DB/driver-dependent behavior is verifiable at the real boundary
+### 4. DB/driver-dependent behavior is verifiable with the target DB engine and driver
 
 When correctness depends on database-engine or driver behavior, the project has
 a path to verify that behavior through the target database engine and selected
-driver. These Rules do not prescribe a test framework, test architecture, or
-execution environment. Having that path does not mean every change has already
-been verified through it.
+driver. Verification may use an isolated or disposable test database; production
+access or production data is not required. These Rules do not prescribe a test
+framework, test architecture, or execution environment. Having that path does
+not mean every change has already been verified through it.
