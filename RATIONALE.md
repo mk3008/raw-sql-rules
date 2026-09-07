@@ -5,7 +5,7 @@ selected Raw SQL. It is not a framework, a query builder, or a tutorial for
 every implementation, review, and testing step. SQL, the selected driver, and
 the application remain the technical authorities.
 
-## Scope, Safety Contract, and Default Requirements
+## Scope, Safety Contract, and Requirements
 
 The **Safety Contract** defines the non-customizable core of Raw SQL Rules:
 runtime input must not supply arbitrary SQL syntax. Scope states the selected
@@ -13,11 +13,9 @@ Raw SQL representation and keeps application concerns application-owned. This
 reorganization is an editorial product decision, not evidence of a measured
 safety improvement.
 
-The four **Default Requirements** are supplied project defaults for source and
-parameter reviewability, schema context, and DB/driver verifiability. A project
-may customize or omit them without changing the Safety Contract. They are not
-weak suggestions, but neither are they experimentally established universal
-necessities.
+The four **Requirements** are supplied as project defaults before adoption. A
+project may customize or omit them before adopting its copy of the Rules. In an
+adopted Rules file, they are simply requirements to satisfy.
 
 ## Why operational/HOW guidance was removed
 
@@ -63,10 +61,10 @@ control of SQL syntax and structural choices; reviewed,
 application-controlled structural variation remains permitted. This is a core
 safety boundary rather than an implementation recipe.
 
-## Why the Default Requirements exist
+## Why the Requirements exist
 
-The Default Requirements supply useful project defaults without fixing their
-implementation:
+The Requirements provide useful reviewability, maintenance, schema-context, and
+verification boundaries without fixing their implementation:
 
 - One authoritative reviewable definition gives each executable application SQL
   statement clear ownership and a directly traceable source from its execution
@@ -81,13 +79,13 @@ implementation:
   test database is sufficient; production access or production data is not
   required.
 
-These are human product and design choices about reviewability, maintenance,
-schema context, and verifiability. They are not claims that every project,
-language, driver, or DBMS needs the same arrangement. Default 4 requires a
-usable target-DB-and-driver verification path; it does not assert that every
-change has already been run through that path.
+These are product and design choices about reviewability, maintenance, schema
+context, and verifiability. They are not claims that every project, language,
+driver, or DBMS needs the same arrangement. Requirement 4 requires a usable
+target-DB-and-driver verification path; it does not assert that every change has
+already been run through that path.
 
-### Why Default 1 is placement-neutral
+### Why Requirement 1 is placement-neutral
 
 Dedicated SQL sources remain useful where file inventory, long SQL, SQL-only
 review, or cross-operation reuse matters. They are not necessary to preserve the
@@ -101,14 +99,14 @@ therefore relaxes dedicated-file placement without establishing that colocation
 is universally better. It did not measure human or AI review quality, general
 repository-wide discoverability, or a universal layout ranking.
 
-### Why Default 2 requires named definitions and bindings
+### Why Requirement 2 requires named definitions and bindings
 
-The author wants a reviewer to inspect the authoritative SQL and its caller
+Requirement 2 lets a reviewer inspect the authoritative SQL and its caller
 without manually maintaining a position-to-value correspondence. Named markers
 and name-based binding keep parameter addition, removal, order changes, and
 repeated use attached to a meaningful identity. Comments next to `$1`, or CTE
 aliases over positional values, still leave a manual positional correspondence
-at the driver call and therefore do not meet v0.3 Default 2.
+at the driver call and therefore do not meet v0.3 Requirement 2.
 
 Some drivers require positional or anonymous binding. A local lowering step is
 compatible when it mechanically derives the driver representation and value
@@ -149,4 +147,4 @@ depends on that package work.
 The evidence is bounded by small task/model samples and recent comparisons that
 are PostgreSQL-heavy. It does not establish universal agent behavior, prove
 that each historical sentence is individually ineffective, or prove every
-Default Requirement universally necessary.
+Requirement universally necessary.
