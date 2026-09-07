@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve release metadata
+        id: release
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          test "${GITHUB_REF_TYPE}" = "tag" || { echo "Release must run from a tag" >&2; exit 1; }
+          notes="RELEASE-NOTES-${tag}.md"
+          test -f "$notes" || { echo "Missing $notes" >&2; exit 1; }
+          test -f raw-sql-rules.md || { echo "Missing raw-sql-rules.md" >&2; exit 1; }
+          title="$(sed -n '1s/^# //p' "$notes")"
+          test -n "$title" || { echo "Missing release title in $notes" >&2; exit 1; }
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "notes=$notes" >> "$GITHUB_OUTPUT"
+          echo "title=$title" >> "$GITHUB_OUTPUT"
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          NOTES: ${{ steps.release.outputs.notes }}
+          TITLE: ${{ steps.release.outputs.title }}
+        shell: bash
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "$TAG already exists; nothing to release."
+            exit 0
+          fi
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "$TITLE" \
+            --notes-file "$NOTES" \
+            "raw-sql-rules.md#Raw SQL Rules contract"
