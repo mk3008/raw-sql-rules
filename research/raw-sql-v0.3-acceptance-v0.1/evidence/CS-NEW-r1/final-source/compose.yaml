@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:18.1
+    environment:
+      POSTGRES_DB: work_items
+      POSTGRES_USER: work_items
+      POSTGRES_PASSWORD: work_items
+    ports:
+      - "54329:5432"
+    volumes:
+      - ./database/schema/001_work_items.sql:/docker-entrypoint-initdb.d/001_work_items.sql:ro
+      - ./database/seed/001_work_items.sql:/docker-entrypoint-initdb.d/002_seed_work_items.sql:ro
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 192.168.64.0/20

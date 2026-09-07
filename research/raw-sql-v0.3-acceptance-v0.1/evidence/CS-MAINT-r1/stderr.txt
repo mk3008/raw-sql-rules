@@ -1,0 +1,11 @@
+Reading additional input from stdin...
+2026-09-05T10:08:05.114246Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-09-05T10:08:05.114275Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-09-05T10:08:05.121939Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+2026-09-05T10:08:05.609211Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-09-05T10:08:05.609237Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-09-05T10:09:06.739663Z ERROR codex_core::tools::router: error=apply_patch verification failed: invalid hunk at line 30, Update file hunk for path 'C:\Users\mssgm\AppData\Local\Temp\rawsql-v03-acceptance-cs-maint-r1-3c5e811177c94d529a0d348dbef5d54b\src\WorkItems.Api\Features\WorkItems\GetWorkItems\ListWorkItems\ListWorkItems.PriorityDesc.sql' is empty
+2026-09-05T10:10:50.806988Z  WARN codex_core::guardian::review_session: failed to refresh guardian trunk rollout snapshot: Session persistence is disabled; cannot guardian review fork.
+2026-09-05T10:10:50.807776Z ERROR codex_core::tools::router: error=exec_command failed: CreateProcess { message: "Rejected(\"This action was rejected due to unacceptable risk.\\nReason: リポジトリ外の NuGet.Config を読み取り、外部パッケージ取得を行う可能性があり、「リポジトリ外を読まない」という明示的な制約で許可されていません。\\nThe agent must not attempt to achieve the same outcome via workaround, indirect execution, or policy circumvention. Proceed only with a materially safer alternative, or if the user explicitly approves the action after being informed of the risk. Otherwise, stop and request user input.\")" }
+2026-09-05T10:11:35.216839Z  WARN codex_core::guardian::review_session: failed to refresh guardian trunk rollout snapshot: Session persistence is disabled; cannot guardian review fork.
+2026-09-05T10:11:51.594610Z  WARN codex_mcp::rmcp_client: failed to initialize MCP client during shutdown: MCP startup failed: handshaking with MCP server failed: connection closed: initialize response

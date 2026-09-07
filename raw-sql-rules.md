@@ -1,66 +1,63 @@
-# Raw SQL Rules v0.2
+# Raw SQL Rules v0.3
 
 ## Scope
 
 These Rules apply to application paths where Raw SQL is the selected query
-representation.
-
-## Contracts
-
-Contracts are the non-customizable core of Raw SQL Rules.
-
-### 1. Raw SQL is the selected query representation
-
-For covered paths, application data access is expressed as directly reviewable
-ordinary SQL and executed through the selected database driver.
-
-### 2. Application concerns remain application-owned
+representation. For covered paths, application data access is expressed as
+directly reviewable ordinary SQL and executed through the selected database
+driver.
 
 Connections and pools, transactions, retries, logging, result mapping,
 migrations, tests, deployment and execution integration, and business semantics
 remain application-owned. Application architecture and framework remain
 application choices.
 
-### 3. Runtime input does not supply arbitrary SQL syntax
+## Safety Contract
 
 Runtime input must not supply arbitrary SQL syntax. The application retains
 control of SQL syntax and structural choices. Application-controlled, reviewed
 structural variation remains permitted.
 
-## Default Requirements
+## Requirements
 
-Projects may customize or omit these requirements without changing the
-Contracts.
+### 1. Executable application SQL has one authoritative reviewable source
 
-### 1. Executable application SQL has a dedicated reviewable source
-
-Each executable application SQL statement has one dedicated authoritative source file
-that a reviewer can locate and read directly as ordinary SQL. A runtime `.sql`
-asset is not required: a dedicated host-language source file is acceptable when
-the SQL remains directly visible. Do not hide it behind query construction,
-generated output, or another opaque representation, and do not maintain a
-generated mirror or duplicate canonical source.
+Each executable application SQL statement has one authoritative definition that
+a reviewer can locate from its execution sites and read directly as ordinary
+SQL. The definition may be in a dedicated source or colocated with the operation
+that binds or executes it. A runtime `.sql` asset is not required: host-language
+source is acceptable when the SQL remains directly visible. Do not hide it
+behind query construction, generated output, or another opaque representation,
+and do not maintain a generated mirror or duplicate canonical source.
 
 CTEs and subqueries remain part of one statement. When an operation executes
-multiple executable application statements, each has its own dedicated source.
-File extension and directory layout are application choices.
+multiple executable application statements, each has its own identifiable
+authoritative definition; they may share the operation's source file. Multiple
+callers may reference the same definition. File extension and directory layout
+are application choices.
 
-This requirement applies only to executable application SQL. It does not impose
-one-statement-per-file on migrations, current or canonical schema sources,
-driver or control statements, non-application health or probe statements, or
+This requirement applies only to executable application SQL. It does not
+prescribe placement for migrations, current or canonical schema sources, driver
+or control statements, non-application health or probe statements, or
 non-executable documentation and examples. These boundaries do not permit
 application query logic to be reclassified to avoid review.
 
-### 2. Parameters are named by meaning at the human review surface
+### 2. Parameters use named definitions and named bindings
 
-At the human SQL review surface, parameters are identified by meaningful names,
-such as `customerId`, `tenantId`, `status`, or `completedFrom`. Positional
-placeholders alone, such as `$1`, `$2`, `?`, or `:1`, do not satisfy this
-requirement.
+The authoritative application SQL uses meaningful named parameters, and the
+calling code binds values by those names. Positional or anonymous parameters,
+such as `$1`, `$2`, `?`, or `:1`, do not satisfy this requirement when comments,
+aliases, or manual value-array ordering are used to maintain the correspondence.
+For example, `$1 AS tenant_id` does not make a positional parameter named.
 
-Driver-specific positional or anonymous binding may exist below that review
-boundary. A derived driver representation is not a second authoritative source
-merely because the selected driver ultimately receives positional placeholders.
+A selected driver may require a positional or anonymous representation at its
+boundary. That representation is permitted only when the correspondence and
+value array are mechanically derived from the authoritative names, without a
+second manually maintained authoritative source or mapping table. Values are
+passed as bound values, never embedded into SQL syntax.
+
+These Rules do not require a particular named-marker notation, DBMS, driver,
+library, file extension, or lowering implementation.
 
 ### 3. Current schema is directly inspectable
 
@@ -71,9 +68,11 @@ inspectable current-schema representation may satisfy this requirement. Migratio
 history alone does not satisfy it when current state cannot be determined
 directly.
 
-### 4. DB/driver-dependent behavior is verifiable at the real boundary
+### 4. DB/driver-dependent behavior is verifiable with the target DB engine and driver
 
 When correctness depends on database-engine or driver behavior, the project has
 a path to verify that behavior through the target database engine and selected
-driver. These Rules do not prescribe a test framework, test architecture, or
-execution environment.
+driver. Verification may use an isolated or disposable test database; production
+access or production data is not required. These Rules do not prescribe a test
+framework, test architecture, or execution environment. Having that path does
+not mean every change has already been verified through it.

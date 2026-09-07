@@ -1,0 +1,24 @@
+{
+  "candidate": "rawsql-v03-acceptance-cs-maint-r1-3c5e811177c94d529a0d348dbef5d54b",
+  "executable": "C:\\Users\\mssgm\\AppData\\Local\\OpenAI\\Codex\\bin\\2d468d2a6f48dd72\\codex.exe",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--json",
+    "-m",
+    "gpt-5.6-terra",
+    "-c",
+    "model_reasoning_effort=\"medium\"",
+    "--approve-for-me",
+    "-C",
+    "C:\\Users\\mssgm\\AppData\\Local\\Temp\\rawsql-v03-acceptance-cs-maint-r1-3c5e811177c94d529a0d348dbef5d54b"
+  ],
+  "model": "gpt-5.6-terra",
+  "reasoningEffort": "medium",
+  "stdinClosed": true,
+  "repairing": false,
+  "result": {
+    "code": 0,
+    "signal": null
+  }
+}

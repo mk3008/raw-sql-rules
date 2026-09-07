@@ -1,0 +1,1 @@
+Initial evaluation: FUNCTION_NOT_MET. The successful GET response is an object with an `items` envelope, but TASK.md requires rows to be returned directly. Preserve all other implementation choices and make the smallest change to return the JSON array directly. Re-run the actual PostgreSQL/node-postgres verification for the valid and invalid cases, then report the result.

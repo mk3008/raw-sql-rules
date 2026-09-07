@@ -4,84 +4,74 @@
 
 Raw SQL Rules defines a durable boundary for directly reviewable SQL without
 becoming a framework or prescribing an application's architecture. Current
-contract: **v0.2**. The authoritative text is
+contract: **v0.3**. The authoritative text is
 [raw-sql-rules.md](raw-sql-rules.md).
 
 ## What is fixed
 
-The three Contracts are the non-customizable core of Raw SQL Rules. Changing
-one changes the core contract:
+The Safety Contract is the non-customizable core: runtime input does not supply
+arbitrary SQL syntax. The application retains control of SQL syntax and
+structural choices, including reviewed finite structural variation.
 
-1. Raw SQL is the selected query representation.
-2. Application concerns remain application-owned.
-3. Runtime input does not supply arbitrary SQL syntax.
+## Requirements
 
-## What is customizable
+This repository supplies four requirements as project defaults. A project may
+customize or omit them before adopting its copy of the Rules. In an adopted
+`raw-sql-rules.md`, they are simply Requirements for agents and implementations
+to follow.
 
-The following are supplied project Default Requirements. They are meaningful
-defaults for reviewability, maintenance, and verification, but a project may
-customize or omit them without changing the three Contracts:
-
-1. Executable application SQL has a dedicated reviewable source.
-2. Parameters are named by meaning at the human review surface.
+1. Executable application SQL has one authoritative reviewable source.
+2. Authoritative SQL uses meaningful named parameters and callers bind by name.
 3. Current schema is directly inspectable.
-4. DB/driver-dependent behavior is verifiable at the real boundary.
+4. DB/driver-dependent behavior is verifiable with the target DB engine and driver.
 
 ## Scope
 
-Raw SQL Rules applies only to application paths where Raw SQL is the selected
-query representation. It makes no claim that Raw SQL is superior to an ORM or
-query builder, and it does not require a mixed application to use Raw SQL for
-all data access.
+Raw SQL Rules applies to application paths where Raw SQL is the selected query
+representation. For covered paths, application data access is expressed as
+directly reviewable ordinary SQL and executed through the selected database
+driver.
 
-## Add Raw SQL Rules
+Connections and pools, transactions, retries, logging, result mapping,
+migrations, tests, deployment and execution integration, and business semantics
+remain application-owned. Application architecture and framework remain
+application choices.
 
-There is no runtime package. Copy
-[raw-sql-rules.md](raw-sql-rules.md) to `rules/raw-sql-rules.md`, then add this
-managed block to the root `AGENTS.md`:
+## Use Raw SQL Rules
 
-```md
-<!-- raw-sql-rules:start -->
-## Raw SQL
+There is no runtime package or installer. Copy the version of
+[raw-sql-rules.md](raw-sql-rules.md) you want to adopt into your repository, for
+example as `rules/raw-sql-rules.md`.
 
-For Raw SQL data-access work, read `rules/raw-sql-rules.md` and follow it
-as the repository contract.
-<!-- raw-sql-rules:end -->
+Tagged GitHub Releases attach `raw-sql-rules.md` as the project distribution
+asset. README, rationale, evidence, research, examples, and other repository
+material remain reference material in the tagged repository and are not part of
+the adopted Rules payload.
+
+### Use with AI agents
+
+Copy this into the repository's root `AGENTS.md` (or equivalent instruction
+file), adjusting the path if needed:
+
+```text
+For Raw SQL data-access work, read `rules/raw-sql-rules.md` and follow it as the
+repository contract.
 ```
 
-### Installer
-
-The installers make the same two changes and update the existing managed block
-without duplicating it. They require an authenticated GitHub CLI (`gh`).
-
-From a POSIX shell:
-
-```sh
-gh api repos/mk3008/raw-sql-rules/contents/install.sh \
-  -H 'Accept: application/vnd.github.raw+json' |
-  sh
-```
-
-From PowerShell 7+ on Windows:
-
-```powershell
-$ref = 'main'
-$env:RAW_SQL_RULES_REF = $ref
-gh api "repos/mk3008/raw-sql-rules/contents/install.ps1?ref=$ref" `
-  -H 'Accept: application/vnd.github.raw+json' |
-  Out-String |
-  ForEach-Object { & ([scriptblock]::Create($_)) }
-```
-
-Optional paths and refs are controlled by `RAW_SQL_RULES_REF`,
-`RAW_SQL_RULES_PATH`, and `AGENTS_FILE`.
+Then keep individual prompts focused on the actual task; they do not need to
+mention Raw SQL Rules each time.
 
 ## Why
 
-The v0.2 structure separates durable product boundaries from removable
-agent-operational/HOW guidance. See [RATIONALE.md](RATIONALE.md) for the
-product reasoning and [EVIDENCE.md](EVIDENCE.md) for the bounded research and
-its limits.
+The v0.3 structure separates Scope, a narrow Safety Contract, and Requirements.
+Requirement 1 protects one authoritative, directly reviewable SQL definition
+without requiring dedicated-file placement. Requirement 2 requires named
+definitions and named bindings: comments or CTE aliases around positional
+parameters alone are not sufficient. Requirement 4 requires a path through the
+target DB engine and driver; an isolated or disposable test database is enough,
+and production access or production data is not required. See
+[RATIONALE.md](RATIONALE.md) for the product reasoning and
+[EVIDENCE.md](EVIDENCE.md) for the bounded evidence and its limits.
 
 ## Learn more
 

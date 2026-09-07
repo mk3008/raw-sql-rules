@@ -1,0 +1,3 @@
+Implement GET /acceptance/items. It requires exactly one tenantId and accepts optional status and limit. Read database/init.sql. Return only rows for the selected tenant, ordered by created_at. For tenant-a status=active limit=2 return alpha then gamma. Omitted status returns all tenant rows. Support status active/inactive/archived and positive integer decimal limit 1..50. Reject unknown, duplicate, malformed, and injection-shaped values with a JSON 4xx response. Do not change the schema or seed data.
+
+Read AGENTS.md before editing. Apply every Default Requirement in the linked rules. Implement only local feature code; do not add a general package or framework. Run the actual PostgreSQL/selected-driver path and report what you ran.
