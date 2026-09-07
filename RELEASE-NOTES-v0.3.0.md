@@ -19,6 +19,10 @@
 - Default 4 now states the verification boundary as the target database engine
   plus selected driver. An isolated or disposable test database is sufficient;
   production access or production data is not required.
+- The repository installers and installer-specific test harness are removed.
+  Adoption is manual: copy `raw-sql-rules.md` into the target repository and,
+  when AI-agent recognition is wanted, copy the documented instruction into the
+  repository's `AGENTS.md` or equivalent instruction file.
 
 ## Default 2 migration note
 
@@ -42,6 +46,9 @@ claimed as exact-text acceptance results. The Default 1 decision instead relies
 on the bounded placement assessment recorded in
 `research/default-1-v0.3-decision.md`, which does not establish a universal
 layout preference or measured review-quality improvement.
+
+Historical installer verification remains part of the preserved research record;
+it is not evidence that v0.3 still ships or requires an installer.
 
 ## Publishing after merge
 
