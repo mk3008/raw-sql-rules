@@ -18,10 +18,7 @@ Runtime input must not supply arbitrary SQL syntax. The application retains
 control of SQL syntax and structural choices. Application-controlled, reviewed
 structural variation remains permitted.
 
-## Default Requirements
-
-Projects may customize or omit these requirements without changing the Safety
-Contract.
+## Requirements
 
 ### 1. Executable application SQL has one authoritative reviewable source
 
