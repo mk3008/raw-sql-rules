@@ -26,12 +26,15 @@ customize or omit them without changing the Safety Contract:
 
 ## Scope
 
-Raw SQL Rules applies only to application paths where Raw SQL is the selected
-query representation, directly visible as ordinary SQL and executed through the
-selected driver. It does not prescribe connections, pools, transactions,
-retries, logging, result mapping, migrations, testing, deployment, framework,
-or architecture. A path covered by these Rules may not be switched to another
-query representation merely to evade them.
+Raw SQL Rules applies to application paths where Raw SQL is the selected query
+representation. For covered paths, application data access is expressed as
+directly reviewable ordinary SQL and executed through the selected database
+driver.
+
+Connections and pools, transactions, retries, logging, result mapping,
+migrations, tests, deployment and execution integration, and business semantics
+remain application-owned. Application architecture and framework remain
+application choices.
 
 ## Add Raw SQL Rules
 
