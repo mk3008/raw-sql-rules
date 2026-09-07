@@ -6,7 +6,7 @@
 ## What changed
 
 - The normative text is organized as **Scope**, one **Safety Contract**, and
-  four author **Default Requirements**.
+  four project-customizable **Default Requirements**.
 - Scope now directly states both the selected Raw SQL representation and that
   connection/pool, transaction, retry, logging, mapping, migration, testing,
   deployment, and architecture choices remain application-owned.
