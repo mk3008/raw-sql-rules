@@ -4,7 +4,7 @@
 
 - Raw SQL Rules: **v0.3 draft (not yet tagged or released)**
 - Normative source: [raw-sql-rules.md](raw-sql-rules.md)
-- `raw-sql-rules.md` SHA-256: `701EBBD6FC1C44703E5AC89E95C32F3510B93FFA2EC9CF73A01E566CFA3C71D4`
+- `raw-sql-rules.md` SHA-256: `51B6A85BFC1853F6D8FE7E8495B0D3E946AEB243AB4EB1662FB233FFB5F27065`
 - v0.1 and v0.2 remain historical provenance; no v0.3 tag or GitHub Release is
   claimed here.
 
@@ -48,10 +48,10 @@ demonstrate a practical final-quality advantage. Removing the legacy
 non-Requirement operational/HOW layer from the v0.2 Contracts and Default
 Requirements likewise produced no observed practical degradation.
 
-This bounded evidence is distinct from the human product choice: v0.3 has a
-narrow Safety Contract, while Scope defines applicability and the four Default
-Requirements are project-customizable author defaults. Default 1 now protects
-one authoritative reviewable SQL definition without universally requiring a
+This bounded evidence is distinct from the product choice: v0.3 has a narrow
+Safety Contract, while Scope defines applicability and the four Default
+Requirements are project-customizable defaults. Default 1 now protects one
+authoritative reviewable SQL definition without universally requiring a
 dedicated file. Default 4 requires a path through the target database engine and
 selected driver; it does not require production access or production data. The
 prior v0.3 study's ten comment-labelled positional examples and the earlier
