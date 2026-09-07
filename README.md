@@ -13,11 +13,12 @@ The Safety Contract is the non-customizable core: runtime input does not supply
 arbitrary SQL syntax. The application retains control of SQL syntax and
 structural choices, including reviewed finite structural variation.
 
-## What is customizable
+## Requirements
 
-The following are supplied project Default Requirements. They are meaningful
-defaults for reviewability, maintenance, and verification, but a project may
-customize or omit them without changing the Safety Contract:
+This repository supplies four requirements as project defaults. A project may
+customize or omit them before adopting its copy of the Rules. In an adopted
+`raw-sql-rules.md`, they are simply Requirements for agents and implementations
+to follow.
 
 1. Executable application SQL has one authoritative reviewable source.
 2. Authoritative SQL uses meaningful named parameters and callers bind by name.
@@ -62,15 +63,15 @@ mention Raw SQL Rules each time.
 
 ## Why
 
-The v0.3 structure separates Scope, a narrow Safety Contract, and author
-Default Requirements. Default 1 protects one authoritative, directly reviewable
-SQL definition without requiring dedicated-file placement. Default 2 requires
-named definitions and named bindings: comments or CTE aliases around positional
-parameters alone are not sufficient. Default 4 requires a path through the
-target DB engine and driver; an isolated or disposable test database is enough,
-and production access or production data is not required. See
-[RATIONALE.md](RATIONALE.md) for the product reasoning and
-[EVIDENCE.md](EVIDENCE.md) for the bounded evidence and its limits.
+The v0.3 structure separates Scope, a narrow Safety Contract, and Requirements.
+Default 1 protects one authoritative, directly reviewable SQL definition without
+requiring dedicated-file placement. Default 2 requires named definitions and
+named bindings: comments or CTE aliases around positional parameters alone are
+not sufficient. Default 4 requires a path through the target DB engine and
+driver; an isolated or disposable test database is enough, and production access
+or production data is not required. See [RATIONALE.md](RATIONALE.md) for the
+product reasoning and [EVIDENCE.md](EVIDENCE.md) for the bounded evidence and its
+limits.
 
 ## Learn more
 
