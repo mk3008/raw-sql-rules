@@ -64,14 +64,14 @@ mention Raw SQL Rules each time.
 ## Why
 
 The v0.3 structure separates Scope, a narrow Safety Contract, and Requirements.
-Default 1 protects one authoritative, directly reviewable SQL definition without
-requiring dedicated-file placement. Default 2 requires named definitions and
-named bindings: comments or CTE aliases around positional parameters alone are
-not sufficient. Default 4 requires a path through the target DB engine and
-driver; an isolated or disposable test database is enough, and production access
-or production data is not required. See [RATIONALE.md](RATIONALE.md) for the
-product reasoning and [EVIDENCE.md](EVIDENCE.md) for the bounded evidence and its
-limits.
+Requirement 1 protects one authoritative, directly reviewable SQL definition
+without requiring dedicated-file placement. Requirement 2 requires named
+definitions and named bindings: comments or CTE aliases around positional
+parameters alone are not sufficient. Requirement 4 requires a path through the
+target DB engine and driver; an isolated or disposable test database is enough,
+and production access or production data is not required. See
+[RATIONALE.md](RATIONALE.md) for the product reasoning and
+[EVIDENCE.md](EVIDENCE.md) for the bounded evidence and its limits.
 
 ## Learn more
 
