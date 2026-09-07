@@ -42,6 +42,11 @@ There is no runtime package or installer. Copy the version of
 [raw-sql-rules.md](raw-sql-rules.md) you want to adopt into your repository, for
 example as `rules/raw-sql-rules.md`.
 
+Tagged GitHub Releases attach `raw-sql-rules.md` as the project distribution
+asset. README, rationale, evidence, research, examples, and other repository
+material remain reference material in the tagged repository and are not part of
+the adopted Rules payload.
+
 ### Use with AI agents
 
 Copy this into the repository's root `AGENTS.md` (or equivalent instruction
