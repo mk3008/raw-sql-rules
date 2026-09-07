@@ -4,7 +4,7 @@
 
 - Raw SQL Rules: **v0.3 draft (not yet tagged or released)**
 - Normative source: [raw-sql-rules.md](raw-sql-rules.md)
-- `raw-sql-rules.md` SHA-256: `15F939B62E4C5AD22621B2705E9DE5CF1B81B9E269D7B6E91185B3F4AAB9C54C`
+- `raw-sql-rules.md` SHA-256: `701EBBD6FC1C44703E5AC89E95C32F3510B93FFA2EC9CF73A01E566CFA3C71D4`
 - v0.1 and v0.2 remain historical provenance; no v0.3 tag or GitHub Release is
   claimed here.
 
@@ -69,8 +69,6 @@ named-definition and named-binding Default 2.
   effect.
 - The current placement-neutral Default 1 text and Default 4 production-access
   clarification postdate the frozen exact-text v0.3 acceptance cases.
-- Raw SQL Rules does not claim Raw SQL universally beats ORM or query-builder
-  approaches.
 
 ## Provenance
 
