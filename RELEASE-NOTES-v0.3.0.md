@@ -1,7 +1,7 @@
-# Raw SQL Rules v0.3.0 release notes (draft)
+# Raw SQL Rules 0.3
 
 > This is a release-note draft. v0.3.0 is not tagged or published until this
-> change is reviewed, merged, tagged, and released from the resulting commit.
+> change is reviewed and merged.
 
 ## What changed
 
@@ -23,6 +23,13 @@
   Adoption is manual: copy `raw-sql-rules.md` into the target repository and,
   when AI-agent recognition is wanted, copy the documented instruction into the
   repository's `AGENTS.md` or equivalent instruction file.
+
+## Distribution
+
+The official GitHub Release asset is `raw-sql-rules.md` only. README, rationale,
+evidence, research, examples, and other repository material remain available in
+the tagged repository as reference material but are not part of the adopted
+Rules payload.
 
 ## Default 2 migration note
 
@@ -52,6 +59,7 @@ it is not evidence that v0.3 still ships or requires an installer.
 
 ## Publishing after merge
 
-After review and merge, create the `v0.3.0` tag at the approved merge commit,
-verify the tagged `raw-sql-rules.md` hash against `EVIDENCE.md`, then create the
-GitHub Release using these notes. Do not tag or publish from this branch.
+After review and merge, verify the approved `raw-sql-rules.md` hash against
+`EVIDENCE.md`, then create the `v0.3.0` tag at that commit. The release workflow
+creates the GitHub Release from these notes and attaches only `raw-sql-rules.md`
+as the project distribution asset.
