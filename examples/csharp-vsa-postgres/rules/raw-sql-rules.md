@@ -28,22 +28,25 @@ These are the author's human requirements. A project may customize or omit them
 without changing the Safety Contract. When they are adopted, an implementation
 must satisfy them; a candidate or tool may not silently weaken or omit them.
 
-### 1. Executable application SQL has a dedicated reviewable source
+### 1. Executable application SQL has one authoritative reviewable source
 
-Each executable application SQL statement has one dedicated authoritative source file
-that a reviewer can locate and read directly as ordinary SQL. A runtime `.sql`
-asset is not required: a dedicated host-language source file is acceptable when
-the SQL remains directly visible. Do not hide it behind query construction,
-generated output, or another opaque representation, and do not maintain a
-generated mirror or duplicate canonical source.
+Each executable application SQL statement has one authoritative definition that
+a reviewer can locate from its execution sites and read directly as ordinary
+SQL. The definition may be in a dedicated source or colocated with the operation
+that binds or executes it. A runtime `.sql` asset is not required: host-language
+source is acceptable when the SQL remains directly visible. Do not hide it
+behind query construction, generated output, or another opaque representation,
+and do not maintain a generated mirror or duplicate canonical source.
 
 CTEs and subqueries remain part of one statement. When an operation executes
-multiple executable application statements, each has its own dedicated source.
-File extension and directory layout are application choices.
+multiple executable application statements, each has its own identifiable
+authoritative definition; they may share the operation's source file. Multiple
+callers may reference the same definition. File extension and directory layout
+are application choices.
 
-This requirement applies only to executable application SQL. It does not impose
-one-statement-per-file on migrations, current or canonical schema sources,
-driver or control statements, non-application health or probe statements, or
+This requirement applies only to executable application SQL. It does not
+prescribe placement for migrations, current or canonical schema sources, driver
+or control statements, non-application health or probe statements, or
 non-executable documentation and examples. These boundaries do not permit
 application query logic to be reclassified to avoid review.
 
@@ -73,10 +76,11 @@ inspectable current-schema representation may satisfy this requirement. Migratio
 history alone does not satisfy it when current state cannot be determined
 directly.
 
-### 4. DB/driver-dependent behavior is verifiable at the real boundary
+### 4. DB/driver-dependent behavior is verifiable with the target DB engine and driver
 
 When correctness depends on database-engine or driver behavior, the project has
 a path to verify that behavior through the target database engine and selected
-driver. These Rules do not prescribe a test framework, test architecture, or
-execution environment. Having that path does not mean every change has already
-been verified through it.
+driver. Verification may use an isolated or disposable test database; production
+access or production data is not required. These Rules do not prescribe a test
+framework, test architecture, or execution environment. Having that path does
+not mean every change has already been verified through it.
