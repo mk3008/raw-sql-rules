@@ -9,9 +9,9 @@ the application remain the technical authorities.
 
 The **Safety Contract** defines the non-customizable core of Raw SQL Rules:
 runtime input must not supply arbitrary SQL syntax. Scope states the selected
-Raw SQL representation and makes application concerns remain application-owned;
-it does not prescribe architecture or prohibit libraries. This reorganization is
-an editorial product decision, not evidence of a measured safety improvement.
+Raw SQL representation and keeps application concerns application-owned. This
+reorganization is an editorial product decision, not evidence of a measured
+safety improvement.
 
 The four **Default Requirements** are supplied project defaults for source and
 parameter reviewability, schema context, and DB/driver verifiability. A project
@@ -44,11 +44,17 @@ they are sound engineering advice.
 
 ## Why Scope and the Safety Contract exist
 
-### Scope and Raw SQL representation
+### Raw SQL representation
 
-Scope selects directly reviewable ordinary SQL, executed through
-the selected database driver, for covered paths. It does not require a runtime
-`.sql` asset or claim superiority over other data-access approaches.
+Scope selects directly reviewable ordinary SQL, executed through the selected
+database driver, for covered paths.
+
+### Application ownership
+
+Connections and pools, transactions, retries, logging, result mapping,
+migrations, tests, deployment and execution integration, and business semantics
+remain application-owned. Application architecture and framework remain
+application choices.
 
 ### Runtime-input safety
 
@@ -142,6 +148,5 @@ depends on that package work.
 
 The evidence is bounded by small task/model samples and recent comparisons that
 are PostgreSQL-heavy. It does not establish universal agent behavior, prove
-that each historical sentence is individually ineffective, prove every Default
-Requirement universally necessary, or claim that Raw SQL universally beats ORM
-or query-builder approaches.
+that each historical sentence is individually ineffective, or prove every
+Default Requirement universally necessary.
