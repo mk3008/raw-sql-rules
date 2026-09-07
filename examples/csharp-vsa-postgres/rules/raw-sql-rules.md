@@ -5,16 +5,12 @@
 These Rules apply to application paths where Raw SQL is the selected query
 representation. For covered paths, application data access is expressed as
 directly reviewable ordinary SQL and executed through the selected database
-driver. This scope does not claim Raw SQL is superior to another representation,
-and it does not require every data-access path in a mixed application to use Raw
-SQL. A covered path must not be changed to another query representation merely
-to avoid these Rules.
+driver.
 
 Connections and pools, transactions, retries, logging, result mapping,
 migrations, tests, deployment and execution integration, and business semantics
-remain application-owned. These Rules do not prescribe application architecture,
-frameworks, or implementation of those concerns. They neither require a
-home-grown implementation nor prohibit use of existing libraries.
+remain application-owned. Application architecture and framework remain
+application choices.
 
 ## Safety Contract
 
