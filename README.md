@@ -36,47 +36,24 @@ migrations, tests, deployment and execution integration, and business semantics
 remain application-owned. Application architecture and framework remain
 application choices.
 
-## Add Raw SQL Rules
+## Use Raw SQL Rules
 
-There is no runtime package. Copy
-[raw-sql-rules.md](raw-sql-rules.md) to `rules/raw-sql-rules.md`, then add this
-managed block to the root `AGENTS.md`:
+There is no runtime package or installer. Copy the version of
+[raw-sql-rules.md](raw-sql-rules.md) you want to adopt into your repository, for
+example as `rules/raw-sql-rules.md`.
 
-```md
-<!-- raw-sql-rules:start -->
-## Raw SQL
+### Use with AI agents
 
-For Raw SQL data-access work, read `rules/raw-sql-rules.md` and follow it
-as the repository contract.
-<!-- raw-sql-rules:end -->
+Copy this into the repository's root `AGENTS.md` (or equivalent instruction
+file), adjusting the path if needed:
+
+```text
+For Raw SQL data-access work, read `rules/raw-sql-rules.md` and follow it as the
+repository contract.
 ```
 
-### Installer
-
-The installers make the same two changes and update the existing managed block
-without duplicating it. They require an authenticated GitHub CLI (`gh`).
-
-From a POSIX shell:
-
-```sh
-gh api repos/mk3008/raw-sql-rules/contents/install.sh \
-  -H 'Accept: application/vnd.github.raw+json' |
-  sh
-```
-
-From PowerShell 7+ on Windows:
-
-```powershell
-$ref = 'main'
-$env:RAW_SQL_RULES_REF = $ref
-gh api "repos/mk3008/raw-sql-rules/contents/install.ps1?ref=$ref" `
-  -H 'Accept: application/vnd.github.raw+json' |
-  Out-String |
-  ForEach-Object { & ([scriptblock]::Create($_)) }
-```
-
-Optional paths and refs are controlled by `RAW_SQL_RULES_REF`,
-`RAW_SQL_RULES_PATH`, and `AGENTS_FILE`.
+Then keep individual prompts focused on the actual task; they do not need to
+mention Raw SQL Rules each time.
 
 ## Why
 
